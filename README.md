@@ -17,3 +17,5 @@
 3. Run SwiftyAuthingExample with iOS simulator or device.
 
 ![image](images/4.png)
+
+4. Test and check with https://console.authing.cn
