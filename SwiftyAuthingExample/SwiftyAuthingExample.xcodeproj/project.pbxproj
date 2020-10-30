@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A34EA31E254C51C200CB4C12 /* SwiftyAuthing in Frameworks */ = {isa = PBXBuildFile; productRef = A34EA31D254C51C200CB4C12 /* SwiftyAuthing */; };
 		A376F493254C1B2700CA84D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A376F492254C1B2700CA84D8 /* AppDelegate.swift */; };
 		A376F495254C1B2700CA84D8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A376F494254C1B2700CA84D8 /* SceneDelegate.swift */; };
 		A376F497254C1B2700CA84D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A376F496254C1B2700CA84D8 /* ViewController.swift */; };
@@ -31,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A34EA31E254C51C200CB4C12 /* SwiftyAuthing in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +85,9 @@
 			dependencies = (
 			);
 			name = SwiftyAuthingExample;
+			packageProductDependencies = (
+				A34EA31D254C51C200CB4C12 /* SwiftyAuthing */,
+			);
 			productName = SwiftyAuthingExample;
 			productReference = A376F48F254C1B2700CA84D8 /* SwiftyAuthingExample.app */;
 			productType = "com.apple.product-type.application";
@@ -110,6 +115,9 @@
 				Base,
 			);
 			mainGroup = A376F486254C1B2700CA84D8;
+			packageReferences = (
+				A34EA31C254C51C200CB4C12 /* XCRemoteSwiftPackageReference "SwiftyAuthing" */,
+			);
 			productRefGroup = A376F490254C1B2700CA84D8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -345,6 +353,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A34EA31C254C51C200CB4C12 /* XCRemoteSwiftPackageReference "SwiftyAuthing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Woo-Interactive/SwiftyAuthing.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A34EA31D254C51C200CB4C12 /* SwiftyAuthing */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A34EA31C254C51C200CB4C12 /* XCRemoteSwiftPackageReference "SwiftyAuthing" */;
+			productName = SwiftyAuthing;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A376F487254C1B2700CA84D8 /* Project object */;
 }

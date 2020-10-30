@@ -12,7 +12,7 @@ import Alamofire
 //import SwiftyRSA
 import Foundation
 
-class Config {
+public class Config {
     public static let domain = "https://core.authing.cn"
     public static let host = domain + "/graphql"
     public static let publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4xKeUgQ+Aoz7TLfAfs9+paePb" +
@@ -22,7 +22,7 @@ class Config {
     public static let photo = "https://files.authing.co/authing-console/default-user-avatar.png"
 }
 
-class Network {
+public class Network {
     static let shared = Network()
     private(set) lazy var apollo = ApolloClient(
         url: URL(string: host)!
@@ -67,17 +67,17 @@ class Network {
 //    }
 //}
 
-class AuthenticationClient {
+public class AuthenticationClient {
     
     /// userPoolId: The user pool Id.
     /// Find in https://console.authing.cn Setting - Basic Information.
     ///
-    var userPoolId: String?
+    public var userPoolId: String?
     
     /// secret: The secret of user pool.
     /// Find in https://console.authing.cn Setting - Basic Information.
     ///
-    var secret: String?
+    public var secret: String?
     
     /// accessToken: The AccessToken of user pool.
     ///
