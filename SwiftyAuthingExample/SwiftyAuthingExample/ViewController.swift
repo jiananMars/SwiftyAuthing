@@ -10,7 +10,15 @@ import SwiftyAuthing
 
 class ViewController: UIViewController {
 
-    var client: AuthenticationClient?
+    
+    @IBOutlet weak var textUsername: UITextField!
+    @IBOutlet weak var textPassword: UITextField!
+    @IBOutlet weak var textEmail: UITextField!
+    @IBOutlet weak var textPhone: UITextField!
+    @IBOutlet weak var textPhonecode: UITextField!
+    
+    
+    private var client: AuthenticationClient?
     
     /// 修改配置信息
     /// Find in https://console.authing.cn Setting - Basic Information.
@@ -22,27 +30,53 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         self.client = AuthenticationClient(userPoolId: userPoolId, secret: secret)
-
-//        self.registerByUsername()
-        
-//        self.registerByEmail()
-//        self.sendVerifyEmail()
-        
-//        self.sendSmsCode()
-//        self.registerByPhoneCode()
-        
-//        self.loginByUsername()
-//        self.loginByEmail()
-//        self.loginByPhoneCode()
-//        self.loginByPhonePassword()
         
     }
 
+    @IBAction func action1(_ sender: Any) {
+        self.registerByUsername()
+    }
+    
+    @IBAction func action2(_ sender: Any) {
+        self.registerByEmail()
+    }
+    
+    @IBAction func action3(_ sender: Any) {
+        self.sendVerifyEmail()
+    }
+    
+    @IBAction func action4(_ sender: Any) {
+        self.sendSmsCode()
+    }
+    
+    @IBAction func actionn5(_ sender: Any) {
+        self.registerByPhoneCode()
+    }
+    
+    @IBAction func action6(_ sender: Any) {
+        self.loginByUsername()
+    }
+    
+    @IBAction func action7(_ sender: Any) {
+        self.loginByEmail()
+    }
+    
+    @IBAction func action8(_ sender: Any) {
+        self.loginByPhoneCode()
+    }
+    
+    @IBAction func action9(_ sender: Any) {
+        self.loginByPhonePassword()
+    }
+    
+    
+    
+    
     
     /// 通过用户名注册
     ///
     func registerByUsername() {
-        self.client?.registerByUsername(username: "test1", password: "123", completion:{status in
+        self.client?.registerByUsername(username: textUsername.text!, password: textPassword.text!, completion:{status in
             if(status.errors == nil) {
                 //调用成功后的逻辑
                 print(status.data?.register ?? "")
@@ -56,7 +90,7 @@ class ViewController: UIViewController {
     /// 通过邮箱注册
     ///
     func registerByEmail() {
-        self.client?.registerByEmail(email: "aloveric@qq.com", password: "123", completion: {status in
+        self.client?.registerByEmail(email: textEmail.text!, password: textPassword.text!, completion: {status in
             if(status.errors == nil) {
                 //调用成功后的逻辑
                 print(status.data?.register ?? "")
@@ -71,7 +105,7 @@ class ViewController: UIViewController {
     /// 发送验证邮件
     ///
     func sendVerifyEmail() {
-        self.client?.sendVerifyEmail(mail: "aloveric@qq.com", completion: {status in
+        self.client?.sendVerifyEmail(mail: textEmail.text!, completion: {status in
             if(status.errors == nil) {
                 //调用成功后的逻辑
                 print(status.data?.sendVerifyEmail ?? "")
@@ -86,7 +120,7 @@ class ViewController: UIViewController {
     /// 发送手机验证码
     ///
     func sendSmsCode() {
-        self.client?.sendSmsCode(phone: "13524132952", completion: { status in
+        self.client?.sendSmsCode(phone: textPhone.text!, completion: { status in
             print(status)
         })
     }
@@ -94,7 +128,7 @@ class ViewController: UIViewController {
     /// 通过手机号验证码注册
     ///
     func registerByPhoneCode() {
-        self.client?.registerByPhoneCode(phone: "13524132952", phoneCode: 7145, completion:{ status in
+        self.client?.registerByPhoneCode(phone: textPhone.text!, phoneCode: Int(textPhonecode.text!)!, completion:{ status in
             if(status.errors == nil) {
                 //调用成功后的逻辑
                 print(status.data?.login ?? "")
@@ -108,7 +142,7 @@ class ViewController: UIViewController {
     /// 通过用户名和密码登录
     ///
     func loginByUsername() {
-        self.client?.loginByUsername(username: "aloveric", password: "1234", completion:{ status in
+        self.client?.loginByUsername(username: textUsername.text!, password: textPassword.text!, completion:{ status in
             if(status.errors == nil) {
                 //调用成功后的逻辑
                 print(status.data?.login ?? "")
@@ -122,7 +156,7 @@ class ViewController: UIViewController {
     /// 通过邮箱密码登录
     ///
     func loginByEmail() {
-        self.client?.loginByEmail(email: "aloveric@qq.com", password: "123", completion:{ status in
+        self.client?.loginByEmail(email: textEmail.text!, password: textPassword.text!, completion:{ status in
             if(status.errors == nil) {
                 //调用成功后的逻辑
                 print(status.data?.login ?? "")
@@ -136,7 +170,7 @@ class ViewController: UIViewController {
     /// 通过手机号和验证码登录
     ///
     func loginByPhoneCode() {
-        self.client?.loginByPhoneCode(phone: "13524132952", phoneCode: 2739, completion:{ status in
+        self.client?.loginByPhoneCode(phone: textPhone.text!, phoneCode: Int(textPhonecode.text!)!, completion:{ status in
             if(status.errors == nil) {
                 //调用成功后的逻辑
                 print(status.data?.login ?? "")
@@ -150,7 +184,7 @@ class ViewController: UIViewController {
     /// 通过手机号和密码登录
     ///
     func loginByPhonePassword() {
-        self.client?.loginByPhonePassword(phone: "13524132952", password: "123", completion:{ status in
+        self.client?.loginByPhonePassword(phone: textPhone.text!, password: textPassword.text!, completion:{ status in
             if(status.errors == nil) {
                 //调用成功后的逻辑
                 print(status.data?.login ?? "")

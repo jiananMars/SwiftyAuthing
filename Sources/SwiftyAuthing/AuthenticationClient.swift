@@ -23,11 +23,11 @@ public class Config {
 }
 
 public class Network {
-    static let shared = Network()
+    public static let shared = Network()
     private(set) lazy var apollo = ApolloClient(
         url: URL(string: host)!
     )
-    var host = Config.host
+    public var host = Config.host
 }
 
 //class Network {
@@ -81,7 +81,7 @@ public class AuthenticationClient {
     
     /// accessToken: The AccessToken of user pool.
     ///
-    private var accessToken: String?
+    public var accessToken: String?
     
     
     /// 初始化
@@ -90,7 +90,7 @@ public class AuthenticationClient {
     /// Find in https://console.authing.cn Setting - Basic Information.
     /// - returns : N/A.
     ///
-    init(userPoolId: String, secret: String) {
+    public init(userPoolId: String, secret: String) {
         self.userPoolId = userPoolId
         self.secret = secret
         self.getClientWhenSdkInit()
@@ -103,7 +103,7 @@ public class AuthenticationClient {
     /// Find in https://console.authing.cn Setting - Basic Information.
     /// - returns : N/A.
     ///
-    init(userPoolId: String, secret: String, host: String) {
+    public init(userPoolId: String, secret: String, host: String) {
         self.userPoolId = userPoolId
         self.secret = secret
         Network.shared.host = host
@@ -112,7 +112,7 @@ public class AuthenticationClient {
     
     /// 初始化 SDK
     ///
-    private func getClientWhenSdkInit() {
+    public func getClientWhenSdkInit() {
         Network.shared.apollo.fetch(query: GetClientWhenSdkInitQuery(secret: self.secret, clientId: self.userPoolId)) { result in
             switch result {
             case .failure(let error):
@@ -127,7 +127,7 @@ public class AuthenticationClient {
     
     /// 加密 PKCS1v1.5
     ///
-    private func encrypt(msg: String) -> String {
+    public func encrypt(msg: String) -> String {
         let publicKey = try! PublicKey(base64Encoded: Config.publicKey)
         let clear = try! ClearMessage(string: msg, using: .utf8)
         let encrypted = try! clear.encrypted(with: publicKey, padding: .PKCS1)
