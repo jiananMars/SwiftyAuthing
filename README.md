@@ -15,3 +15,5 @@
 2. Change **userPoolId & secret** in SwiftyAuthingExample - ViewController.swift
 
 3. Run SwiftyAuthingExample with iOS simulator or device.
+
+![image](images/4.png)
