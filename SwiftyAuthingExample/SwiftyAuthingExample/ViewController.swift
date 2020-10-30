@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftyAuthing
 
 class ViewController: UIViewController {
 
