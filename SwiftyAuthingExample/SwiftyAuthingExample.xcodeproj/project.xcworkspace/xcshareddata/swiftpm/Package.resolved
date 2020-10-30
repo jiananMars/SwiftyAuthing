@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/Woo-Interactive/SwiftyAuthing.git",
         "state": {
           "branch": null,
-          "revision": "124a96187b55fc7d3a99b4ac2471e541f6fc22f8",
-          "version": "1.1.0"
+          "revision": "25e25be1448a211668f43666432bf8a65e78b8fa",
+          "version": "1.1.1"
         }
       }
     ]
