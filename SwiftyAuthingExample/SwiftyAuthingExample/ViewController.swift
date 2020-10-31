@@ -6,10 +6,8 @@
 //
 
 import UIKit
-import SwiftyAuthing
 
 class ViewController: UIViewController {
-
     
     @IBOutlet weak var textUsername: UITextField!
     @IBOutlet weak var textPassword: UITextField!
@@ -17,22 +15,19 @@ class ViewController: UIViewController {
     @IBOutlet weak var textPhone: UITextField!
     @IBOutlet weak var textPhonecode: UITextField!
     
+    var client: AuthenticationClient?
     
-    private var client: AuthenticationClient?
-    
-    /// 修改配置信息
+    /// Config Information, change your UserPoolId and Host
     /// Find in https://console.authing.cn Setting - Basic Information.
     let userPoolId = "5f967caecd744579cccf4bcf"
-    let secret = "3eb5b702173678c467e6cde8f0c3e963"
-    
+    let host = "https://core.authing.cn/graphql"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.client = AuthenticationClient(userPoolId: userPoolId, secret: secret)
-        
+        self.client = AuthenticationClient(userPoolId: userPoolId, host: host)
     }
-
+    
     @IBAction func action1(_ sender: Any) {
         self.registerByUsername()
     }
@@ -69,55 +64,67 @@ class ViewController: UIViewController {
         self.loginByPhonePassword()
     }
     
+    /// Init SDK and get AccessToken.
+    ///
+    func getClientWhenSdkInit() {
+        self.client?.getClientWhenSdkInit(completion:{status in
+            if(status.errors == nil) {
+                //Success
+                guard let result = status.data?.getClientWhenSdkInit else { return }
+                print("AccessToken: " + result.accessToken!)
+                print(result)
+            } else {
+                //Failure
+                print(status.errors ?? "")
+            }
+        })
+    }
     
-    
-    
-    
-    /// 通过用户名注册
+    /// Register by Username and Password.
     ///
     func registerByUsername() {
         self.client?.registerByUsername(username: textUsername.text!, password: textPassword.text!, completion:{status in
             if(status.errors == nil) {
-                //调用成功后的逻辑
+                //Success
                 print(status.data?.register ?? "")
             } else {
-                //调用返回错误
+                //Failure
                 print(status.errors ?? "")
             }
         })
     }
-
-    /// 通过邮箱注册
+    
+    /// Register by Email and Password.
     ///
     func registerByEmail() {
         self.client?.registerByEmail(email: textEmail.text!, password: textPassword.text!, completion: {status in
             if(status.errors == nil) {
-                //调用成功后的逻辑
+                //Success
                 print(status.data?.register ?? "")
             } else {
-                //调用返回错误
+                //Failure
                 print(status.errors ?? "")
             }
         })
     }
     
     
-    /// 发送验证邮件
+    /// Send Verify Email.
     ///
     func sendVerifyEmail() {
         self.client?.sendVerifyEmail(mail: textEmail.text!, completion: {status in
             if(status.errors == nil) {
-                //调用成功后的逻辑
+                //Success
                 print(status.data?.sendVerifyEmail ?? "")
             } else {
-                //调用返回错误
+                //Failure
                 print(status.errors ?? "")
             }
         })
     }
     
     
-    /// 发送手机验证码
+    /// Send SMS Code to Phone Number.
     ///
     func sendSmsCode() {
         self.client?.sendSmsCode(phone: textPhone.text!, completion: { status in
@@ -125,76 +132,76 @@ class ViewController: UIViewController {
         })
     }
     
-    /// 通过手机号验证码注册
+    /// Register by Phone Number and SMS Code.
     ///
     func registerByPhoneCode() {
         self.client?.registerByPhoneCode(phone: textPhone.text!, phoneCode: Int(textPhonecode.text!)!, completion:{ status in
             if(status.errors == nil) {
-                //调用成功后的逻辑
+                //Success
                 print(status.data?.login ?? "")
             } else {
-                //调用返回错误
+                //Failure
                 print(status.errors ?? "")
             }
         })
     }
-
-    /// 通过用户名和密码登录
+    
+    /// Login with Username and Password.
     ///
     func loginByUsername() {
         self.client?.loginByUsername(username: textUsername.text!, password: textPassword.text!, completion:{ status in
             if(status.errors == nil) {
-                //调用成功后的逻辑
+                //Success
                 print(status.data?.login ?? "")
             } else {
-                //调用返回错误
+                //Failure
                 print(status.errors ?? "")
             }
         })
     }
     
-    /// 通过邮箱密码登录
+    /// Login by Email and Password.
     ///
     func loginByEmail() {
         self.client?.loginByEmail(email: textEmail.text!, password: textPassword.text!, completion:{ status in
             if(status.errors == nil) {
-                //调用成功后的逻辑
+                //Success
                 print(status.data?.login ?? "")
             } else {
-                //调用返回错误
+                //Failure
                 print(status.errors ?? "")
             }
         })
     }
     
-    /// 通过手机号和验证码登录
+    /// Login by Phone Number and SMS Code.
     ///
     func loginByPhoneCode() {
         self.client?.loginByPhoneCode(phone: textPhone.text!, phoneCode: Int(textPhonecode.text!)!, completion:{ status in
             if(status.errors == nil) {
-                //调用成功后的逻辑
+                //Success
                 print(status.data?.login ?? "")
             } else {
-                //调用返回错误
+                //Failure
                 print(status.errors ?? "")
             }
         })
     }
     
-    /// 通过手机号和密码登录
+    /// Login by Phone Number and Password.
     ///
     func loginByPhonePassword() {
         self.client?.loginByPhonePassword(phone: textPhone.text!, password: textPassword.text!, completion:{ status in
             if(status.errors == nil) {
-                //调用成功后的逻辑
+                //Success
                 print(status.data?.login ?? "")
             } else {
-                //调用返回错误
+                //Failure
                 print(status.errors ?? "")
             }
         })
     }
-
+    
     
 }
 

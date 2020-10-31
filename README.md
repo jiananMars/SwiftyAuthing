@@ -12,10 +12,10 @@
 ![image](images/3.png)
 
 
-2. Change **userPoolId & secret** in SwiftyAuthingExample - ViewController.swift
+2. Change **UserPoolId and Host** in SwiftyAuthingExample - ViewController.swift
 
-3. Run SwiftyAuthingExample with iOS simulator or device.
+3. Run **SwiftyAuthingExample** with iOS simulator or device.
 
 ![image](images/4.png)
 
-4. Test and check with https://console.authing.cn
+4. Test and check with web console [https://console.authing.cn](https://console.authing.cn)

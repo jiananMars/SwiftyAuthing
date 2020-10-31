@@ -9,7 +9,6 @@
 
 import Apollo
 import Alamofire
-//import SwiftyRSA
 import Foundation
 
 public class Config {
@@ -30,8 +29,8 @@ public class Network {
     public var host = Config.host
 }
 
-//class Network {
-//    static let shared = Network()
+//public class Network {
+//    public static let shared = Network()
 //    private(set) lazy var apollo: ApolloClient = {
 //        let client = URLSessionClient()
 //        let cache = InMemoryNormalizedCache()
@@ -42,20 +41,20 @@ public class Network {
 //                                                     endpointURL: url)
 //        return ApolloClient(networkTransport: transport, store: store)
 //    }()
-//    var host = Config.host
+//    public var host = Config.host
 //}
 //
-//class NetworkInterceptorProvider: LegacyInterceptorProvider {
-//    override func interceptors<Operation: GraphQLOperation>(for operation: Operation) -> [ApolloInterceptor] {
+//public class NetworkInterceptorProvider: LegacyInterceptorProvider {
+//    public override func interceptors<Operation: GraphQLOperation>(for operation: Operation) -> [ApolloInterceptor] {
 //        var interceptors = super.interceptors(for: operation)
 //        interceptors.insert(CustomInterceptor(), at: 0)
 //        return interceptors
 //    }
 //}
 //
-//class CustomInterceptor: ApolloInterceptor {
-//    let token = UserDefaults.standard.string(forKey: "accessToken") ?? ""
-//    func interceptAsync<Operation: GraphQLOperation>(
+//public class CustomInterceptor: ApolloInterceptor {
+//    public let token = UserDefaults.standard.string(forKey: "accessToken") ?? ""
+//    public func interceptAsync<Operation: GraphQLOperation>(
 //        chain: RequestChain,
 //        request: HTTPRequest<Operation>,
 //        response: HTTPResponse<Operation>?,
@@ -69,63 +68,83 @@ public class Network {
 
 public class AuthenticationClient {
     
-    /// userPoolId: The user pool Id.
+    /// UserPoolId: The user pool id.
     /// Find in https://console.authing.cn Setting - Basic Information.
     ///
     public var userPoolId: String?
     
-    /// secret: The secret of user pool.
+    /// Secret: The secret of user pool.
     /// Find in https://console.authing.cn Setting - Basic Information.
     ///
     public var secret: String?
     
-    /// accessToken: The AccessToken of user pool.
+    /// Host: The host of User Pool.
+    ///
+    public var host: String?
+    
+    /// AccessToken: The AccessToken of user pool.
     ///
     public var accessToken: String?
     
-    
-    /// 初始化
+    /// Init with UserPoolId
     /// userPoolId: The user pool Id.
     /// secret: The secret of user pool.
     /// Find in https://console.authing.cn Setting - Basic Information.
-    /// - returns : N/A.
+    ///
+    public init(userPoolId: String) {
+        self.userPoolId = userPoolId
+    }
+    
+    /// Init with UserPoolId and Secret
+    /// userPoolId: The user pool Id.
+    /// secret: The secret of user pool.
+    /// Find in https://console.authing.cn Setting - Basic Information.
     ///
     public init(userPoolId: String, secret: String) {
         self.userPoolId = userPoolId
         self.secret = secret
-        self.getClientWhenSdkInit()
     }
     
-    /// 初始化
+    /// Init with UserPoolId and Host
+    /// userPoolId: The user pool Id.
+    /// host: The host of user pool.
+    /// Find in https://console.authing.cn Setting - Basic Information.
+    ///
+    public init(userPoolId: String, host: String) {
+        self.userPoolId = userPoolId
+        self.host = host
+        Network.shared.host = host
+    }
+    
+    /// Init with UserPoolId, Secret, and Host
     /// userPoolId: The user pool Id.
     /// secret: The secret of user pool.
     /// host: The host of user pool.
     /// Find in https://console.authing.cn Setting - Basic Information.
-    /// - returns : N/A.
     ///
     public init(userPoolId: String, secret: String, host: String) {
         self.userPoolId = userPoolId
         self.secret = secret
+        self.host = host
         Network.shared.host = host
-        self.getClientWhenSdkInit()
     }
     
-    /// 初始化 SDK
+    /// Init SDK and get AccessToken.
     ///
-    public func getClientWhenSdkInit() {
+    public func getClientWhenSdkInit(completion: @escaping ((GraphQLResult<GetClientWhenSdkInitQuery.Data>) -> Void)) {
         Network.shared.apollo.fetch(query: GetClientWhenSdkInitQuery(secret: self.secret, clientId: self.userPoolId)) { result in
             switch result {
             case .failure(let error):
-                print("Something bad happened \(error)")
+                print("Failure: \(error)")
             case .success(let graphQLResult):
                 guard let status = graphQLResult.data?.getClientWhenSdkInit else { return }
                 self.accessToken = status.accessToken
-                UserDefaults.standard.setValue(status.accessToken, forKey: "accessToken")
+                completion(graphQLResult)
             }
         }
     }
     
-    /// 加密 PKCS1v1.5
+    /// Encrypt with PKCS1v1.5.
     ///
     public func encrypt(msg: String) -> String {
         let publicKey = try! PublicKey(base64Encoded: Config.publicKey)
@@ -134,13 +153,13 @@ public class AuthenticationClient {
         return encrypted.base64String
     }
     
-    /// 通过用户名注册
+    /// Register by Username and Password.
     ///
     public func registerByUsername(username: String, password: String, completion: @escaping ((GraphQLResult<RegisterMutation.Data>) -> Void)) {
         Network.shared.apollo.perform(mutation: RegisterMutation(password: encrypt(msg: password), registerInClient: self.userPoolId!, username: username, photo: Config.photo), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
-                print("Something bad happened \(error)")
+                print("Failure: \(error)")
             case .success(let graphQLResult):
                 //guard let status = graphQLResult.data?.register else { return }
                 completion(graphQLResult)
@@ -149,13 +168,13 @@ public class AuthenticationClient {
     }
     
     
-    /// 通过邮箱注册
+    /// Register by Email and Password.
     ///
     public func registerByEmail(email: String, password: String, completion: @escaping ((GraphQLResult<RegisterMutation.Data>) -> Void)) {
         Network.shared.apollo.perform(mutation: RegisterMutation(email: email, password: encrypt(msg: password), registerInClient: self.userPoolId!, photo: Config.photo), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
-                print("Something bad happened \(error)")
+                print("Failure: \(error)")
             case .success(let graphQLResult):
                 //guard let status = graphQLResult.data?.register else { return }
                 completion(graphQLResult)
@@ -163,13 +182,13 @@ public class AuthenticationClient {
         }
     }
     
-    /// 发送验证邮件
+    /// Send Verify Email.
     ///
     public func sendVerifyEmail(mail: String, completion: @escaping ((GraphQLResult<SendVerifyEmailMutation.Data>) -> Void)) {
         Network.shared.apollo.perform(mutation: SendVerifyEmailMutation(email: mail, client: self.userPoolId!), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
-                print("Something bad happened \(error)")
+                print("Failure: \(error)")
             case .success(let graphQLResult):
                 //guard let status = graphQLResult.data?.sendVerifyEmail else { return }
                 completion(graphQLResult)
@@ -177,7 +196,7 @@ public class AuthenticationClient {
         }
     }
     
-    /// 发送手机验证码
+    /// Send SMS Code to Phone Number.
     ///
     public func sendSmsCode(phone: String, completion: @escaping(Any) -> Void) {
         let url = Config.domain + "/send_smscode/\(phone)/\(self.userPoolId!)"
@@ -191,13 +210,13 @@ public class AuthenticationClient {
         }
     }
     
-    /// 通过手机号验证码注册
+    /// Register by Phone Number and SMS Code.
     ///
     public func registerByPhoneCode(phone: String, phoneCode: Int, completion: @escaping ((GraphQLResult<LoginByPhoneCodeMutation.Data>) -> Void)) {
         Network.shared.apollo.perform(mutation: LoginByPhoneCodeMutation(phone: phone, phoneCode: phoneCode, registerInClient: self.userPoolId!), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
-                print("Something bad happened \(error)")
+                print("Failure: \(error)")
             case .success(let graphQLResult):
                 //guard let status = graphQLResult.data?.login else { return }
                 completion(graphQLResult)
@@ -205,13 +224,13 @@ public class AuthenticationClient {
         }
     }
     
-    /// 通过用户名和密码登录
+    /// Login with Username and Password.
     ///
     public func loginByUsername(username: String, password: String, completion: @escaping ((GraphQLResult<LoginByUsernameMutation.Data>) -> Void)) {
         Network.shared.apollo.perform(mutation: LoginByUsernameMutation(username: username, password: encrypt(msg: password), registerInClient: self.userPoolId!), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
-                print("Something bad happened \(error)")
+                print("Failure: \(error)")
             case .success(let graphQLResult):
                 //guard let status = graphQLResult.data?.login else { return }
                 completion(graphQLResult)
@@ -219,27 +238,27 @@ public class AuthenticationClient {
         }
     }
     
-    /// 通过邮箱密码登录
+    /// Login by Email and Password.
     ///
     public func loginByEmail(email: String, password: String, completion: @escaping ((GraphQLResult<LoginMutation.Data>) -> Void)) {
         Network.shared.apollo.perform(mutation: LoginMutation(email: email, password: encrypt(msg: password), registerInClient: self.userPoolId!), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
-                print("Something bad happened \(error)")
+                print("Failure: \(error)")
             case .success(let graphQLResult):
-                //                guard let status = graphQLResult.data?.login else { return }
+                //guard let status = graphQLResult.data?.login else { return }
                 completion(graphQLResult)
             }
         }
     }
     
-    /// 通过手机号和验证码登录
+    /// Login by Phone Number and SMS Code.
     ///
     public func loginByPhoneCode(phone: String, phoneCode: Int, completion: @escaping ((GraphQLResult<LoginByPhoneCodeMutation.Data>) -> Void)) {
         Network.shared.apollo.perform(mutation: LoginByPhoneCodeMutation(phone: phone, phoneCode: phoneCode, registerInClient: self.userPoolId!), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
-                print("Something bad happened \(error)")
+                print("Failure: \(error)")
             case .success(let graphQLResult):
                 //guard let status = graphQLResult.data?.login else { return }
                 completion(graphQLResult)
@@ -247,13 +266,13 @@ public class AuthenticationClient {
         }
     }
     
-    /// 通过手机号和密码登录
+    /// Login by Phone Number and Password.
     ///
     public func loginByPhonePassword(phone: String, password: String, completion: @escaping ((GraphQLResult<LoginByPhonePasswordMutation.Data>) -> Void)) {
         Network.shared.apollo.perform(mutation: LoginByPhonePasswordMutation(phone: phone, password: encrypt(msg: password), registerInClient: self.userPoolId!), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
-                print("Something bad happened \(error)")
+                print("Failure: \(error)")
             case .success(let graphQLResult):
                 //guard let status = graphQLResult.data?.login else { return }
                 completion(graphQLResult)
@@ -261,7 +280,7 @@ public class AuthenticationClient {
         }
     }
     
-    /// 注销当前用户（TBD)
+    /// Logout Current User (TBD).
     ///
     public func logout() {
         
