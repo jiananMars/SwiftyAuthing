@@ -88,8 +88,9 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+.DS_Store
 Sources/.DS_Store
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .swiftpm/xcode/xcshareddata/xcschemes/SwiftyAuthing.xcscheme
-.DS_Store
+
 
