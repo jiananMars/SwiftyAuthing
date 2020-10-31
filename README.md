@@ -29,7 +29,7 @@
 
 1. Clone repository
 
-2. Change **UserPoolId and Host** in SwiftyAuthingExample - ViewController.swift
+2. Change **UserPoolId, Secret, and Host** in SwiftyAuthingExample - ViewController.swift
 
 3. Run **SwiftyAuthingExample** with iOS simulator or device.
 
