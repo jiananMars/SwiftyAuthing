@@ -16,13 +16,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var textPhone: UITextField!
     @IBOutlet weak var textPhonecode: UITextField!
     
-    var client: AuthenticationClient?
-    
     /// Config Information, change your UserPoolId, Secret, and Host
     /// Find in https://console.authing.cn Setting - Basic Information.
     let userPoolId = "5f967caecd744579cccf4bcf"
     let secret = "3eb5b702173678c467e6cde8f0c3e963"
     let host = "https://core.authing.cn/graphql"
+    
+    var client: AuthenticationClient?
+    var userid = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +71,18 @@ class ViewController: UIViewController {
         self.loginByPhonePassword()
     }
     
+    @IBAction func action10(_ sender: Any) {
+        self.logout()
+    }
+    
+    @IBAction func action11(_ sender: Any) {
+        self.checkLoginStatus()
+    }
+    
+    @IBAction func action12(_ sender: Any) {
+        self.loginByWeChatCode()
+    }
+    
     /// Init SDK and get AccessToken.
     ///
     func getClientWhenSdkInit() {
@@ -93,6 +106,7 @@ class ViewController: UIViewController {
             if(status.errors == nil) {
                 //Success
                 print(status.data?.register ?? "")
+                self.userid = status.data?.register?._id ?? ""
             } else {
                 //Failure
                 print(status.errors ?? "")
@@ -107,6 +121,7 @@ class ViewController: UIViewController {
             if(status.errors == nil) {
                 //Success
                 print(status.data?.register ?? "")
+                self.userid = status.data?.register?._id ?? ""
             } else {
                 //Failure
                 print(status.errors ?? "")
@@ -145,6 +160,7 @@ class ViewController: UIViewController {
             if(status.errors == nil) {
                 //Success
                 print(status.data?.login ?? "")
+                self.userid = status.data?.login?._id ?? ""
             } else {
                 //Failure
                 print(status.errors ?? "")
@@ -205,6 +221,44 @@ class ViewController: UIViewController {
                 //Failure
                 print(status.errors ?? "")
             }
+        })
+    }
+    
+    /// Check Login Status.
+    ///
+    func checkLoginStatus() {
+        self.client?.checkLoginStatus(completion:{ status in
+            if(status.errors == nil) {
+                //Success
+                print(status.data?.checkLoginStatus ?? "")
+            } else {
+                //Failure
+                print(status.errors ?? "")
+            }
+        })
+    }
+    
+    /// Logout Current User.
+    ///
+    func logout() {
+        self.client?.logout(userid: self.userid, completion:{ status in
+            if(status.errors == nil) {
+                //Success
+                print(status.data?.updateUser ?? "")
+            } else {
+                //Failure
+                print(status.errors ?? "")
+            }
+        })
+    }
+    
+    /// Login by WeChat Code.
+    ///
+    func loginByWeChatCode() {
+        //Change your code from WeChat via https://docs.authing.cn/social-login/mobile/wechat.html
+        let code = "041jya0w35SheV2Czq0w3kR57j2jya0T"
+        self.client?.loginByWeChatCode(code: code, completion: { status in
+            print(status)
         })
     }
     
