@@ -41,7 +41,12 @@
 ```
 import SwiftyAuthing
 
-    //Change your UserPoolId, Secret and Host in https://console.authing.cn Setting - Basic Information.
+    /// Config Information, change your UserPoolId, Secret, and Host
+    /// Find in https://console.authing.cn Setting - Basic Information.
+    let userPoolId = "5f967caecd744579cccf4bcf"
+    let secret = "3eb5b702173678c467e6cde8f0c3e963"
+    let host = "https://core.authing.cn/graphql"
+
     let client: AuthenticationClient = AuthenticationClient(userPoolId: userPoolId, secret: secret, host: host)
 
     /// Init SDK and get AccessToken.
