@@ -1,6 +1,6 @@
-# SwiftyAuthing
+# SDK for Swift
 
-**SwiftyAuthing** is a pure Swift library for [Authing](https://authing.cn).
+This is a pure Swift library for [Authing](https://authing.cn).
 
 ![image](images/4.png)
 
@@ -38,7 +38,7 @@
 
 ## How to use
 
-```
+```swift
 import SwiftyAuthing
 
     /// Config Information, change your UserPoolId, Secret, and Host
