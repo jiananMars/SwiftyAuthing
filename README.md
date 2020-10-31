@@ -1,6 +1,6 @@
 # SwiftyAuthing
 
-**SwiftyAuthing** is a pure swift library for [Authing](https://authing.cn).
+**SwiftyAuthing** is a pure Swift library for [Authing](https://authing.cn).
 
 ![image](images/4.png)
 
