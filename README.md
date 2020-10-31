@@ -48,8 +48,8 @@ import SwiftyAuthing
 
    /// Config Information, change your UserPoolId, Secret, and Host
     /// Find in https://console.authing.cn Setting - Basic Information.
-    let userPoolId = "5f967caecd744579cccf4bcf"
-    let secret = "3eb5b702173678c467e6cde8f0c3e963"
+    let userPoolId = "chang userPoolId here"
+    let secret = "change secret here"
     let host = "https://core.authing.cn/graphql"
 
     let client: AuthenticationClient = AuthenticationClient(userPoolId: userPoolId, secret: secret, host: host)
@@ -229,7 +229,7 @@ import SwiftyAuthing
     ///
     func loginByWeChatCode() {
         //Change your code from WeChat via https://docs.authing.cn/social-login/mobile/wechat.html
-        let code = "041jya0w35SheV2Czq0w3kR57j2jya0T"
+        let code = "change code here"
         self.client?.loginByWeChatCode(code: code, completion: { status in
             print(status)
         })
