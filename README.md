@@ -25,6 +25,10 @@
 
 ![image](images/3.png)
 
+4. Update to latest version (optional)
+
+![image](images/5.png)
+
 
 ## Example
 
