@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftyAuthing
 
 class ViewController: UIViewController {
     
@@ -20,12 +21,17 @@ class ViewController: UIViewController {
     /// Config Information, change your UserPoolId and Host
     /// Find in https://console.authing.cn Setting - Basic Information.
     let userPoolId = "5f967caecd744579cccf4bcf"
+    let secret = "3eb5b702173678c467e6cde8f0c3e963"
     let host = "https://core.authing.cn/graphql"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.client = AuthenticationClient(userPoolId: userPoolId, host: host)
+        self.client = AuthenticationClient(userPoolId: userPoolId, secret: secret, host: host)
+    }
+    
+    @IBAction func action0(_ sender: Any) {
+        self.getClientWhenSdkInit()
     }
     
     @IBAction func action1(_ sender: Any) {
@@ -71,7 +77,7 @@ class ViewController: UIViewController {
             if(status.errors == nil) {
                 //Success
                 guard let result = status.data?.getClientWhenSdkInit else { return }
-                print("AccessToken: " + result.accessToken!)
+                print(result.accessToken ?? "")
                 print(result)
             } else {
                 //Failure
