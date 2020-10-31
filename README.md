@@ -39,7 +39,7 @@
 
 ## How to use
 
-```
+```swift
 import SwiftyAuthing
 
    /// Config Information, change your UserPoolId, Secret, and Host
