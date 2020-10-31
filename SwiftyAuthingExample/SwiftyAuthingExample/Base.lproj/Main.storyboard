@@ -140,7 +140,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pbM-uw-t3L">
-                                <rect key="frame" x="106" y="649" width="203" height="30"/>
+                                <rect key="frame" x="105" y="649" width="203" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Register by Phone Number and SMS Code"/>
@@ -191,6 +191,33 @@
                                 <state key="normal" title="Init SDK and get AccessToken"/>
                                 <connections>
                                     <action selector="action0:" destination="BYZ-38-t0r" eventType="touchUpInside" id="D9A-17-V7l"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bEa-If-7of">
+                                <rect key="frame" x="329" y="840" width="65" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <state key="normal" title="Logout"/>
+                                <connections>
+                                    <action selector="action10:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PpQ-Ul-zSO"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iBp-ku-7p7">
+                                <rect key="frame" x="329" y="803" width="65" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <state key="normal" title="Check"/>
+                                <connections>
+                                    <action selector="action11:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zMX-vP-KOj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GpU-Xl-Dqo">
+                                <rect key="frame" x="329" y="765" width="65" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <state key="normal" title="WeChat"/>
+                                <connections>
+                                    <action selector="action12:" destination="BYZ-38-t0r" eventType="touchUpInside" id="74r-Sb-kWn"/>
                                 </connections>
                             </button>
                         </subviews>

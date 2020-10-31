@@ -1,5 +1,5 @@
 //
-//  API.swift
+//  AuthenticationClient.swift
 //  SwiftyAuthing
 //
 //  Created by Eric Woo on 2020/10/27.
@@ -2602,6 +2602,647 @@ public final class UpdateUserMutation: GraphQLMutation {
         }
         set {
           resultMap.updateValue(newValue, forKey: "isDeleted")
+        }
+      }
+    }
+  }
+}
+
+public final class UpdateUserLogoutMutation: GraphQLMutation {
+  /// The raw GraphQL definition of this operation.
+  public let operationDefinition: String =
+    """
+    mutation updateUserLogout($_id: String!, $registerInClient: String!, $tokenExpiredAt: String) {
+      updateUser(options: {_id: $_id, registerInClient: $registerInClient, tokenExpiredAt: $tokenExpiredAt}) {
+        __typename
+        _id
+        registerInClient
+        tokenExpiredAt
+      }
+    }
+    """
+
+  public let operationName: String = "updateUserLogout"
+
+  public let operationIdentifier: String? = "6d60d3a1593f09123e6103fc8f9d78a366ed0c3535427a972e24deeb8a086864"
+
+  public var _id: String
+  public var registerInClient: String
+  public var tokenExpiredAt: String?
+
+  public init(_id: String, registerInClient: String, tokenExpiredAt: String? = nil) {
+    self._id = _id
+    self.registerInClient = registerInClient
+    self.tokenExpiredAt = tokenExpiredAt
+  }
+
+  public var variables: GraphQLMap? {
+    return ["_id": _id, "registerInClient": registerInClient, "tokenExpiredAt": tokenExpiredAt]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes: [String] = ["Mutation"]
+
+    public static var selections: [GraphQLSelection] {
+      return [
+        GraphQLField("updateUser", arguments: ["options": ["_id": GraphQLVariable("_id"), "registerInClient": GraphQLVariable("registerInClient"), "tokenExpiredAt": GraphQLVariable("tokenExpiredAt")]], type: .object(UpdateUser.selections)),
+      ]
+    }
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(updateUser: UpdateUser? = nil) {
+      self.init(unsafeResultMap: ["__typename": "Mutation", "updateUser": updateUser.flatMap { (value: UpdateUser) -> ResultMap in value.resultMap }])
+    }
+
+    public var updateUser: UpdateUser? {
+      get {
+        return (resultMap["updateUser"] as? ResultMap).flatMap { UpdateUser(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "updateUser")
+      }
+    }
+
+    public struct UpdateUser: GraphQLSelectionSet {
+      public static let possibleTypes: [String] = ["ExtendUser"]
+
+      public static var selections: [GraphQLSelection] {
+        return [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("_id", type: .scalar(String.self)),
+          GraphQLField("registerInClient", type: .scalar(String.self)),
+          GraphQLField("tokenExpiredAt", type: .scalar(String.self)),
+        ]
+      }
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(_id: String? = nil, registerInClient: String? = nil, tokenExpiredAt: String? = nil) {
+        self.init(unsafeResultMap: ["__typename": "ExtendUser", "_id": _id, "registerInClient": registerInClient, "tokenExpiredAt": tokenExpiredAt])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var _id: String? {
+        get {
+          return resultMap["_id"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "_id")
+        }
+      }
+
+      public var registerInClient: String? {
+        get {
+          return resultMap["registerInClient"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "registerInClient")
+        }
+      }
+
+      public var tokenExpiredAt: String? {
+        get {
+          return resultMap["tokenExpiredAt"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "tokenExpiredAt")
+        }
+      }
+    }
+  }
+}
+
+public final class UserQuery: GraphQLQuery {
+  /// The raw GraphQL definition of this operation.
+  public let operationDefinition: String =
+    """
+    query user($id: String!, $registerInClient: String!) {
+      user(id: $id, registerInClient: $registerInClient) {
+        __typename
+        _id
+        email
+        emailVerified
+        username
+        nickname
+        company
+        photo
+        browser
+        registerInClient
+        registerMethod
+        oauth
+        token
+        tokenExpiredAt
+        loginsCount
+        lastLogin
+        lastIP
+        signedUp
+        blocked
+        isDeleted
+        userLocation {
+          __typename
+          _id
+          when
+          where
+        }
+        userLoginHistory {
+          __typename
+          totalCount
+          list {
+            __typename
+            _id
+            when
+            success
+            ip
+            result
+          }
+        }
+      }
+    }
+    """
+
+  public let operationName: String = "user"
+
+  public let operationIdentifier: String? = "2d1854565eb22b332d5cd034670d52e4f5c0d2501506bc9aa21cd25652eef18b"
+
+  public var id: String
+  public var registerInClient: String
+
+  public init(id: String, registerInClient: String) {
+    self.id = id
+    self.registerInClient = registerInClient
+  }
+
+  public var variables: GraphQLMap? {
+    return ["id": id, "registerInClient": registerInClient]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes: [String] = ["Query"]
+
+    public static var selections: [GraphQLSelection] {
+      return [
+        GraphQLField("user", arguments: ["id": GraphQLVariable("id"), "registerInClient": GraphQLVariable("registerInClient")], type: .object(User.selections)),
+      ]
+    }
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(user: User? = nil) {
+      self.init(unsafeResultMap: ["__typename": "Query", "user": user.flatMap { (value: User) -> ResultMap in value.resultMap }])
+    }
+
+    public var user: User? {
+      get {
+        return (resultMap["user"] as? ResultMap).flatMap { User(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "user")
+      }
+    }
+
+    public struct User: GraphQLSelectionSet {
+      public static let possibleTypes: [String] = ["ExtendUser"]
+
+      public static var selections: [GraphQLSelection] {
+        return [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("_id", type: .scalar(String.self)),
+          GraphQLField("email", type: .scalar(String.self)),
+          GraphQLField("emailVerified", type: .scalar(Bool.self)),
+          GraphQLField("username", type: .scalar(String.self)),
+          GraphQLField("nickname", type: .scalar(String.self)),
+          GraphQLField("company", type: .scalar(String.self)),
+          GraphQLField("photo", type: .scalar(String.self)),
+          GraphQLField("browser", type: .scalar(String.self)),
+          GraphQLField("registerInClient", type: .scalar(String.self)),
+          GraphQLField("registerMethod", type: .scalar(String.self)),
+          GraphQLField("oauth", type: .scalar(String.self)),
+          GraphQLField("token", type: .scalar(String.self)),
+          GraphQLField("tokenExpiredAt", type: .scalar(String.self)),
+          GraphQLField("loginsCount", type: .scalar(Int.self)),
+          GraphQLField("lastLogin", type: .scalar(String.self)),
+          GraphQLField("lastIP", type: .scalar(String.self)),
+          GraphQLField("signedUp", type: .scalar(String.self)),
+          GraphQLField("blocked", type: .scalar(Bool.self)),
+          GraphQLField("isDeleted", type: .scalar(Bool.self)),
+          GraphQLField("userLocation", type: .list(.object(UserLocation.selections))),
+          GraphQLField("userLoginHistory", type: .object(UserLoginHistory.selections)),
+        ]
+      }
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(_id: String? = nil, email: String? = nil, emailVerified: Bool? = nil, username: String? = nil, nickname: String? = nil, company: String? = nil, photo: String? = nil, browser: String? = nil, registerInClient: String? = nil, registerMethod: String? = nil, oauth: String? = nil, token: String? = nil, tokenExpiredAt: String? = nil, loginsCount: Int? = nil, lastLogin: String? = nil, lastIp: String? = nil, signedUp: String? = nil, blocked: Bool? = nil, isDeleted: Bool? = nil, userLocation: [UserLocation?]? = nil, userLoginHistory: UserLoginHistory? = nil) {
+        self.init(unsafeResultMap: ["__typename": "ExtendUser", "_id": _id, "email": email, "emailVerified": emailVerified, "username": username, "nickname": nickname, "company": company, "photo": photo, "browser": browser, "registerInClient": registerInClient, "registerMethod": registerMethod, "oauth": oauth, "token": token, "tokenExpiredAt": tokenExpiredAt, "loginsCount": loginsCount, "lastLogin": lastLogin, "lastIP": lastIp, "signedUp": signedUp, "blocked": blocked, "isDeleted": isDeleted, "userLocation": userLocation.flatMap { (value: [UserLocation?]) -> [ResultMap?] in value.map { (value: UserLocation?) -> ResultMap? in value.flatMap { (value: UserLocation) -> ResultMap in value.resultMap } } }, "userLoginHistory": userLoginHistory.flatMap { (value: UserLoginHistory) -> ResultMap in value.resultMap }])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var _id: String? {
+        get {
+          return resultMap["_id"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "_id")
+        }
+      }
+
+      public var email: String? {
+        get {
+          return resultMap["email"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "email")
+        }
+      }
+
+      public var emailVerified: Bool? {
+        get {
+          return resultMap["emailVerified"] as? Bool
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "emailVerified")
+        }
+      }
+
+      public var username: String? {
+        get {
+          return resultMap["username"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "username")
+        }
+      }
+
+      public var nickname: String? {
+        get {
+          return resultMap["nickname"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "nickname")
+        }
+      }
+
+      public var company: String? {
+        get {
+          return resultMap["company"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "company")
+        }
+      }
+
+      public var photo: String? {
+        get {
+          return resultMap["photo"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "photo")
+        }
+      }
+
+      public var browser: String? {
+        get {
+          return resultMap["browser"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "browser")
+        }
+      }
+
+      public var registerInClient: String? {
+        get {
+          return resultMap["registerInClient"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "registerInClient")
+        }
+      }
+
+      public var registerMethod: String? {
+        get {
+          return resultMap["registerMethod"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "registerMethod")
+        }
+      }
+
+      public var oauth: String? {
+        get {
+          return resultMap["oauth"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "oauth")
+        }
+      }
+
+      public var token: String? {
+        get {
+          return resultMap["token"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "token")
+        }
+      }
+
+      public var tokenExpiredAt: String? {
+        get {
+          return resultMap["tokenExpiredAt"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "tokenExpiredAt")
+        }
+      }
+
+      public var loginsCount: Int? {
+        get {
+          return resultMap["loginsCount"] as? Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "loginsCount")
+        }
+      }
+
+      public var lastLogin: String? {
+        get {
+          return resultMap["lastLogin"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "lastLogin")
+        }
+      }
+
+      public var lastIp: String? {
+        get {
+          return resultMap["lastIP"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "lastIP")
+        }
+      }
+
+      public var signedUp: String? {
+        get {
+          return resultMap["signedUp"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "signedUp")
+        }
+      }
+
+      public var blocked: Bool? {
+        get {
+          return resultMap["blocked"] as? Bool
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "blocked")
+        }
+      }
+
+      public var isDeleted: Bool? {
+        get {
+          return resultMap["isDeleted"] as? Bool
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "isDeleted")
+        }
+      }
+
+      public var userLocation: [UserLocation?]? {
+        get {
+          return (resultMap["userLocation"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [UserLocation?] in value.map { (value: ResultMap?) -> UserLocation? in value.flatMap { (value: ResultMap) -> UserLocation in UserLocation(unsafeResultMap: value) } } }
+        }
+        set {
+          resultMap.updateValue(newValue.flatMap { (value: [UserLocation?]) -> [ResultMap?] in value.map { (value: UserLocation?) -> ResultMap? in value.flatMap { (value: UserLocation) -> ResultMap in value.resultMap } } }, forKey: "userLocation")
+        }
+      }
+
+      public var userLoginHistory: UserLoginHistory? {
+        get {
+          return (resultMap["userLoginHistory"] as? ResultMap).flatMap { UserLoginHistory(unsafeResultMap: $0) }
+        }
+        set {
+          resultMap.updateValue(newValue?.resultMap, forKey: "userLoginHistory")
+        }
+      }
+
+      public struct UserLocation: GraphQLSelectionSet {
+        public static let possibleTypes: [String] = ["UserLocation"]
+
+        public static var selections: [GraphQLSelection] {
+          return [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("_id", type: .scalar(String.self)),
+            GraphQLField("when", type: .scalar(String.self)),
+            GraphQLField("where", type: .scalar(String.self)),
+          ]
+        }
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(_id: String? = nil, when: String? = nil, `where`: String? = nil) {
+          self.init(unsafeResultMap: ["__typename": "UserLocation", "_id": _id, "when": when, "where": `where`])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var _id: String? {
+          get {
+            return resultMap["_id"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "_id")
+          }
+        }
+
+        public var when: String? {
+          get {
+            return resultMap["when"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "when")
+          }
+        }
+
+        public var `where`: String? {
+          get {
+            return resultMap["where"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "where")
+          }
+        }
+      }
+
+      public struct UserLoginHistory: GraphQLSelectionSet {
+        public static let possibleTypes: [String] = ["PagedUserLoginHistory"]
+
+        public static var selections: [GraphQLSelection] {
+          return [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+            GraphQLField("list", type: .list(.object(List.selections))),
+          ]
+        }
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(totalCount: Int, list: [List?]? = nil) {
+          self.init(unsafeResultMap: ["__typename": "PagedUserLoginHistory", "totalCount": totalCount, "list": list.flatMap { (value: [List?]) -> [ResultMap?] in value.map { (value: List?) -> ResultMap? in value.flatMap { (value: List) -> ResultMap in value.resultMap } } }])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var totalCount: Int {
+          get {
+            return resultMap["totalCount"]! as! Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "totalCount")
+          }
+        }
+
+        public var list: [List?]? {
+          get {
+            return (resultMap["list"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [List?] in value.map { (value: ResultMap?) -> List? in value.flatMap { (value: ResultMap) -> List in List(unsafeResultMap: value) } } }
+          }
+          set {
+            resultMap.updateValue(newValue.flatMap { (value: [List?]) -> [ResultMap?] in value.map { (value: List?) -> ResultMap? in value.flatMap { (value: List) -> ResultMap in value.resultMap } } }, forKey: "list")
+          }
+        }
+
+        public struct List: GraphQLSelectionSet {
+          public static let possibleTypes: [String] = ["UserLoginHistory"]
+
+          public static var selections: [GraphQLSelection] {
+            return [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("_id", type: .scalar(String.self)),
+              GraphQLField("when", type: .scalar(String.self)),
+              GraphQLField("success", type: .scalar(Bool.self)),
+              GraphQLField("ip", type: .scalar(String.self)),
+              GraphQLField("result", type: .scalar(String.self)),
+            ]
+          }
+
+          public private(set) var resultMap: ResultMap
+
+          public init(unsafeResultMap: ResultMap) {
+            self.resultMap = unsafeResultMap
+          }
+
+          public init(_id: String? = nil, when: String? = nil, success: Bool? = nil, ip: String? = nil, result: String? = nil) {
+            self.init(unsafeResultMap: ["__typename": "UserLoginHistory", "_id": _id, "when": when, "success": success, "ip": ip, "result": result])
+          }
+
+          public var __typename: String {
+            get {
+              return resultMap["__typename"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var _id: String? {
+            get {
+              return resultMap["_id"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "_id")
+            }
+          }
+
+          public var when: String? {
+            get {
+              return resultMap["when"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "when")
+            }
+          }
+
+          public var success: Bool? {
+            get {
+              return resultMap["success"] as? Bool
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "success")
+            }
+          }
+
+          public var ip: String? {
+            get {
+              return resultMap["ip"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "ip")
+            }
+          }
+
+          public var result: String? {
+            get {
+              return resultMap["result"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "result")
+            }
+          }
         }
       }
     }

@@ -21,50 +21,50 @@ public class Config {
     public static let photo = "https://files.authing.co/authing-console/default-user-avatar.png"
 }
 
+//public class Network {
+//    public var host = Config.host
+//    public static let shared = Network()
+//    private(set) lazy var apollo = ApolloClient(
+//        url: URL(string: host)!
+//    )
+//}
+
 public class Network {
-    public static let shared = Network()
-    private(set) lazy var apollo = ApolloClient(
-        url: URL(string: host)!
-    )
     public var host = Config.host
+    public static let shared = Network()
+    private(set) lazy var apollo: ApolloClient = {
+        let client = URLSessionClient()
+        let cache = InMemoryNormalizedCache()
+        let store = ApolloStore(cache: cache)
+        let provider = NetworkInterceptorProvider(client: client, store: store)
+        let url = URL(string: host)!
+        let transport = RequestChainNetworkTransport(interceptorProvider: provider,
+                                                     endpointURL: url)
+        return ApolloClient(networkTransport: transport, store: store)
+    }()
 }
 
-//public class Network {
-//    public static let shared = Network()
-//    private(set) lazy var apollo: ApolloClient = {
-//        let client = URLSessionClient()
-//        let cache = InMemoryNormalizedCache()
-//        let store = ApolloStore(cache: cache)
-//        let provider = NetworkInterceptorProvider(client: client, store: store)
-//        let url = URL(string: host)!
-//        let transport = RequestChainNetworkTransport(interceptorProvider: provider,
-//                                                     endpointURL: url)
-//        return ApolloClient(networkTransport: transport, store: store)
-//    }()
-//    public var host = Config.host
-//}
-//
-//public class NetworkInterceptorProvider: LegacyInterceptorProvider {
-//    public override func interceptors<Operation: GraphQLOperation>(for operation: Operation) -> [ApolloInterceptor] {
-//        var interceptors = super.interceptors(for: operation)
-//        interceptors.insert(CustomInterceptor(), at: 0)
-//        return interceptors
-//    }
-//}
-//
-//public class CustomInterceptor: ApolloInterceptor {
-//    public let token = UserDefaults.standard.string(forKey: "accessToken") ?? ""
-//    public func interceptAsync<Operation: GraphQLOperation>(
-//        chain: RequestChain,
-//        request: HTTPRequest<Operation>,
-//        response: HTTPResponse<Operation>?,
-//        completion: @escaping (Result<GraphQLResult<Operation.Data>, Error>) -> Void) {
-//        request.addHeader(name: "Authorization", value: "Bearer: \(token)")
-//        chain.proceedAsync(request: request,
-//                           response: response,
-//                           completion: completion)
-//    }
-//}
+public class NetworkInterceptorProvider: LegacyInterceptorProvider {
+    public override func interceptors<Operation: GraphQLOperation>(for operation: Operation) -> [ApolloInterceptor] {
+        var interceptors = super.interceptors(for: operation)
+        interceptors.insert(CustomInterceptor(), at: 0)
+        return interceptors
+    }
+}
+
+public class CustomInterceptor: ApolloInterceptor {
+    public let token = UserDefaults.standard.string(forKey: "accessToken") ?? ""
+    public func interceptAsync<Operation: GraphQLOperation>(
+        chain: RequestChain,
+        request: HTTPRequest<Operation>,
+        response: HTTPResponse<Operation>?,
+        completion: @escaping (Result<GraphQLResult<Operation.Data>, Error>) -> Void) {
+        request.addHeader(name: "Authorization", value: "Bearer \(token)")
+        chain.proceedAsync(request: request,
+                           response: response,
+                           completion: completion)
+    }
+}
 
 public class AuthenticationClient {
     
@@ -139,6 +139,7 @@ public class AuthenticationClient {
             case .success(let graphQLResult):
                 guard let status = graphQLResult.data?.getClientWhenSdkInit else { return }
                 self.accessToken = status.accessToken
+                UserDefaults.standard.setValue(status.accessToken, forKey: "accessToken")
                 completion(graphQLResult)
             }
         }
@@ -280,11 +281,62 @@ public class AuthenticationClient {
         }
     }
     
-    /// Logout Current User (TBD).
+    /// Check Login Status.
     ///
-    public func logout() {
-        
+    public func checkLoginStatus(completion: @escaping ((GraphQLResult<CheckLoginStatusQuery.Data>) -> Void)) {
+        Network.shared.apollo.fetch(query: CheckLoginStatusQuery()) { result in
+            switch result {
+            case .failure(let error):
+                print("Failure: \(error)")
+            case .success(let graphQLResult):
+                //guard let status = graphQLResult.data?.checkLoginStatus else { return }
+                completion(graphQLResult)
+            }
+        }
+    }
+    
+    /// Get User Information.
+    ///
+    public func user(userid: String, completion: @escaping ((GraphQLResult<UserQuery.Data>) -> Void)) {
+        Network.shared.apollo.fetch(query: UserQuery(id: userid, registerInClient: self.userPoolId!)) { result in
+            switch result {
+            case .failure(let error):
+                print("Failure: \(error)")
+            case .success(let graphQLResult):
+                //guard let status = graphQLResult.data?.user else { return }
+                completion(graphQLResult)
+            }
+        }
+    }
+    
+    /// Logout Current User.
+    ///
+    public func logout(userid: String, completion: @escaping ((GraphQLResult<UpdateUserLogoutMutation.Data>) -> Void)) {
+        Network.shared.apollo.perform(mutation: UpdateUserLogoutMutation(_id: userid, registerInClient: self.userPoolId!, tokenExpiredAt: "0"), queue: DispatchQueue.main) { result in
+            switch result {
+            case .failure(let error):
+                print("Failure: \(error)")
+            case .success(let graphQLResult):
+                //guard let status = graphQLResult.data?.updateUser else { return }
+                completion(graphQLResult)
+            }
+        }
+    }
+    
+    /// Login by WeChat Code.
+    ///
+    public func loginByWeChatCode(code: String, completion: @escaping(Any) -> Void) {
+        let url = Config.domain + "/connection/social/wechat:mobile/\(self.userPoolId!)/callback?code=\(code)"
+        AF.request(url, method: .get).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                completion(value)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
     
+
 }
