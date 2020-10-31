@@ -106,6 +106,7 @@ class ViewController: UIViewController {
             if(status.errors == nil) {
                 //Success
                 print(status.data?.register ?? "")
+                self.userid = status.data?.register?._id ?? ""
             } else {
                 //Failure
                 print(status.errors ?? "")
@@ -120,6 +121,7 @@ class ViewController: UIViewController {
             if(status.errors == nil) {
                 //Success
                 print(status.data?.register ?? "")
+                self.userid = status.data?.register?._id ?? ""
             } else {
                 //Failure
                 print(status.errors ?? "")
@@ -158,6 +160,7 @@ class ViewController: UIViewController {
             if(status.errors == nil) {
                 //Success
                 print(status.data?.login ?? "")
+                self.userid = status.data?.login?._id ?? ""
             } else {
                 //Failure
                 print(status.errors ?? "")
