@@ -1,5 +1,9 @@
-// @generated
-//  This file was automatically generated and should not be edited.
+//
+//  API.swift
+//  SwiftyAuthing
+//
+//  Created by Eric Woo on 2020/10/27.
+//
 
 import Apollo
 import Foundation
