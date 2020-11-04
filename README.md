@@ -35,7 +35,7 @@
 
 1. Clone repository
 
-2. Change **UserPoolId, Secret, and Host** in SwiftyAuthingExample - ViewController.swift
+2. Change **UserPoolId and Host** in SwiftyAuthingExample - ViewController.swift
 
 3. Run **SwiftyAuthingExample** with iOS simulator or device.
 
@@ -49,13 +49,14 @@ import SwiftyAuthing
 
 /// Config Information, change your UserPoolId, Secret, and Host
 /// Find in https://console.authing.cn Setting - Basic Information.
-let userPoolId = "5f967caecd744579cccf4bcf"
+let userPoolId = "userPoolId"
 let host = "https://core.authing.cn/graphql/v2"
 
 var client: AuthenticationClient?
 var userid = ""
 
 self.client = AuthenticationClient(userPoolId: userPoolId, host: host)
+
 
 
 /// Register by Email and Password.
@@ -262,7 +263,7 @@ func resetPasswordByEmailCode() {
 /// 修改用户资料
 ///
 func updateProfile() {
-    self.client?.updateProfile(id: self.userid, nickname: textUsername.text!, completion: {status in
+    self.client?.updateProfile(nickname: textUsername.text!, completion: {status in
         if(status.errors == nil) {
             //Success
             print(status.data?.updateUser ?? "")
@@ -313,7 +314,7 @@ func updateEmail() {
     self.client?.updateEmail(email: textEmail.text!, emailCode: textPhonecode.text!, oldEmail: textEmail.text!, oldEmailCode: textPhonecode.text!, completion: {status in
         if(status.errors == nil) {
             //Success
-            print(status.data?.updatePhone ?? "")
+            print(status.data?.updateEmail ?? "")
         } else {
             //Failure
             print(status.errors ?? "")
@@ -326,7 +327,7 @@ func updateEmail() {
 /// 刷新当前用户的 token
 ///
 func refreshToken() {
-    self.client?.refreshToken(id: self.userid, completion:{ status in
+    self.client?.refreshToken(completion:{ status in
         if(status.errors == nil) {
             //Success
             print(status.data?.refreshToken ?? "")
@@ -342,7 +343,7 @@ func refreshToken() {
 /// 获取当前登录的用户信息
 ///
 func getCurrentUser() {
-    self.client?.getCurrentUser(id: self.userid, completion: {status in
+    self.client?.getCurrentUser(completion: {status in
         if(status.errors == nil) {
             //Success
             print(status.data?.user ?? "")
@@ -358,7 +359,7 @@ func getCurrentUser() {
 /// 退出登录
 ///
 func logout() {
-    self.client?.logout(id: self.userid, completion:{ status in
+    self.client?.logout(completion:{ status in
         if(status.errors == nil) {
             //Success
             print(status.data?.updateUser ?? "")
@@ -420,7 +421,7 @@ func unbindPhone() {
 /// 获取当前用户的自定义数据列表
 ///
 func listUdv() {
-    self.client?.listUdv(id: self.userid, completion:{ status in
+    self.client?.listUdv(completion:{ status in
         if(status.errors == nil) {
             //Success
             print(status.data?.udv ?? "")
@@ -436,7 +437,7 @@ func listUdv() {
 /// 添加自定义数据
 ///
 func setUdv() {
-    self.client?.setUdv(id: self.userid, key: "HelloDate", value: Date(), completion:{ status in
+    self.client?.setUdv(key: "HelloDate", value: Date(), completion:{ status in
         if(status.errors == nil) {
             //Success
             print(status.data?.setUdv ?? "")
@@ -451,7 +452,7 @@ func setUdv() {
 /// 删除自定义数据
 ///
 func removeUdv() {
-    self.client?.removeUdv(id: self.userid, key: "HelloDate", completion:{ status in
+    self.client?.removeUdv(key: "HelloDate", completion:{ status in
         if(status.errors == nil) {
             //Success
             print(status.data?.removeUdv ?? "")
@@ -490,7 +491,6 @@ func loginByWeChatCode() {
         print(status)
     })
 }
-
 
 ```
 
