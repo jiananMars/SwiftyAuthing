@@ -62,8 +62,8 @@
 				A376F494254C1B2700CA84D8 /* SceneDelegate.swift */,
 				A376F496254C1B2700CA84D8 /* ViewController.swift */,
 				A376F498254C1B2700CA84D8 /* Main.storyboard */,
-				A376F49B254C1B2700CA84D8 /* Assets.xcassets */,
 				A376F49D254C1B2700CA84D8 /* LaunchScreen.storyboard */,
+				A376F49B254C1B2700CA84D8 /* Assets.xcassets */,
 				A376F4A0254C1B2700CA84D8 /* Info.plist */,
 			);
 			path = SwiftyAuthingExample;
