@@ -987,6 +987,13 @@ public class AuthenticationClient {
         AF.request(url, method: .get).responseJSON { response in
             switch response.result {
             case .success(let value):
+                let json = JSON(value)
+                let code = json["code"].intValue
+                if(code == 200) {
+                    let accessToken = json["data"]["token"].stringValue
+                    self.accessToken = accessToken
+                    UserDefaults.standard.setValue(accessToken, forKey: Config.keyAccessToken)
+                }
                 completion(value)
             case .failure(let error):
                 print(error)
