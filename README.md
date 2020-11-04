@@ -1,9 +1,9 @@
-# SwiftyAuthing
+# SDK for Swift
 
-**SwiftyAuthing** is a pure Swift library for [Authing](https://authing.cn).
+This is a pure Swift library for [Authing](https://authing.cn).
 
 
-![image](images/4.png)
+<img src="images/Swift0.png" height="500px"></img>
 
 ## Requirements
 
@@ -17,18 +17,16 @@
 ### Swift Package Manager
 
 1. Xcode - Project - Swift Packages
-2. Add + https://github.com/Woo-Interactive/SwiftyAuthing.git
+2. Add + https://github.com/Authing/SwiftyAuthing.git
 3. Select the latest version
 
-![image](images/1.png)
+![image](./images/Swift1.png)
 
-![image](images/2.png)
+![image](images/Swift2.png)
 
-![image](images/3.png)
+![image](images/Swift3.png)
 
 4. Update to latest version (optional)
-
-![image](images/5.png)
 
 
 ## Example
