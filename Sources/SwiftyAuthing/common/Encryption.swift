@@ -1,6 +1,6 @@
 //
 //  Encryption.swift
-//  TestSMP
+//  SwiftyAuthing
 //
 //  Created by Eric Woo on 2020/11/1.
 //
@@ -27,6 +27,11 @@ class Encryption {
     }
     
     /// Stringify.
+    /// - parameter value: Any value
+    /// - returns: Stringify value
+    ///
+    /// Stringify any value.
+    ///
     ///
     public static func stringify(_ value: Any) -> String {
         switch value.self {
@@ -37,6 +42,19 @@ class Encryption {
         default:
             return "\(value)"
         }
+    }
+    
+    /// JWT Decode.
+    /// - parameter token: User Token
+    /// - returns: User Id
+    ///
+    /// Decode JWT and get User Id.
+    ///
+    public static func jwtDecode(_ token: String) -> String {
+        let jwt = try! decode(jwt: token)
+        let data = jwt.body["data"] as? [String : Any]
+        let userId = data?["userId"] as? String ?? ""
+        return userId
     }
     
     

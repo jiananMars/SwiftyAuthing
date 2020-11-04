@@ -572,7 +572,6 @@ public class AuthenticationClient {
     
     /// Update Profile.
     /// 修改用户资料
-    /// - parameter id: 用户 Id
     /// - parameter username: 用户名
     /// - parameter nickname: 昵称
     /// - parameter photo: 头像
@@ -604,8 +603,9 @@ public class AuthenticationClient {
     ///
     /// 修改用户资料，此接口不能用于修改手机号、邮箱、密码，如果需要请调用 updatePhone、updateEmail、updatePassword 接口。
     ///
-    public func updateProfile(id: String, username: String? = nil, nickname: String? = nil, photo: String? = nil, company: String? = nil, browser: String? = nil, device: String? = nil, lastIP: String? = nil, name: String? = nil, givenName: String? = nil, familyName: String? = nil, middleName: String? = nil, profile: String? = nil, preferredUsername: String? = nil, website: String? = nil, birthdate: String? = nil, zoneinfo: String? = nil, locale: String? = nil, address: String? = nil, streetAddress: String? = nil, locality: String? = nil, region: String? = nil, postalCode: String? = nil, city: String? = nil, province: String? = nil, country: String? = nil, completion: @escaping ((GraphQLResult<UpdateUserMutation.Data>) -> Void)) {
-        self.getCurrentUser(id: id, completion: {status in
+    public func updateProfile(username: String? = nil, nickname: String? = nil, photo: String? = nil, company: String? = nil, browser: String? = nil, device: String? = nil, lastIP: String? = nil, name: String? = nil, givenName: String? = nil, familyName: String? = nil, middleName: String? = nil, profile: String? = nil, preferredUsername: String? = nil, website: String? = nil, gender: String? = nil, birthdate: String? = nil, zoneinfo: String? = nil, locale: String? = nil, address: String? = nil, streetAddress: String? = nil, locality: String? = nil, region: String? = nil, postalCode: String? = nil, city: String? = nil, province: String? = nil, country: String? = nil, completion: @escaping ((GraphQLResult<UpdateUserMutation.Data>) -> Void)) {
+        let id = self.getUserId()
+        self.getCurrentUser(completion: {status in
             if(status.errors == nil) {
                 //Success
                 let u = status.data?.user
@@ -623,6 +623,7 @@ public class AuthenticationClient {
                 let _profile = (profile != nil) ? profile : u?.profile
                 let _preferredUsername = (preferredUsername != nil) ? preferredUsername : u?.preferredUsername
                 let _website = (website != nil) ? website : u?.website
+                let _gender = (gender != nil) ? gender : u?.gender
                 let _birthdate = (birthdate != nil) ? birthdate : u?.birthdate
                 let _zoneinfo = (zoneinfo != nil) ? zoneinfo : u?.zoneinfo
                 let _locale = (locale != nil) ? locale : u?.locale
@@ -634,7 +635,7 @@ public class AuthenticationClient {
                 let _city = (city != nil) ? city : u?.city
                 let _province = (province != nil) ? province : u?.province
                 let _country = (country != nil) ? country : u?.country
-                Network.shared.apollo.perform(mutation: UpdateUserMutation(id: id, username: _username, nickname: _nickname, photo: _photo, company: _company, browser: _browser, device: _device, lastIP: _lastIP, name: _name, givenName: _givenName, familyName: _familyName, middleName: _middleName, profile: _profile, preferredUsername: _preferredUsername, website: _website, birthdate: _birthdate, zoneinfo: _zoneinfo, locale: _locale, address: _address, streetAddress: _streetAddress, locality: _locality, region: _region, postalCode: _postalCode, city: _city, province: _province, country: _country), queue: DispatchQueue.main) { result in
+                Network.shared.apollo.perform(mutation: UpdateUserMutation(id: id, username: _username, nickname: _nickname, photo: _photo, company: _company, browser: _browser, device: _device, lastIP: _lastIP, name: _name, givenName: _givenName, familyName: _familyName, middleName: _middleName, profile: _profile, preferredUsername: _preferredUsername, website: _website, gender: _gender, birthdate: _birthdate, zoneinfo: _zoneinfo, locale: _locale, address: _address, streetAddress: _streetAddress, locality: _locality, region: _region, postalCode: _postalCode, city: _city, province: _province, country: _country), queue: DispatchQueue.main) { result in
                     switch result {
                     case .failure(let error):
                         print("Failure: \(error)")
@@ -717,13 +718,13 @@ public class AuthenticationClient {
     
     ///Refresh Token.
     /// 刷新当前用户的 token
-    /// - parameter id: 用户 Id
     /// - parameter completion: 服务器端返回的数据
     /// - returns: N/A
     ///
     /// 刷新当前用户的 token，调用此接口要求先登录。
     ///
-    public func refreshToken(id: String, completion: @escaping ((GraphQLResult<RefreshTokenMutation.Data>) -> Void)) {
+    public func refreshToken(completion: @escaping ((GraphQLResult<RefreshTokenMutation.Data>) -> Void)) {
+        let id = self.getUserId()
         Network.shared.apollo.perform(mutation: RefreshTokenMutation(id: id), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
@@ -735,16 +736,31 @@ public class AuthenticationClient {
     }
     
     
+    /// Get User Id.
+    /// 通过 token 获取 User Id。
+    /// - parameter token: 用户 Token
+    /// - returns: User Id
+    ///
+    /// 通过 token 获取 User Id。
+    ///
+    private func getUserId() -> String {
+        let token = UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
+        let id = Encryption.jwtDecode(token)
+        print("token: " + token)
+        print("uid: " + id)
+        return id
+    }
+    
     
     /// Get Current User.
     /// 获取当前登录的用户信息
-    /// - parameter id: 用户 Id
     /// - parameter completion: 服务器端返回的数据
     /// - returns: N/A
     ///
     /// 获取当前登录的用户信息
     ///
-    public func getCurrentUser(id: String, completion: @escaping ((GraphQLResult<UserQuery.Data>) -> Void)) {
+    public func getCurrentUser(completion: @escaping ((GraphQLResult<UserQuery.Data>) -> Void)) {
+        let id = self.getUserId()
         Network.shared.apollo.fetch(query: UserQuery(id: id)) { result in
             switch result {
             case .failure(let error):
@@ -817,13 +833,13 @@ public class AuthenticationClient {
     
     /// Logout Current User.
     /// 退出登录
-    /// - parameter id: 用户 Id
     /// - parameter completion: 服务器端返回的数据
     /// - returns: N/A
     ///
     /// 退出登录
     ///
-    public func logout(id: String, completion: @escaping ((GraphQLResult<LogoutMutation.Data>) -> Void)) {
+    public func logout(completion: @escaping ((GraphQLResult<LogoutMutation.Data>) -> Void)) {
+        let id = self.getUserId()
         Network.shared.apollo.perform(mutation: LogoutMutation(id: id, tokenExpiredAt: "0"), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
@@ -839,13 +855,13 @@ public class AuthenticationClient {
     
     /// List Udv.
     /// 获取当前用户的自定义数据列表
-    /// - parameter id: 用户 Id
     /// - parameter completion: 服务器端返回的数据
     /// - returns: N/A
     ///
     /// 获取当前用户的自定义数据列表
     ///
-    public func listUdv(id: String, completion: @escaping ((GraphQLResult<UdvQuery.Data>) -> Void)) {
+    public func listUdv(completion: @escaping ((GraphQLResult<UdvQuery.Data>) -> Void)) {
+        let id = self.getUserId()
         Network.shared.apollo.fetch(query: UdvQuery(targetType: UDFTargetType.user, targetId: id)) { result in
             switch result {
             case .failure(let error):
@@ -859,7 +875,6 @@ public class AuthenticationClient {
     
     /// Set Udv.
     /// 添加自定义数据
-    /// - parameter id: 用户 Id
     /// - parameter key: 自定义字段的 key
     /// - parameter value: 自定义数据的值，值的类型必须要和用户池定义的自定义字段类型一致。
     /// - parameter completion: 服务器端返回的数据
@@ -867,7 +882,8 @@ public class AuthenticationClient {
     ///
     /// 添加自定义数据
     ///
-    public func setUdv(id: String, key: String, value: Any, completion: @escaping ((GraphQLResult<SetUdvMutation.Data>) -> Void)) {
+    public func setUdv(key: String, value: Any, completion: @escaping ((GraphQLResult<SetUdvMutation.Data>) -> Void)) {
+        let id = self.getUserId()
         Network.shared.apollo.perform(mutation: SetUdvMutation(targetType: UDFTargetType.user, targetId: id, key: key, value: Encryption.stringify(value)), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
@@ -881,14 +897,14 @@ public class AuthenticationClient {
     
     /// Remove Udv.
     /// 删除自定义数据
-    /// - parameter id: 用户 Id
     /// - parameter key: 自定义字段的 key
     /// - parameter completion: 服务器端返回的数据
     /// - returns: N/A
     ///
     /// 删除自定义数据
     ///
-    public func removeUdv(id: String, key: String, completion: @escaping ((GraphQLResult<RemoveUdvMutation.Data>) -> Void)) {
+    public func removeUdv(key: String, completion: @escaping ((GraphQLResult<RemoveUdvMutation.Data>) -> Void)) {
+        let id = self.getUserId()
         Network.shared.apollo.perform(mutation: RemoveUdvMutation(targetType: UDFTargetType.user, targetId: id, key: key), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):

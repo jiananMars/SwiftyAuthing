@@ -8514,7 +8514,7 @@ public final class UpdateEmailMutation: GraphQLMutation {
   public let operationDefinition: String =
     """
     mutation updateEmail($email: String!, $emailCode: String!, $oldEmail: String, $oldEmailCode: String) {
-      updatePhone(email: $email, emailCode: $emailCode, oldEmail: $oldEmail, oldEmailCode: $oldEmailCode) {
+      updateEmail(email: $email, emailCode: $emailCode, oldEmail: $oldEmail, oldEmailCode: $oldEmailCode) {
         __typename
         id
         arn
@@ -8570,7 +8570,7 @@ public final class UpdateEmailMutation: GraphQLMutation {
 
   public let operationName: String = "updateEmail"
 
-  public let operationIdentifier: String? = "a61da30fe1ad10ac1b4689ec371121f24ea022a90dd417cae01df03c684249f0"
+  public let operationIdentifier: String? = "e110ddc1772ef2a5e2efd1369e9d1a643d7886dc56f64aa2cc31d2098951bbec"
 
   public var email: String
   public var emailCode: String
@@ -8593,7 +8593,7 @@ public final class UpdateEmailMutation: GraphQLMutation {
 
     public static var selections: [GraphQLSelection] {
       return [
-        GraphQLField("updatePhone", arguments: ["email": GraphQLVariable("email"), "emailCode": GraphQLVariable("emailCode"), "oldEmail": GraphQLVariable("oldEmail"), "oldEmailCode": GraphQLVariable("oldEmailCode")], type: .nonNull(.object(UpdatePhone.selections))),
+        GraphQLField("updateEmail", arguments: ["email": GraphQLVariable("email"), "emailCode": GraphQLVariable("emailCode"), "oldEmail": GraphQLVariable("oldEmail"), "oldEmailCode": GraphQLVariable("oldEmailCode")], type: .nonNull(.object(UpdateEmail.selections))),
       ]
     }
 
@@ -8603,21 +8603,21 @@ public final class UpdateEmailMutation: GraphQLMutation {
       self.resultMap = unsafeResultMap
     }
 
-    public init(updatePhone: UpdatePhone) {
-      self.init(unsafeResultMap: ["__typename": "Mutation", "updatePhone": updatePhone.resultMap])
+    public init(updateEmail: UpdateEmail) {
+      self.init(unsafeResultMap: ["__typename": "Mutation", "updateEmail": updateEmail.resultMap])
     }
 
-    /// 修改手机号。此接口需要验证手机号验证码，管理员直接修改请使用 **updateUser** 接口。
-    public var updatePhone: UpdatePhone {
+    /// 修改邮箱。此接口需要验证邮箱验证码，管理员直接修改请使用 updateUser 接口。
+    public var updateEmail: UpdateEmail {
       get {
-        return UpdatePhone(unsafeResultMap: resultMap["updatePhone"]! as! ResultMap)
+        return UpdateEmail(unsafeResultMap: resultMap["updateEmail"]! as! ResultMap)
       }
       set {
-        resultMap.updateValue(newValue.resultMap, forKey: "updatePhone")
+        resultMap.updateValue(newValue.resultMap, forKey: "updateEmail")
       }
     }
 
-    public struct UpdatePhone: GraphQLSelectionSet {
+    public struct UpdateEmail: GraphQLSelectionSet {
       public static let possibleTypes: [String] = ["User"]
 
       public static var selections: [GraphQLSelection] {
@@ -10426,8 +10426,8 @@ public final class UpdateUserMutation: GraphQLMutation {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition: String =
     """
-    mutation updateUser($id: String, $username: String, $nickname: String, $photo: String, $company: String, $browser: String, $device: String, $lastIP: String, $name: String, $givenName: String, $familyName: String, $middleName: String, $profile: String, $preferredUsername: String, $website: String, $birthdate: String, $zoneinfo: String, $locale: String, $address: String, $streetAddress: String, $locality: String, $region: String, $postalCode: String, $city: String, $province: String, $country: String) {
-      updateUser(id: $id, input: {username: $username, nickname: $nickname, photo: $photo, company: $company, browser: $browser, device: $device, lastIP: $lastIP, name: $name, givenName: $givenName, familyName: $familyName, middleName: $middleName, profile: $profile, preferredUsername: $preferredUsername, website: $website, birthdate: $birthdate, zoneinfo: $zoneinfo, locale: $locale, address: $address, streetAddress: $streetAddress, locality: $locality, region: $region, postalCode: $postalCode, city: $city, province: $province, country: $country}) {
+    mutation updateUser($id: String, $username: String, $nickname: String, $photo: String, $company: String, $browser: String, $device: String, $lastIP: String, $name: String, $givenName: String, $familyName: String, $middleName: String, $profile: String, $preferredUsername: String, $website: String, $gender: String, $birthdate: String, $zoneinfo: String, $locale: String, $address: String, $streetAddress: String, $locality: String, $region: String, $postalCode: String, $city: String, $province: String, $country: String) {
+      updateUser(id: $id, input: {username: $username, nickname: $nickname, photo: $photo, company: $company, browser: $browser, device: $device, lastIP: $lastIP, name: $name, givenName: $givenName, familyName: $familyName, middleName: $middleName, profile: $profile, preferredUsername: $preferredUsername, website: $website, gender: $gender, birthdate: $birthdate, zoneinfo: $zoneinfo, locale: $locale, address: $address, streetAddress: $streetAddress, locality: $locality, region: $region, postalCode: $postalCode, city: $city, province: $province, country: $country}) {
         __typename
         id
         arn
@@ -10483,7 +10483,7 @@ public final class UpdateUserMutation: GraphQLMutation {
 
   public let operationName: String = "updateUser"
 
-  public let operationIdentifier: String? = "5be601b5d6a2c6e5580c04a35710f0892382f432c8135f96fba05acc406bd570"
+  public let operationIdentifier: String? = "9dcfe31221529e69eebe8f964f72a31c24f8742cef1cd70f03f741a16060a287"
 
   public var id: String?
   public var username: String?
@@ -10500,6 +10500,7 @@ public final class UpdateUserMutation: GraphQLMutation {
   public var profile: String?
   public var preferredUsername: String?
   public var website: String?
+  public var gender: String?
   public var birthdate: String?
   public var zoneinfo: String?
   public var locale: String?
@@ -10512,7 +10513,7 @@ public final class UpdateUserMutation: GraphQLMutation {
   public var province: String?
   public var country: String?
 
-  public init(id: String? = nil, username: String? = nil, nickname: String? = nil, photo: String? = nil, company: String? = nil, browser: String? = nil, device: String? = nil, lastIP: String? = nil, name: String? = nil, givenName: String? = nil, familyName: String? = nil, middleName: String? = nil, profile: String? = nil, preferredUsername: String? = nil, website: String? = nil, birthdate: String? = nil, zoneinfo: String? = nil, locale: String? = nil, address: String? = nil, streetAddress: String? = nil, locality: String? = nil, region: String? = nil, postalCode: String? = nil, city: String? = nil, province: String? = nil, country: String? = nil) {
+  public init(id: String? = nil, username: String? = nil, nickname: String? = nil, photo: String? = nil, company: String? = nil, browser: String? = nil, device: String? = nil, lastIP: String? = nil, name: String? = nil, givenName: String? = nil, familyName: String? = nil, middleName: String? = nil, profile: String? = nil, preferredUsername: String? = nil, website: String? = nil, gender: String? = nil, birthdate: String? = nil, zoneinfo: String? = nil, locale: String? = nil, address: String? = nil, streetAddress: String? = nil, locality: String? = nil, region: String? = nil, postalCode: String? = nil, city: String? = nil, province: String? = nil, country: String? = nil) {
     self.id = id
     self.username = username
     self.nickname = nickname
@@ -10528,6 +10529,7 @@ public final class UpdateUserMutation: GraphQLMutation {
     self.profile = profile
     self.preferredUsername = preferredUsername
     self.website = website
+    self.gender = gender
     self.birthdate = birthdate
     self.zoneinfo = zoneinfo
     self.locale = locale
@@ -10542,7 +10544,7 @@ public final class UpdateUserMutation: GraphQLMutation {
   }
 
   public var variables: GraphQLMap? {
-    return ["id": id, "username": username, "nickname": nickname, "photo": photo, "company": company, "browser": browser, "device": device, "lastIP": lastIP, "name": name, "givenName": givenName, "familyName": familyName, "middleName": middleName, "profile": profile, "preferredUsername": preferredUsername, "website": website, "birthdate": birthdate, "zoneinfo": zoneinfo, "locale": locale, "address": address, "streetAddress": streetAddress, "locality": locality, "region": region, "postalCode": postalCode, "city": city, "province": province, "country": country]
+    return ["id": id, "username": username, "nickname": nickname, "photo": photo, "company": company, "browser": browser, "device": device, "lastIP": lastIP, "name": name, "givenName": givenName, "familyName": familyName, "middleName": middleName, "profile": profile, "preferredUsername": preferredUsername, "website": website, "gender": gender, "birthdate": birthdate, "zoneinfo": zoneinfo, "locale": locale, "address": address, "streetAddress": streetAddress, "locality": locality, "region": region, "postalCode": postalCode, "city": city, "province": province, "country": country]
   }
 
   public struct Data: GraphQLSelectionSet {
@@ -10550,7 +10552,7 @@ public final class UpdateUserMutation: GraphQLMutation {
 
     public static var selections: [GraphQLSelection] {
       return [
-        GraphQLField("updateUser", arguments: ["id": GraphQLVariable("id"), "input": ["username": GraphQLVariable("username"), "nickname": GraphQLVariable("nickname"), "photo": GraphQLVariable("photo"), "company": GraphQLVariable("company"), "browser": GraphQLVariable("browser"), "device": GraphQLVariable("device"), "lastIP": GraphQLVariable("lastIP"), "name": GraphQLVariable("name"), "givenName": GraphQLVariable("givenName"), "familyName": GraphQLVariable("familyName"), "middleName": GraphQLVariable("middleName"), "profile": GraphQLVariable("profile"), "preferredUsername": GraphQLVariable("preferredUsername"), "website": GraphQLVariable("website"), "birthdate": GraphQLVariable("birthdate"), "zoneinfo": GraphQLVariable("zoneinfo"), "locale": GraphQLVariable("locale"), "address": GraphQLVariable("address"), "streetAddress": GraphQLVariable("streetAddress"), "locality": GraphQLVariable("locality"), "region": GraphQLVariable("region"), "postalCode": GraphQLVariable("postalCode"), "city": GraphQLVariable("city"), "province": GraphQLVariable("province"), "country": GraphQLVariable("country")]], type: .nonNull(.object(UpdateUser.selections))),
+        GraphQLField("updateUser", arguments: ["id": GraphQLVariable("id"), "input": ["username": GraphQLVariable("username"), "nickname": GraphQLVariable("nickname"), "photo": GraphQLVariable("photo"), "company": GraphQLVariable("company"), "browser": GraphQLVariable("browser"), "device": GraphQLVariable("device"), "lastIP": GraphQLVariable("lastIP"), "name": GraphQLVariable("name"), "givenName": GraphQLVariable("givenName"), "familyName": GraphQLVariable("familyName"), "middleName": GraphQLVariable("middleName"), "profile": GraphQLVariable("profile"), "preferredUsername": GraphQLVariable("preferredUsername"), "website": GraphQLVariable("website"), "gender": GraphQLVariable("gender"), "birthdate": GraphQLVariable("birthdate"), "zoneinfo": GraphQLVariable("zoneinfo"), "locale": GraphQLVariable("locale"), "address": GraphQLVariable("address"), "streetAddress": GraphQLVariable("streetAddress"), "locality": GraphQLVariable("locality"), "region": GraphQLVariable("region"), "postalCode": GraphQLVariable("postalCode"), "city": GraphQLVariable("city"), "province": GraphQLVariable("province"), "country": GraphQLVariable("country")]], type: .nonNull(.object(UpdateUser.selections))),
       ]
     }
 
