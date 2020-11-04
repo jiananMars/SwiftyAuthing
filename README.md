@@ -3,7 +3,7 @@
 This is a pure Swift library for [Authing](https://authing.cn).
 
 
-<img src="images/4.png" height="500px"></img>
+<img src="images/Swift0.png" height="500px"></img>
 
 ## Requirements
 
