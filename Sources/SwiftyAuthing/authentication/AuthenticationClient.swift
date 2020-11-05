@@ -44,7 +44,6 @@ public class AuthenticationClient {
     
     /// Init with UserPoolId
     /// userPoolId: The user pool Id.
-    /// secret: The secret of user pool.
     /// Find in https://console.authing.cn Setting - Basic Information.
     ///
     public init(userPoolId: String) {
