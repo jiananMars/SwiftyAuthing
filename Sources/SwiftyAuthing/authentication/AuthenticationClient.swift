@@ -123,13 +123,13 @@ public class AuthenticationClient {
     ///
     /// 使用邮箱注册，此接口不要求用户对邮箱进行验证，用户注册之后 emailVerified 字段会为 false 。如果你希望邮箱未验证的用户不能进行登录，可以使用 pipeline 对此类请求进行拦截。
     ///
-    public func registerByEmail(email: String, password: String, profile: RegisterProfile, forceLogin: Bool, generateToken: Bool, clientIp: String, completion: @escaping ((GraphQLResult<RegisterByEmailMutation.Data>) -> Void)) {
+    public func registerByEmail(email: String, password: String, profile: RegisterProfile? = nil, forceLogin: Bool? = nil, generateToken: Bool? = nil, clientIp: String? = nil, completion: @escaping ((GraphQLResult<RegisterByEmailMutation.Data>) -> Void)) {
         Network.shared.apollo.perform(mutation: RegisterByEmailMutation(email: email, password: Encryption.encrypt(password), profile: profile, forceLogin: forceLogin, generateToken: generateToken, clientIp: clientIp), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                if(generateToken) {
+                if(generateToken ?? false) {
                     let accessToken = graphQLResult.data?.registerByEmail?.token ?? ""
                     self.setAccessToken(accessToken)
                 }
@@ -172,14 +172,14 @@ public class AuthenticationClient {
     ///
     /// 使用用户名注册
     ///
-    public func registerByUsername(username: String, password: String, profile: RegisterProfile, forceLogin: Bool, generateToken: Bool, clientIp: String, completion: @escaping ((GraphQLResult<RegisterByUsernameMutation.Data>) -> Void)) {
+    public func registerByUsername(username: String, password: String, profile: RegisterProfile? = nil, forceLogin: Bool? = nil, generateToken: Bool? = nil, clientIp: String? = nil, completion: @escaping ((GraphQLResult<RegisterByUsernameMutation.Data>) -> Void)) {
         
         Network.shared.apollo.perform(mutation: RegisterByUsernameMutation(username: username, password: Encryption.encrypt(password), profile: profile, forceLogin: forceLogin, generateToken: generateToken, clientIp: clientIp), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                if(generateToken) {
+                if(generateToken ?? false) {
                     let accessToken = graphQLResult.data?.registerByUsername?.token ?? ""
                     self.setAccessToken(accessToken)
                 }
@@ -244,13 +244,13 @@ public class AuthenticationClient {
     ///
     /// 使用手机号注册，你可以同时设置该账号的初始密码。发送短信的接口请见 sendSmsCode
     ///
-    public func registerByPhoneCode(phone: String, code: String, password: String, profile: RegisterProfile, forceLogin: Bool, generateToken: Bool, clientIp: String, completion: @escaping ((GraphQLResult<RegisterByPhoneCodeMutation.Data>) -> Void)) {
+    public func registerByPhoneCode(phone: String, code: String, password: String, profile: RegisterProfile? = nil, forceLogin: Bool? = nil, generateToken: Bool? = nil, clientIp: String? = nil, completion: @escaping ((GraphQLResult<RegisterByPhoneCodeMutation.Data>) -> Void)) {
         Network.shared.apollo.perform(mutation: RegisterByPhoneCodeMutation(phone: phone, code: code, password: Encryption.encrypt(password), profile: profile, forceLogin: forceLogin, generateToken: generateToken, clientIp: clientIp), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                if(generateToken) {
+                if(generateToken ?? false) {
                     let accessToken = graphQLResult.data?.registerByPhoneCode?.token ?? ""
                     self.setAccessToken(accessToken)
                 }
@@ -339,7 +339,7 @@ public class AuthenticationClient {
     ///
     /// 使用邮箱登录，该接口默认不会限制未验证的邮箱进行登录，如果你希望邮箱未验证的用户不能进行登录，可以使用 pipeline 对此类请求进行拦截。如果你的用户池配置了登录失败检测，当同一 IP 下登录多次失败的时候会要求用户输入图形验证码（code 为 2000)。
     ///
-    public func loginByEmail(email: String, password: String, autoRegister: Bool, captchaCode: String, clientIp: String, completion: @escaping ((GraphQLResult<LoginByEmailMutation.Data>) -> Void)) {
+    public func loginByEmail(email: String, password: String, autoRegister: Bool? = nil, captchaCode: String? = nil, clientIp: String? = nil, completion: @escaping ((GraphQLResult<LoginByEmailMutation.Data>) -> Void)) {
         Network.shared.apollo.perform(mutation: LoginByEmailMutation(email: email, password: Encryption.encrypt(password), autoRegister: autoRegister, captchaCode: captchaCode, clientIp: clientIp), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
@@ -387,7 +387,7 @@ public class AuthenticationClient {
     ///
     /// 使用用户名登录
     ///
-    public func loginByUsername(username: String, password: String, autoRegister: Bool, captchaCode: String, clientIp: String, completion: @escaping ((GraphQLResult<LoginByUsernameMutation.Data>) -> Void)) {
+    public func loginByUsername(username: String, password: String, autoRegister: Bool? = nil, captchaCode: String? = nil, clientIp: String? = nil, completion: @escaping ((GraphQLResult<LoginByUsernameMutation.Data>) -> Void)) {
         Network.shared.apollo.perform(mutation: LoginByUsernameMutation(username: username, password: Encryption.encrypt(password), autoRegister: autoRegister, captchaCode: captchaCode, clientIp: clientIp), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
@@ -481,7 +481,7 @@ public class AuthenticationClient {
     ///
     /// 使用手机号密码登录
     ///
-    public func loginByPhonePassword(phone: String, password: String, captchaCode: String, autoRegister: Bool, clientIp: String, completion: @escaping ((GraphQLResult<LoginByPhonePasswordMutation.Data>) -> Void)) {
+    public func loginByPhonePassword(phone: String, password: String, captchaCode: String? = nil, autoRegister: Bool? = nil, clientIp: String? = nil, completion: @escaping ((GraphQLResult<LoginByPhonePasswordMutation.Data>) -> Void)) {
         Network.shared.apollo.perform(mutation: LoginByPhonePasswordMutation(phone: phone, password: Encryption.encrypt(password), captchaCode: captchaCode, autoRegister: autoRegister, clientIp: clientIp), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
@@ -1018,7 +1018,6 @@ public class AuthenticationClient {
     /// 设置用户的 AccessToken
     ///
     private func setAccessToken(_ token: String) {
-        //self.accessToken = token
         self._accessToken = token
         UserDefaults.standard.setValue(token, forKey: Config.keyAccessToken)
     }
@@ -1030,7 +1029,6 @@ public class AuthenticationClient {
     /// 清空用户的 AccessToken
     ///
     private func removeAccessToken() {
-        //self.accessToken = ""
         self._accessToken = ""
         UserDefaults.standard.setValue("", forKey: Config.keyAccessToken)
     }

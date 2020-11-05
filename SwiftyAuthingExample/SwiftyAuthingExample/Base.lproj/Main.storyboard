@@ -86,7 +86,7 @@
                                 <rect key="frame" x="127" y="358" width="198" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <state key="normal" title="Init SDK and get AccessToken"/>
+                                <state key="normal" title="Initiate Test"/>
                                 <connections>
                                     <action selector="action0:" destination="BYZ-38-t0r" eventType="touchUpInside" id="D9A-17-V7l"/>
                                 </connections>
