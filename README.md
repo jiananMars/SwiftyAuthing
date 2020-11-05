@@ -45,15 +45,14 @@ This is a pure Swift library for [Authing](https://authing.cn).
 ```swift
 import SwiftyAuthing
 
-/// Config Information, change your UserPoolId, Secret, and Host
+/// Config Information, change your UserPoolId
 /// Find in https://console.authing.cn Setting - Basic Information.
 let userPoolId = "userPoolId"
-let host = "https://core.authing.cn/graphql/v2"
 
 var client: AuthenticationClient?
 var userid = ""
 
-self.client = AuthenticationClient(userPoolId: userPoolId, host: host)
+self.client = AuthenticationClient(userPoolId: userPoolId)
 
 // 如在此类中调用用户 User 相关方法，需要在此设置此用户保存的有效的用户 AccessToken。
 // 如需变动用户 AccessToken，只需再次赋值即可。
