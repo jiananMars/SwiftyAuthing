@@ -51,11 +51,16 @@ class Encryption {
     /// Decode JWT and get User Id.
     ///
     public static func jwtDecode(_ token: String) -> String {
-        let jwt = try! decode(jwt: token)
-        let data = jwt.body["data"] as? [String : Any]
-        let userId = data?["userId"] as? String ?? ""
-        return userId
+        if(token.count > 0) {
+            let jwt = try! decode(jwt: token)
+            let data = jwt.body["data"] as? [String : Any]
+            let userId = data?["userId"] as? String ?? ""
+            return userId
+        } else {
+            return token
+        }
     }
+    
     
     
 }

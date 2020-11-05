@@ -28,9 +28,19 @@ public class AuthenticationClient {
     ///
     public var host: String?
     
-    /// AccessToken: The AccessToken of user pool.
+    /// AccessToken: The AccessToken of user.
     ///
-    public var accessToken: String?
+    private var _accessToken: String?
+    public var accessToken: String? {
+        get {
+            return self._accessToken
+        }
+        set {
+            self.setAccessToken(newValue ?? "")
+            self._accessToken = newValue
+        }
+    }
+
     
     /// Init with UserPoolId
     /// userPoolId: The user pool Id.
@@ -120,8 +130,8 @@ public class AuthenticationClient {
                 print("Failure: \(error)")
             case .success(let graphQLResult):
                 if(generateToken) {
-                    self.accessToken = graphQLResult.data?.registerByEmail?.token
-                    UserDefaults.standard.setValue(self.accessToken, forKey: Config.keyAccessToken)
+                    let accessToken = graphQLResult.data?.registerByEmail?.token ?? ""
+                    self.setAccessToken(accessToken)
                 }
                 completion(graphQLResult)
             }
@@ -170,8 +180,8 @@ public class AuthenticationClient {
                 print("Failure: \(error)")
             case .success(let graphQLResult):
                 if(generateToken) {
-                    self.accessToken = graphQLResult.data?.registerByUsername?.token
-                    UserDefaults.standard.setValue(self.accessToken, forKey: Config.keyAccessToken)
+                    let accessToken = graphQLResult.data?.registerByUsername?.token ?? ""
+                    self.setAccessToken(accessToken)
                 }
                 completion(graphQLResult)
             }
@@ -241,8 +251,8 @@ public class AuthenticationClient {
                 print("Failure: \(error)")
             case .success(let graphQLResult):
                 if(generateToken) {
-                    self.accessToken = graphQLResult.data?.registerByPhoneCode?.token
-                    UserDefaults.standard.setValue(self.accessToken, forKey: Config.keyAccessToken)
+                    let accessToken = graphQLResult.data?.registerByPhoneCode?.token ?? ""
+                    self.setAccessToken(accessToken)
                 }
                 completion(graphQLResult)
             }
@@ -310,8 +320,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                self.accessToken = graphQLResult.data?.loginByEmail?.token
-                UserDefaults.standard.setValue(self.accessToken, forKey: Config.keyAccessToken)
+                let accessToken = graphQLResult.data?.loginByEmail?.token ?? ""
+                self.setAccessToken(accessToken)
                 completion(graphQLResult)
             }
         }
@@ -335,8 +345,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                self.accessToken = graphQLResult.data?.loginByEmail?.token
-                UserDefaults.standard.setValue(self.accessToken, forKey: Config.keyAccessToken)
+                let accessToken = graphQLResult.data?.loginByEmail?.token ?? ""
+                self.setAccessToken(accessToken)
                 completion(graphQLResult)
             }
         }
@@ -358,8 +368,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                self.accessToken = graphQLResult.data?.loginByUsername?.token
-                UserDefaults.standard.setValue(self.accessToken, forKey: Config.keyAccessToken)
+                let accessToken = graphQLResult.data?.loginByUsername?.token ?? ""
+                self.setAccessToken(accessToken)
                 completion(graphQLResult)
             }
         }
@@ -383,8 +393,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                self.accessToken = graphQLResult.data?.loginByUsername?.token
-                UserDefaults.standard.setValue(self.accessToken, forKey: Config.keyAccessToken)
+                let accessToken = graphQLResult.data?.loginByUsername?.token ?? ""
+                self.setAccessToken(accessToken)
                 completion(graphQLResult)
             }
         }
@@ -406,8 +416,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                self.accessToken = graphQLResult.data?.loginByPhoneCode?.token
-                UserDefaults.standard.setValue(self.accessToken, forKey: Config.keyAccessToken)
+                let accessToken = graphQLResult.data?.loginByPhoneCode?.token ?? ""
+                self.setAccessToken(accessToken)
                 completion(graphQLResult)
             }
         }
@@ -429,8 +439,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                self.accessToken = graphQLResult.data?.loginByPhoneCode?.token
-                UserDefaults.standard.setValue(self.accessToken, forKey: Config.keyAccessToken)
+                let accessToken = graphQLResult.data?.loginByPhoneCode?.token ?? ""
+                self.setAccessToken(accessToken)
                 completion(graphQLResult)
             }
         }
@@ -452,8 +462,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                self.accessToken = graphQLResult.data?.loginByPhonePassword?.token
-                UserDefaults.standard.setValue(self.accessToken, forKey: Config.keyAccessToken)
+                let accessToken = graphQLResult.data?.loginByPhonePassword?.token ?? ""
+                self.setAccessToken(accessToken)
                 completion(graphQLResult)
             }
         }
@@ -477,8 +487,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                self.accessToken = graphQLResult.data?.loginByPhonePassword?.token
-                UserDefaults.standard.setValue(self.accessToken, forKey: Config.keyAccessToken)
+                let accessToken = graphQLResult.data?.loginByPhonePassword?.token ?? ""
+                self.setAccessToken(accessToken)
                 completion(graphQLResult)
             }
         }
@@ -845,7 +855,7 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                UserDefaults.standard.setValue("", forKey: Config.keyAccessToken)
+                self.removeAccessToken()
                 completion(graphQLResult)
             }
         }
@@ -991,8 +1001,7 @@ public class AuthenticationClient {
                 let code = json["code"].intValue
                 if(code == 200) {
                     let accessToken = json["data"]["token"].stringValue
-                    self.accessToken = accessToken
-                    UserDefaults.standard.setValue(accessToken, forKey: Config.keyAccessToken)
+                    self.setAccessToken(accessToken)
                 }
                 completion(value)
             case .failure(let error):
@@ -1001,5 +1010,29 @@ public class AuthenticationClient {
         }
     }
     
+    /// Set AccessToken.
+    /// 设置用户的 AccessToken
+    /// - parameter token: 用户的 AccessToken
+    /// - returns: N/A
+    ///
+    /// 设置用户的 AccessToken
+    ///
+    private func setAccessToken(_ token: String) {
+        //self.accessToken = token
+        self._accessToken = token
+        UserDefaults.standard.setValue(token, forKey: Config.keyAccessToken)
+    }
+    
+    /// Remove AccessToken.
+    /// 清空用户的 AccessToken
+    /// - returns: N/A
+    ///
+    /// 清空用户的 AccessToken
+    ///
+    private func removeAccessToken() {
+        //self.accessToken = ""
+        self._accessToken = ""
+        UserDefaults.standard.setValue("", forKey: Config.keyAccessToken)
+    }
 
 }
