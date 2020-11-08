@@ -36,6 +36,7 @@ class ViewController: UIViewController {
     
     @IBAction func action0(_ sender: Any) {
         //Test
+        //self.listUdv()
         //self.setUdv()
         //self.bindPhone()
         //self.unbindPhone()
