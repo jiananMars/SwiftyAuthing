@@ -41,6 +41,17 @@ public class AuthenticationClient {
         }
     }
 
+    /// CachePolicy: A cache policy that specifies whether results should be fetched from the server or loaded from the local cache.
+    ///
+    private var _cachePolicy: CachePolicy?
+    public var cachePolicy: CachePolicy? {
+        get {
+            return self._cachePolicy
+        }
+        set {
+            self._cachePolicy = newValue
+        }
+    }
     
     /// Init with UserPoolId
     /// userPoolId: The user pool Id.
@@ -268,7 +279,7 @@ public class AuthenticationClient {
     /// 检查密码强度，详情请见: https://docs.authing.co/security/config-user-pool-password-level.html
     ///
     public func checkPasswordStrength(password: String, completion: @escaping ((GraphQLResult<CheckPasswordStrengthQuery.Data>) -> Void)) {
-        Network.shared.apollo.fetch(query: CheckPasswordStrengthQuery(password: password)) { result in
+        Network.shared.apollo.fetch(query: CheckPasswordStrengthQuery(password: password), cachePolicy: self._cachePolicy ?? .fetchIgnoringCacheCompletely) { result in
             switch result {
             case .failure(let error):
                 print("Failure: \(error)")
@@ -504,7 +515,7 @@ public class AuthenticationClient {
     ///
     public func checkLoginStatus(token: String, completion: @escaping ((GraphQLResult<CheckLoginStatusQuery.Data>) -> Void)) {
         UserDefaults.standard.setValue("", forKey: Config.keyAccessToken)
-        Network.shared.apollo.fetch(query: CheckLoginStatusQuery(token: token)) { result in
+        Network.shared.apollo.fetch(query: CheckLoginStatusQuery(token: token), cachePolicy: self._cachePolicy ?? .fetchIgnoringCacheCompletely) { result in
             switch result {
             case .failure(let error):
                 print("Failure: \(error)")
@@ -770,7 +781,7 @@ public class AuthenticationClient {
     ///
     public func getCurrentUser(completion: @escaping ((GraphQLResult<UserQuery.Data>) -> Void)) {
         let id = self.getUserId()
-        Network.shared.apollo.fetch(query: UserQuery(id: id)) { result in
+        Network.shared.apollo.fetch(query: UserQuery(id: id), cachePolicy: self._cachePolicy ?? .fetchIgnoringCacheCompletely) { result in
             switch result {
             case .failure(let error):
                 print("Failure: \(error)")
@@ -871,7 +882,7 @@ public class AuthenticationClient {
     ///
     public func listUdv(completion: @escaping ((GraphQLResult<UdvQuery.Data>) -> Void)) {
         let id = self.getUserId()
-        Network.shared.apollo.fetch(query: UdvQuery(targetType: UDFTargetType.user, targetId: id)) { result in
+        Network.shared.apollo.fetch(query: UdvQuery(targetType: UDFTargetType.user, targetId: id), cachePolicy: self._cachePolicy ?? .fetchIgnoringCacheCompletely) { result in
             switch result {
             case .failure(let error):
                 print("Failure: \(error)")
