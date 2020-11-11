@@ -438,13 +438,14 @@ public class AuthenticationClient {
     /// - parameter phone: 手机号
     /// - parameter code: 短信验证码
     /// - parameter clientIp: 客户端真实 IP，如果你在服务器端调用此接口，请务必将此参数设置为终端用户的真实 IP。
+    /// - parameter autoRegister: 如果用户不存在，是否自动注册账号，默认为 true
     /// - parameter completion: 服务器端返回的数据
     /// - returns: N/A
     ///
     /// 使用手机号验证码登录。
     ///
-    public func loginByPhoneCode(phone: String, code: String, clientIp: String, completion: @escaping ((GraphQLResult<LoginByPhoneCodeMutation.Data>) -> Void)) {
-        Network.shared.apollo.perform(mutation: LoginByPhoneCodeMutation(phone: phone, code: code, clientIp: clientIp), queue: DispatchQueue.main) { result in
+    public func loginByPhoneCode(phone: String, code: String, autoRegister: Bool? = nil, clientIp: String? = nil, completion: @escaping ((GraphQLResult<LoginByPhoneCodeMutation.Data>) -> Void)) {
+        Network.shared.apollo.perform(mutation: LoginByPhoneCodeMutation(phone: phone, code: code, clientIp: clientIp, autoRegister: autoRegister), queue: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
                 print("Failure: \(error)")
@@ -455,7 +456,6 @@ public class AuthenticationClient {
             }
         }
     }
-    
     
     /// Login by Phone Number and Password.
     /// 使用手机号密码登录
