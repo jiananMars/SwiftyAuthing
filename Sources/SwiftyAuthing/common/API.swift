@@ -2130,6 +2130,7 @@ public final class LoginByPhoneCodeMutation: GraphQLMutation {
     """
 
   public let operationName: String = "loginByPhoneCode"
+  public let operationIdentifier: String? = "d35bc80b2483f5de7aff33d734bc1097c63ad45f8d360b85c8271e3698a02ff9"
 
   public var phone: String
   public var code: String
