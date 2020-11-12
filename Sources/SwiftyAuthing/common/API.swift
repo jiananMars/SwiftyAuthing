@@ -2074,8 +2074,8 @@ public final class LoginByPhoneCodeMutation: GraphQLMutation {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition: String =
     """
-    mutation loginByPhoneCode($phone: String!, $code: String!, $clientIp: String) {
-      loginByPhoneCode(input: {phone: $phone, code: $code, clientIp: $clientIp}) {
+    mutation loginByPhoneCode($phone: String!, $code: String!, $clientIp: String, $autoRegister: Boolean) {
+      loginByPhoneCode(input: {phone: $phone, code: $code, clientIp: $clientIp, autoRegister: $autoRegister}) {
         __typename
         id
         arn
@@ -2131,30 +2131,28 @@ public final class LoginByPhoneCodeMutation: GraphQLMutation {
 
   public let operationName: String = "loginByPhoneCode"
 
-  public let operationIdentifier: String? = "04a363987e7f18943716ead4855b05de005ed264aa8cb197f82d632f66ac0e5a"
-
   public var phone: String
   public var code: String
   public var clientIp: String?
+  public var autoRegister: Bool?
 
-  public init(phone: String, code: String, clientIp: String? = nil) {
+  public init(phone: String, code: String, clientIp: String? = nil, autoRegister: Bool? = nil) {
     self.phone = phone
     self.code = code
     self.clientIp = clientIp
+    self.autoRegister = autoRegister
   }
 
   public var variables: GraphQLMap? {
-    return ["phone": phone, "code": code, "clientIp": clientIp]
+    return ["phone": phone, "code": code, "clientIp": clientIp, "autoRegister": autoRegister]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes: [String] = ["Mutation"]
 
-    public static var selections: [GraphQLSelection] {
-      return [
-        GraphQLField("loginByPhoneCode", arguments: ["input": ["phone": GraphQLVariable("phone"), "code": GraphQLVariable("code"), "clientIp": GraphQLVariable("clientIp")]], type: .object(LoginByPhoneCode.selections)),
-      ]
-    }
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("loginByPhoneCode", arguments: ["input": ["phone": GraphQLVariable("phone"), "code": GraphQLVariable("code"), "clientIp": GraphQLVariable("clientIp"), "autoRegister": GraphQLVariable("autoRegister")]], type: .object(LoginByPhoneCode.selections)),
+    ]
 
     public private(set) var resultMap: ResultMap
 
@@ -2705,6 +2703,7 @@ public final class LoginByPhoneCodeMutation: GraphQLMutation {
     }
   }
 }
+
 
 public final class LoginByPhonePasswordMutation: GraphQLMutation {
   /// The raw GraphQL definition of this operation.
