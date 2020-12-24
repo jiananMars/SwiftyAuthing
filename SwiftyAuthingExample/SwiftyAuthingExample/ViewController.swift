@@ -99,14 +99,25 @@ class ViewController: UIViewController {
     /// 使用邮箱注册
     ///
     func registerByEmail() {
-        self.client?.registerByEmail(email: textEmail.text!, password: textPassword.text!, completion: {status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.registerByEmail ?? "")
-                self.userid = status.data?.registerByEmail?.id ?? ""
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.registerByEmail(email: textEmail.text!, password: textPassword.text!, completion: {status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.registerByEmail ?? "")
+//                self.userid = status.data?.registerByEmail?.id ?? ""
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.registerByEmailWithResult(email: textEmail.text!, password: textPassword.text!, completion: {result in
+            switch result {
+            case .success(let graphQLResult):
+                print(graphQLResult.data?.registerByEmail ?? "")
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -115,14 +126,25 @@ class ViewController: UIViewController {
     /// 使用用户名注册
     ///
     func registerByUsername() {
-        self.client?.registerByUsername(username: textUsername.text!, password: textPassword.text!, completion:{status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.registerByUsername ?? "")
-                self.userid = status.data?.registerByUsername?.id ?? ""
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.registerByUsername(username: textUsername.text!, password: textPassword.text!, completion:{status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.registerByUsername ?? "")
+//                self.userid = status.data?.registerByUsername?.id ?? ""
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.registerByUsernameWithResult(username: textUsername.text!, password: textPassword.text!, completion:{result in
+            switch result {
+            case .success(let graphQLResult):
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -131,30 +153,73 @@ class ViewController: UIViewController {
     /// 使用手机号注册
     ///
     func registerByPhoneCode() {
-        self.client?.registerByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.registerByPhoneCode ?? "")
-                self.userid = status.data?.registerByPhoneCode?.id ?? ""
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        
+        //Normal
+//        self.client?.registerByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.registerByPhoneCode ?? "")
+//                self.userid = status.data?.registerByPhoneCode?.id ?? ""
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.registerByPhoneCodeWithResult(phone: textPhone.text!, code: textPhonecode.text!, completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.registerByPhoneCode ?? "")
+                    self.userid = status.data?.registerByPhoneCode?.id ?? ""
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+                
+            case .failure(let error):
+                print(error)
             }
         })
+        
     }
 
     /// Check Password Strength.
     /// 检查密码强度
     ///
     func checkPasswordStrength() {
-        self.client?.checkPasswordStrength(password: textPassword.text!, completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.checkPasswordStrength ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.checkPasswordStrength(password: textPassword.text!, completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.checkPasswordStrength ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.checkPasswordStrengthWithResult(password: textPassword.text!, completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.checkPasswordStrength ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
+
         })
     }
 
@@ -162,8 +227,14 @@ class ViewController: UIViewController {
     /// 发送短信验证码
     ///
     func sendSmsCode() {
-        self.client?.sendSmsCode(phone: textPhone.text!, completion: { status in
-            print(status)
+        //Normal
+//        self.client?.sendSmsCode(phone: textPhone.text!, completion: { status in
+//            print(status)
+//        })
+        
+        //With result
+        self.client?.sendSmsCodeWithResult(phone: textPhone.text!, completion: { result in
+            print(result)
         })
     }
 
@@ -172,13 +243,32 @@ class ViewController: UIViewController {
     /// 使用邮箱登录
     ///
     func loginByEmail() {
-        self.client?.loginByEmail(email: textEmail.text!, password: textPassword.text!, completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.loginByEmail ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.loginByEmail(email: textEmail.text!, password: textPassword.text!, completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.loginByEmail ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.loginByEmailWithResult(email: textEmail.text!, password: textPassword.text!, completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.loginByEmail ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -187,13 +277,32 @@ class ViewController: UIViewController {
     /// Login with Username and Password.
     /// 使用用户名登录
     func loginByUsername() {
-        self.client?.loginByUsername(username: textUsername.text!, password: textPassword.text!, completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.loginByUsername ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.loginByUsername(username: textUsername.text!, password: textPassword.text!, completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.loginByUsername ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.loginByUsernameWithResult(username: textUsername.text!, password: textPassword.text!, completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.loginByUsername ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -202,13 +311,32 @@ class ViewController: UIViewController {
     /// 使用手机号验证码登录
     ///
     func loginByPhoneCode() {
-        self.client?.loginByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.loginByPhoneCode ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.loginByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.loginByPhoneCode ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.loginByPhoneCodeWithResult(phone: textPhone.text!, code: textPhonecode.text!, completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.loginByPhoneCode ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -218,13 +346,32 @@ class ViewController: UIViewController {
     /// 使用手机号密码登录
     ///
     func loginByPhonePassword() {
-        self.client?.loginByPhonePassword(phone: textPhone.text!, password: textPassword.text!, completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.loginByPhonePassword ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.loginByPhonePassword(phone: textPhone.text!, password: textPassword.text!, completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.loginByPhonePassword ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.loginByPhonePasswordWithResult(phone: textPhone.text!, password: textPassword.text!, completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.loginByPhonePassword ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -237,13 +384,33 @@ class ViewController: UIViewController {
         // Change your accessToken here
         let accessToken = self.client?.accessToken ?? ""
         print("accessToken: " + accessToken)
-        self.client?.checkLoginStatus(token: accessToken, completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.checkLoginStatus ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        
+        //Normal
+//        self.client?.checkLoginStatus(token: accessToken, completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.checkLoginStatus ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.checkLoginStatusWithResult(token: accessToken, completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.checkLoginStatus ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -253,13 +420,32 @@ class ViewController: UIViewController {
     /// 发送邮件
     ///
     func sendEmail() {
-        self.client?.sendEmail(email: textEmail.text!, scene: EmailScene.resetPassword, completion: {status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.sendEmail ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.sendEmail(email: textEmail.text!, scene: EmailScene.resetPassword, completion: {status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.sendEmail ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.sendEmailWithResult(email: textEmail.text!, scene: EmailScene.resetPassword, completion: {result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.sendEmail ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -268,13 +454,32 @@ class ViewController: UIViewController {
     /// 通过短信验证码重置密码
     ///
     func resetPasswordByPhoneCode() {
-        self.client?.resetPasswordByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: {status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.resetPassword ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.resetPasswordByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: {status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.resetPassword ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.resetPasswordByPhoneCodeWithResult(phone: textPhone.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: {result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.resetPassword ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -283,13 +488,32 @@ class ViewController: UIViewController {
     /// 通过邮件验证码重置密码
     ///
     func resetPasswordByEmailCode() {
-        self.client?.resetPasswordByEmailCode(email: textEmail.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: {status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.resetPassword ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.resetPasswordByEmailCode(email: textEmail.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: {status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.resetPassword ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.resetPasswordByEmailCodeWithResult(email: textEmail.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: {result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.resetPassword ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -299,13 +523,32 @@ class ViewController: UIViewController {
     /// 修改用户资料
     ///
     func updateProfile() {
-        self.client?.updateProfile(nickname: textUsername.text!, completion: {status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.updateUser ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.updateProfile(nickname: textUsername.text!, completion: {status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.updateUser ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.updateProfileWithResult(nickname: textUsername.text!, completion: {result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.updateUser ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -315,13 +558,32 @@ class ViewController: UIViewController {
     /// 更新用户密码
     ///
     func updatePassword() {
-        self.client?.updatePassword(newPassword: textPassword.text!,oldPassword: textPassword.text!, completion: {status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.updatePassword ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.updatePassword(newPassword: textPassword.text!,oldPassword: textPassword.text!, completion: {status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.updatePassword ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.updatePasswordWithResult(newPassword: textPassword.text!,oldPassword: textPassword.text!, completion: {result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.updatePassword ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -331,13 +593,32 @@ class ViewController: UIViewController {
     /// 更新用户手机号
     ///
     func updatePhone() {
-        self.client?.updatePhone(phone: textPhone.text!, phoneCode: textPhonecode.text!, oldPhone: textPhone.text!, oldPhoneCode: textPhonecode.text!, completion: {status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.updatePhone ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.updatePhone(phone: textPhone.text!, phoneCode: textPhonecode.text!, oldPhone: textPhone.text!, oldPhoneCode: textPhonecode.text!, completion: {status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.updatePhone ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.updatePhoneWithResult(phone: textPhone.text!, phoneCode: textPhonecode.text!, oldPhone: textPhone.text!, oldPhoneCode: textPhonecode.text!, completion: {result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.updatePhone ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -347,13 +628,32 @@ class ViewController: UIViewController {
     /// 更新用户邮箱
     ///
     func updateEmail() {
-        self.client?.updateEmail(email: textEmail.text!, emailCode: textPhonecode.text!, oldEmail: textEmail.text!, oldEmailCode: textPhonecode.text!, completion: {status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.updateEmail ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.updateEmail(email: textEmail.text!, emailCode: textPhonecode.text!, oldEmail: textEmail.text!, oldEmailCode: textPhonecode.text!, completion: {status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.updateEmail ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.updateEmailWithResult(email: textEmail.text!, emailCode: textPhonecode.text!, oldEmail: textEmail.text!, oldEmailCode: textPhonecode.text!, completion: {result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.updateEmail ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -363,13 +663,32 @@ class ViewController: UIViewController {
     /// 刷新当前用户的 token
     ///
     func refreshToken() {
-        self.client?.refreshToken(completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.refreshToken ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.refreshToken(completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.refreshToken ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.refreshTokenWithResult(completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.refreshToken ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -379,13 +698,32 @@ class ViewController: UIViewController {
     /// 获取当前登录的用户信息
     ///
     func getCurrentUser() {
-        self.client?.getCurrentUser(completion: {status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.user ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.getCurrentUser(completion: {status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.user ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.getCurrentUserWithResult(completion: {result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.user ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -395,13 +733,32 @@ class ViewController: UIViewController {
     /// 退出登录
     ///
     func logout() {
-        self.client?.logout(completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.updateUser ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.logout(completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.updateUser ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.logoutWithResult(completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.updateUser ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -410,13 +767,32 @@ class ViewController: UIViewController {
     /// 绑定手机号
     ///
     func bindPhone() {
-        self.client?.bindPhone(phone: textPhone.text!, phoneCode: textPhonecode.text!, completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.bindPhone ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.bindPhone(phone: textPhone.text!, phoneCode: textPhonecode.text!, completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.bindPhone ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.bindPhoneWithResult(phone: textPhone.text!, phoneCode: textPhonecode.text!, completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.bindPhone ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -426,13 +802,32 @@ class ViewController: UIViewController {
     /// 解绑邮箱
     ///
     func unbindEmail() {
-        self.client?.unbindEmail(completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.unbindEmail ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.unbindEmail(completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.unbindEmail ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.unbindEmailWithResult(completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.unbindEmail ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -442,13 +837,32 @@ class ViewController: UIViewController {
     /// 绑定手机号
     ///
     func unbindPhone() {
-        self.client?.unbindPhone(completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.unbindPhone ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.unbindPhone(completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.unbindPhone ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.unbindPhoneWithResult(completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.unbindPhone ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -457,13 +871,32 @@ class ViewController: UIViewController {
     /// 获取当前用户的自定义数据列表
     ///
     func listUdv() {
-        self.client?.listUdv(completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.udv ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.listUdv(completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.udv ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.listUdvWithResult(completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.udv ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -473,13 +906,32 @@ class ViewController: UIViewController {
     /// 添加自定义数据
     ///
     func setUdv() {
-        self.client?.setUdv(key: "HelloDate", value: Date(), completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.setUdv ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.setUdv(key: "HelloDate", value: Date(), completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.setUdv ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.setUdvWithResult(key: "HelloDate", value: Date(), completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.setUdv ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -488,13 +940,32 @@ class ViewController: UIViewController {
     /// 删除自定义数据
     ///
     func removeUdv() {
-        self.client?.removeUdv(key: "HelloDate", completion:{ status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.removeUdv ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
+        //Normal
+//        self.client?.removeUdv(key: "HelloDate", completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.removeUdv ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        self.client?.removeUdvWithResult(key: "HelloDate", completion:{ result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.removeUdv ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
             }
         })
     }
@@ -503,16 +974,28 @@ class ViewController: UIViewController {
     /// listOrg.
     /// 获取用户所在组织机构
     func listOrg() {
-        self.client?.listOrg(completion: { status in
-            print(status)
+        //Normal
+//        self.client?.listOrg(completion: { status in
+//            print(status)
+//        })
+        
+        //With result
+        self.client?.listOrgWithResult(completion: { result in
+            print(result)
         })
     }
     
     /// loginByLdap.
     /// 使用 LDAP 用户名登录
     func loginByLdap() {
-        self.client?.loginByLdap(username: textUsername.text!, password: textPassword.text!, completion: { status in
-            print(status)
+        //Normal
+//        self.client?.loginByLdap(username: textUsername.text!, password: textPassword.text!, completion: { status in
+//            print(status)
+//        })
+        
+        //With result
+        self.client?.loginByLdapWithResult(username: textUsername.text!, password: textPassword.text!, completion: { result in
+            print(result)
         })
     }
     
@@ -522,9 +1005,15 @@ class ViewController: UIViewController {
     ///
     func loginByWeChatCode() {
         //通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
-        let code = "041jya0w35SheV2Czq0w3kR57j2jya0T"
-        self.client?.loginByWeChatCode(code: code, completion: { status in
-            print(status)
+        let code = "061h1e0w3bwPgV2guj2w3srjsJ0h1e0K"
+        //Normal
+//        self.client?.loginByWeChatCode(code: code, completion: { status in
+//            print(status)
+//        })
+        
+        //With result
+        self.client?.loginByWeChatCodeWithResult(code: code, completion: { result in
+            print(result)
         })
     }
     
