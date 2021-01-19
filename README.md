@@ -46,13 +46,17 @@ This is a pure Swift library for [Authing](https://authing.cn).
 import SwiftyAuthing
 
 /// Config Information, change your UserPoolId
-/// Find in https://console.authing.cn Setting - Basic Information.
+/// Find in https://console.authing.cn Setting - Basic Information & Application.
 let userPoolId = "userPoolId"
+let appId = "appId"
 
 var client: AuthenticationClient?
 var userid = ""
 
 self.client = AuthenticationClient(userPoolId: userPoolId)
+
+//使用 userPoolId 和 appId 同时初始化
+//self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId)
 
 // 如在此类中调用用户 User 相关方法，需要在此设置此用户保存的有效的用户 AccessToken。
 // 如需变动用户 AccessToken，只需再次赋值即可。
@@ -970,7 +974,7 @@ func loginByLdap() {
 ///
 func loginByWeChatCode() {
     //通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
-    let code = "061h1e0w3bwPgV2guj2w3srjsJ0h1e0K"
+    let code = "code"
     //Normal
 //        self.client?.loginByWeChatCode(code: code, completion: { status in
 //            print(status)
