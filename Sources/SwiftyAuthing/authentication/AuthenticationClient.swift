@@ -112,7 +112,7 @@ public class AuthenticationClient {
         self.userPoolId = userPoolId
         self.appId = appId
         UserDefaults.standard.setValue(userPoolId, forKey: Config.keyUserPoolId)
-        UserDefaults.standard.setValue(userPoolId, forKey: Config.keyAppId)
+        UserDefaults.standard.setValue(appId, forKey: Config.keyAppId)
     }
     
     

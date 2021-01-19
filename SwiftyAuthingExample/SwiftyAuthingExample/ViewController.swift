@@ -103,26 +103,26 @@ class ViewController: UIViewController {
     ///
     func registerByEmail() {
         //Normal
-//        self.client?.registerByEmail(email: textEmail.text!, password: textPassword.text!, completion: {status in
-//            if(status.errors == nil) {
-//                //Success
-//                print(status.data?.registerByEmail ?? "")
-//                self.userid = status.data?.registerByEmail?.id ?? ""
-//            } else {
-//                //Failure
-//                print(status.errors ?? "")
-//            }
-//        })
-        
-        //With result
-        self.client?.registerByEmailWithResult(email: textEmail.text!, password: textPassword.text!, completion: {result in
-            switch result {
-            case .success(let graphQLResult):
-                print(graphQLResult.data?.registerByEmail ?? "")
-            case .failure(let error):
-                print(error)
+        self.client?.registerByEmail(email: textEmail.text!, password: textPassword.text!, completion: {status in
+            if(status.errors == nil) {
+                //Success
+                print(status.data?.registerByEmail ?? "")
+                self.userid = status.data?.registerByEmail?.id ?? ""
+            } else {
+                //Failure
+                print(status.errors ?? "")
             }
         })
+        
+        //With result
+//        self.client?.registerByEmailWithResult(email: textEmail.text!, password: textPassword.text!, completion: {result in
+//            switch result {
+//            case .success(let graphQLResult):
+//                print(graphQLResult.data?.registerByEmail ?? "")
+//            case .failure(let error):
+//                print(error)
+//            }
+//        })
     }
 
     /// Register by Username and Password.
