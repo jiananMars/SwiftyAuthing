@@ -32,11 +32,19 @@ public class Config {
     
     /// User Pool Id Key for Header.
     ///
-    public static let userpoolid = "x-authing-userpool-id"
+    public static let userpoolidHeader = "x-authing-userpool-id"
     
     /// User Pool Id Key.
     ///
     public static let keyUserPoolId = "userPoolId"
+    
+    /// User App Id Key for Header.
+    ///
+    public static let appidHeader = "x-authing-app-id"
+    
+    /// User App Id Key.
+    ///
+    public static let keyAppId = "appId"
     
     /// AccessToken Key.
     ///

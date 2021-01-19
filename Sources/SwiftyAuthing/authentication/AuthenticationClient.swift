@@ -28,6 +28,10 @@ public class AuthenticationClient {
     ///
     public var host: String?
     
+    /// AppId: The App ID.
+    ///
+    public var appId: String?
+    
     /// AccessToken: The AccessToken of user.
     ///
     private var _accessToken: String?
@@ -98,6 +102,18 @@ public class AuthenticationClient {
 //        Network.shared.host = host
 //        UserDefaults.standard.setValue(userPoolId, forKey: Config.keyUserPoolId)
 //    }
+    
+    /// Init with UserPoolId
+    /// userPoolId: The user pool Id.
+    /// appId: The App ID.
+    /// Find in https://console.authing.cn Setting - Basic Information & Application.
+    ///
+    public init(userPoolId: String, appId: String) {
+        self.userPoolId = userPoolId
+        self.appId = appId
+        UserDefaults.standard.setValue(userPoolId, forKey: Config.keyUserPoolId)
+        UserDefaults.standard.setValue(userPoolId, forKey: Config.keyAppId)
+    }
     
     
     /// Register by Email and Password.

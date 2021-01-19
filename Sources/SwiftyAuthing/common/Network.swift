@@ -49,14 +49,21 @@ public class NetworkInterceptorProvider: LegacyInterceptorProvider {
 ///
 public class CustomInterceptor: ApolloInterceptor {
     public let token = UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
+    public let userpoolidHeader = Config.userpoolidHeader
     public let userpoolid = UserDefaults.standard.string(forKey: Config.keyUserPoolId) ?? ""
+    public let appidHeader = Config.appidHeader
+    public let appid = UserDefaults.standard.string(forKey: Config.keyAppId) ?? ""
+    
     public func interceptAsync<Operation: GraphQLOperation>(
         chain: RequestChain,
         request: HTTPRequest<Operation>,
         response: HTTPResponse<Operation>?,
         completion: @escaping (Result<GraphQLResult<Operation.Data>, Error>) -> Void) {
         request.addHeader(name: "Authorization", value: "Bearer " + token)
-        request.addHeader(name: Config.userpoolid, value: userpoolid)
+        request.addHeader(name: userpoolidHeader, value: userpoolid)
+        if(appid.count > 0) {
+            request.addHeader(name: appidHeader, value: appid)
+        }
         chain.proceedAsync(request: request,
                            response: response,
                            completion: completion)
