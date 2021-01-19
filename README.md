@@ -976,7 +976,7 @@ func loginByLdap() {
 ///
 func loginByWeChatCode() {
     //通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
-    let code = "061h1e0w3bwPgV2guj2w3srjsJ0h1e0K"
+    let code = "code"
     //Normal
 //        self.client?.loginByWeChatCode(code: code, completion: { status in
 //            print(status)
