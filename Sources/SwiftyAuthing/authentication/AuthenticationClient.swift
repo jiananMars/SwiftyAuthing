@@ -478,7 +478,7 @@ public class AuthenticationClient {
         let url = Config.sms
         let parameters = ["phone": phone]
         let headers: HTTPHeaders = [
-            Config.userpoolid: self.userPoolId!,
+            Config.userpoolidHeader: self.userPoolId!,
         ]
         AF.request(url, method: .post, parameters: parameters, headers: headers).responseJSON { response in
             switch response.result {
@@ -502,7 +502,7 @@ public class AuthenticationClient {
         let url = Config.sms
         let parameters = ["phone": phone]
         let headers: HTTPHeaders = [
-            Config.userpoolid: self.userPoolId!,
+            Config.userpoolidHeader: self.userPoolId!,
         ]
         AF.request(url, method: .post, parameters: parameters, headers: headers).responseJSON { response in
             completion(response.result)
@@ -1654,7 +1654,7 @@ public class AuthenticationClient {
     public func listOrg(completion: @escaping(Any) -> Void) {
         let url = Config.domain + "/api/v2/users/me/orgs"
         let headers: HTTPHeaders = [
-            Config.userpoolid: self.userPoolId!,
+            Config.userpoolidHeader: self.userPoolId!,
             "Authorization": UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
         ]
         AF.request(url, method: .get, headers: headers).responseJSON { response in
@@ -1677,7 +1677,7 @@ public class AuthenticationClient {
     public func listOrgWithResult(completion: @escaping(Any) -> Void) {
         let url = Config.domain + "/api/v2/users/me/orgs"
         let headers: HTTPHeaders = [
-            Config.userpoolid: self.userPoolId!,
+            Config.userpoolidHeader: self.userPoolId!,
             "Authorization": UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
         ]
         AF.request(url, method: .get, headers: headers).responseJSON { response in
