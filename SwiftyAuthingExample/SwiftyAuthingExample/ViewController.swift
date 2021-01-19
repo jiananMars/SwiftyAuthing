@@ -17,8 +17,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var textPhonecode: UITextField!
     
     /// Config Information, change your UserPoolId
-    /// Find in https://console.authing.cn Setting - Basic Information.
+    /// Find in https://console.authing.cn Setting - Basic Information & Application.
     let userPoolId = "userPoolId"
+    let appId = "appId"
     
     var client: AuthenticationClient?
     var userid = ""
@@ -28,6 +29,8 @@ class ViewController: UIViewController {
         
         self.client = AuthenticationClient(userPoolId: userPoolId)
         
+//        self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId)
+
         // 如在此类中调用用户 User 相关方法，需要在此设置此用户保存的有效的用户 AccessToken。
         // 如需变动用户 AccessToken，只需再次赋值即可。
         //self.client?.accessToken = "accessToken"
