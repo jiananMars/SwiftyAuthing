@@ -56,6 +56,8 @@ var client: AuthenticationClient?
 var userid = ""
 
 self.client = AuthenticationClient(userPoolId: userPoolId)
+
+//使用 userPoolId 和 appId 同时初始化
 //self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId)
 
 // 如在此类中调用用户 User 相关方法，需要在此设置此用户保存的有效的用户 AccessToken。
