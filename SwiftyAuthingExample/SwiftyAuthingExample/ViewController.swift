@@ -17,9 +17,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var textPhonecode: UITextField!
     
     /// Config Information, change your UserPoolId
-    /// Find in https://console.authing.cn Setting - Basic Information.
+    /// Find in https://console.authing.cn Setting - Basic Information & Application.
     let userPoolId = "userPoolId"
-    
+    let appId = "appId"
+
     var client: AuthenticationClient?
     var userid = ""
     
@@ -28,6 +29,8 @@ class ViewController: UIViewController {
         
         self.client = AuthenticationClient(userPoolId: userPoolId)
         
+//        self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId)
+
         // 如在此类中调用用户 User 相关方法，需要在此设置此用户保存的有效的用户 AccessToken。
         // 如需变动用户 AccessToken，只需再次赋值即可。
         //self.client?.accessToken = "accessToken"
@@ -100,26 +103,26 @@ class ViewController: UIViewController {
     ///
     func registerByEmail() {
         //Normal
-//        self.client?.registerByEmail(email: textEmail.text!, password: textPassword.text!, completion: {status in
-//            if(status.errors == nil) {
-//                //Success
-//                print(status.data?.registerByEmail ?? "")
-//                self.userid = status.data?.registerByEmail?.id ?? ""
-//            } else {
-//                //Failure
-//                print(status.errors ?? "")
-//            }
-//        })
-        
-        //With result
-        self.client?.registerByEmailWithResult(email: textEmail.text!, password: textPassword.text!, completion: {result in
-            switch result {
-            case .success(let graphQLResult):
-                print(graphQLResult.data?.registerByEmail ?? "")
-            case .failure(let error):
-                print(error)
+        self.client?.registerByEmail(email: textEmail.text!, password: textPassword.text!, completion: {status in
+            if(status.errors == nil) {
+                //Success
+                print(status.data?.registerByEmail ?? "")
+                self.userid = status.data?.registerByEmail?.id ?? ""
+            } else {
+                //Failure
+                print(status.errors ?? "")
             }
         })
+        
+        //With result
+//        self.client?.registerByEmailWithResult(email: textEmail.text!, password: textPassword.text!, completion: {result in
+//            switch result {
+//            case .success(let graphQLResult):
+//                print(graphQLResult.data?.registerByEmail ?? "")
+//            case .failure(let error):
+//                print(error)
+//            }
+//        })
     }
 
     /// Register by Username and Password.
