@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     /// Find in https://console.authing.cn Setting - Basic Information & Application.
     let userPoolId = "userPoolId"
     let appId = "appId"
-    
+
     var client: AuthenticationClient?
     var userid = ""
     
