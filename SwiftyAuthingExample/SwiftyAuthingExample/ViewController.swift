@@ -375,6 +375,8 @@ class ViewController: UIViewController {
                 } else {
                     //Failure
                     print(status.errors ?? "")
+                    //print(status.errors?.first?.displayMessage)
+                    //print(status.errors?.first?.displayCode)
                 }
                 print(graphQLResult)
             case .failure(let error):
