@@ -1758,7 +1758,7 @@ public class AuthenticationClient {
     ///
     public func loginByWeChatCode(code: String, completion: @escaping(Any) -> Void) {
         let url = Config.domain + "/connection/social/wechat:mobile/\(self.userPoolId!)/callback?code=\(code)"
-            + ((self.appId != nil && self.appId?.count ?? 0 > 0) ? "app_id=\(self.appId ?? "")" : "")
+            + ((self.appId != nil && self.appId?.count ?? 0 > 0) ? "&app_id=\(self.appId ?? "")" : "")
         AF.request(url, method: .get).responseJSON { response in
             switch response.result {
             case .success(let value):
@@ -1785,7 +1785,7 @@ public class AuthenticationClient {
     ///
     public func loginByWeChatCodeWithResult(code: String, completion: @escaping(Any) -> Void) {
         let url = Config.domain + "/connection/social/wechat:mobile/\(self.userPoolId!)/callback?code=\(code)"
-            + ((self.appId != nil && self.appId?.count ?? 0 > 0) ? "app_id=\(self.appId ?? "")" : "")
+            + ((self.appId != nil && self.appId?.count ?? 0 > 0) ? "&app_id=\(self.appId ?? "")" : "")
         AF.request(url, method: .get).responseJSON { response in
             switch response.result {
             case .success(let value):
