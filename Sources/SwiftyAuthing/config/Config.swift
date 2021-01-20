@@ -23,6 +23,29 @@ public class Config {
     ///
     public static let sms = domain + "/api/v2/sms/send"
     
+    /// ORG Host.
+    ///
+    public static let orgs = domain + "/api/v2/users/me/orgs"
+    
+    /// Verify user Host.
+    ///
+    public static let verifyuser = domain + "/api/v2/ldap/verify-user"
+    
+    /// WeChat code Host.
+    ///
+    public static func wechatmobile(userPoolId: String, code: String, appId: String) -> String {
+        return domain + "/connection/social/wechat:mobile/" + userPoolId + "/callback?code=" + code +
+            (appId.count > 0 ? "&app_id=" + appId : "")
+    }
+    
+    /// User id verify Host.
+    ///
+    public static let idverify = domain + "/api/v2/users/id-verify"
+    
+    /// User id verify status Host.
+    ///
+    public static let idverifystatus = domain + "/api/v2/users/me/id-verify/status"
+    
     /// Encrypt with PKCS1v1.5 PublicKey.
     ///
     public static let publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4xKeUgQ+Aoz7TLfAfs9+paePb" +
@@ -49,4 +72,18 @@ public class Config {
     /// AccessToken Key.
     ///
     public static let keyAccessToken = "accessToken"
+    
+    /// Authorization for Header.
+    ///
+    public static let authorizationHeader = "Authorization"
+    
+    /// Content-Type for Header.
+    ///
+    public static let contentTypeHeader = "Content-Type"
+    
+    /// Content-Type for Header.
+    ///
+    public static let contentTypeHeaderValue = "application/json; charset=utf-8"
+    
+    
 }
