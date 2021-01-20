@@ -27,9 +27,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.client = AuthenticationClient(userPoolId: userPoolId)
+        //使用 userPoolId 初始化
+        //self.client = AuthenticationClient(userPoolId: userPoolId)
         
-//        self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId)
+        //使用 userPoolId 和 appId 同时初始化
+        self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId)
 
         // 如在此类中调用用户 User 相关方法，需要在此设置此用户保存的有效的用户 AccessToken。
         // 如需变动用户 AccessToken，只需再次赋值即可。
@@ -47,6 +49,8 @@ class ViewController: UIViewController {
         //self.listOrg()
         //self.loginByLdap()
         //self.getCurrentUser()
+        //self.userIdVerify()
+        //self.userIdVerifyStatus()
     }
     
     @IBAction func action1(_ sender: Any) {
@@ -371,6 +375,8 @@ class ViewController: UIViewController {
                 } else {
                     //Failure
                     print(status.errors ?? "")
+                    //print(status.errors?.first?.displayMessage)
+                    //print(status.errors?.first?.displayCode)
                 }
                 print(graphQLResult)
             case .failure(let error):
@@ -976,6 +982,7 @@ class ViewController: UIViewController {
     
     /// listOrg.
     /// 获取用户所在组织机构
+    ///
     func listOrg() {
         //Normal
 //        self.client?.listOrg(completion: { status in
@@ -990,6 +997,7 @@ class ViewController: UIViewController {
     
     /// loginByLdap.
     /// 使用 LDAP 用户名登录
+    ///
     func loginByLdap() {
         //Normal
 //        self.client?.loginByLdap(username: textUsername.text!, password: textPassword.text!, completion: { status in
@@ -1008,7 +1016,7 @@ class ViewController: UIViewController {
     ///
     func loginByWeChatCode() {
         //通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
-        let code = "061h1e0w3bwPgV2guj2w3srjsJ0h1e0K"
+        let code = "code"
         //Normal
 //        self.client?.loginByWeChatCode(code: code, completion: { status in
 //            print(status)
@@ -1020,6 +1028,61 @@ class ViewController: UIViewController {
         })
     }
     
+    
+    /// User Id Verify.
+    /// 实名认证 - 使用姓名，身份证号码，人脸图像，需要登录后调用
+    ///
+    func userIdVerify() {
+        //*需要登录后调用
+        
+        //via faceImageURL
+        self.client?.userIdVerify(name: "张三", idCard: "123456", faceImageURL: URL(string: "http://xxx.jpg")!, completion: { result in
+            print(result)
+        })
+        
+        //via faceImageBase64, 如使用 UIImage 可以使用 getBase64FromImage 转换
+//        self.client?.userIdVerify(name: "张三", idCard: "123456", faceImageBase64: "data:image/jpeg;base64,/9j/4QFmRXhpZgA", completion: { result in
+//            print(result)
+//        })
+        
+//        success msg
+//        {
+//            "code": 200,
+//            "message": "实名认证成功"
+//        }
+    }
+    
+    /// Get Base64 from UIImage
+    /// UIImage 转 Base64
+    ///
+    func getBase64FromImage(_ name: String) -> String{
+        let imageOrigin = UIImage(named: name)
+        if let image = imageOrigin {
+            let dataTmp = image.pngData()
+            if let data = dataTmp {
+                let imageStrTT = data.base64EncodedString()
+                return imageStrTT
+            }
+        }
+        return ""
+    }
+
+    /// User Id Verify Status.
+    /// 查询实名认证状态，需要登录后调用
+    ///
+    func userIdVerifyStatus() {
+        //*需要登录后调用
+        self.client?.userIdVerifyStatus(completion: { result in
+            print(result)
+        })
+        
+//        success msg
+//        {
+//            "code": 200,
+//            "data": true,
+//            "message": "查询实名认证状态成功"
+//        }
+    }
     
 }
 

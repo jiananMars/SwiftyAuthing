@@ -19,11 +19,6 @@ public class AuthenticationClient {
     ///
     public var userPoolId: String?
     
-    /// Secret: The secret of user pool.
-    /// Find in https://console.authing.cn Setting - Basic Information.
-    ///
-//    public var secret: String?
-    
     /// Host: The host of User Pool.
     ///
     public var host: String?
@@ -59,23 +54,24 @@ public class AuthenticationClient {
     
     /// Init with UserPoolId
     /// userPoolId: The user pool Id.
+    /// appId: The App ID.
+    /// Find in https://console.authing.cn Setting - Basic Information & Application.
+    ///
+    public init(userPoolId: String, appId: String) {
+        self.userPoolId = userPoolId
+        self.appId = appId
+        UserDefaults.standard.setValue(userPoolId, forKey: Config.keyUserPoolId)
+        UserDefaults.standard.setValue(appId, forKey: Config.keyAppId)
+    }
+    
+    /// Init with UserPoolId
+    /// userPoolId: The user pool Id.
     /// Find in https://console.authing.cn Setting - Basic Information.
     ///
     public init(userPoolId: String) {
         self.userPoolId = userPoolId
         UserDefaults.standard.setValue(userPoolId, forKey: Config.keyUserPoolId)
     }
-    
-    /// Init with UserPoolId and Secret
-    /// userPoolId: The user pool Id.
-    /// secret: The secret of user pool.
-    /// Find in https://console.authing.cn Setting - Basic Information.
-    ///
-//    public init(userPoolId: String, secret: String) {
-//        self.userPoolId = userPoolId
-//        self.secret = secret
-//        UserDefaults.standard.setValue(userPoolId, forKey: Config.keyUserPoolId)
-//    }
     
     /// Init with UserPoolId and Host
     /// userPoolId: The user pool Id.
@@ -87,32 +83,6 @@ public class AuthenticationClient {
         self.host = host
         Network.shared.host = host
         UserDefaults.standard.setValue(userPoolId, forKey: Config.keyUserPoolId)
-    }
-    
-    /// Init with UserPoolId, Secret, and Host
-    /// userPoolId: The user pool Id.
-    /// secret: The secret of user pool.
-    /// host: The host of user pool.
-    /// Find in https://console.authing.cn Setting - Basic Information.
-    ///
-//    public init(userPoolId: String, secret: String, host: String) {
-//        self.userPoolId = userPoolId
-//        self.secret = secret
-//        self.host = host
-//        Network.shared.host = host
-//        UserDefaults.standard.setValue(userPoolId, forKey: Config.keyUserPoolId)
-//    }
-    
-    /// Init with UserPoolId
-    /// userPoolId: The user pool Id.
-    /// appId: The App ID.
-    /// Find in https://console.authing.cn Setting - Basic Information & Application.
-    ///
-    public init(userPoolId: String, appId: String) {
-        self.userPoolId = userPoolId
-        self.appId = appId
-        UserDefaults.standard.setValue(userPoolId, forKey: Config.keyUserPoolId)
-        UserDefaults.standard.setValue(appId, forKey: Config.keyAppId)
     }
     
     
@@ -1653,10 +1623,12 @@ public class AuthenticationClient {
     /// 获取用户所在的组织机构立碑，以及他所属的节点在此组织机构内的完整路径。
     ///
     public func listOrg(completion: @escaping(Any) -> Void) {
-        let url = Config.domain + "/api/v2/users/me/orgs"
+        let token = UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
+        let userPoolId = self.userPoolId ?? ""
+        let url = Config.orgs
         let headers: HTTPHeaders = [
-            Config.userpoolidHeader: self.userPoolId!,
-            "Authorization": UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
+            Config.userpoolidHeader: userPoolId,
+            Config.authorizationHeader: token
         ]
         AF.request(url, method: .get, headers: headers).responseJSON { response in
             switch response.result {
@@ -1676,10 +1648,12 @@ public class AuthenticationClient {
     /// 获取用户所在的组织机构立碑，以及他所属的节点在此组织机构内的完整路径。
     ///
     public func listOrgWithResult(completion: @escaping(Any) -> Void) {
-        let url = Config.domain + "/api/v2/users/me/orgs"
+        let token = UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
+        let userPoolId = self.userPoolId ?? ""
+        let url = Config.orgs
         let headers: HTTPHeaders = [
-            Config.userpoolidHeader: self.userPoolId!,
-            "Authorization": UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
+            Config.userpoolidHeader: userPoolId,
+            Config.authorizationHeader: token
         ]
         AF.request(url, method: .get, headers: headers).responseJSON { response in
             completion(response.result)
@@ -1700,11 +1674,7 @@ public class AuthenticationClient {
     /// 使用 LDAP 用户名登录。如果你的用户池配置了登录失败检测，当同一  IP 下登录多次失败的时候会要求用户输入图形验证码（code 为 2000)。
     ///
     public func loginByLdap(username: String, password: String, autoRegister: Bool? = nil, captchaCode: String? = nil, clientIp: String? = nil, completion: @escaping(Any) -> Void) {
-        let url = Config.domain + "/api/v2/ldap/verify-user"
-//        let headers: HTTPHeaders = [
-//            Config.userpoolid: self.userPoolId!,
-//            "Authorization": UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
-//        ]
+        let url = Config.verifyuser
         let parameters = [
             "username": username,
             "password": password
@@ -1733,11 +1703,7 @@ public class AuthenticationClient {
     /// 使用 LDAP 用户名登录。如果你的用户池配置了登录失败检测，当同一  IP 下登录多次失败的时候会要求用户输入图形验证码（code 为 2000)。
     ///
     public func loginByLdapWithResult(username: String, password: String, autoRegister: Bool? = nil, captchaCode: String? = nil, clientIp: String? = nil, completion: @escaping(Any) -> Void) {
-        let url = Config.domain + "/api/v2/ldap/verify-user"
-//        let headers: HTTPHeaders = [
-//            Config.userpoolid: self.userPoolId!,
-//            "Authorization": UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
-//        ]
+        let url = Config.verifyuser
         let parameters = [
             "username": username,
             "password": password
@@ -1757,8 +1723,9 @@ public class AuthenticationClient {
     /// 通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
     ///
     public func loginByWeChatCode(code: String, completion: @escaping(Any) -> Void) {
-        let url = Config.domain + "/connection/social/wechat:mobile/\(self.userPoolId!)/callback?code=\(code)"
-            + ((self.appId != nil && self.appId?.count ?? 0 > 0) ? "&app_id=\(self.appId ?? "")" : "")
+        let userPoolId = self.userPoolId ?? ""
+        let appId = self.appId ?? ""
+        let url = Config.wechatmobile(userPoolId: userPoolId, code: code, appId: appId)
         AF.request(url, method: .get).responseJSON { response in
             switch response.result {
             case .success(let value):
@@ -1784,8 +1751,9 @@ public class AuthenticationClient {
     /// 通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
     ///
     public func loginByWeChatCodeWithResult(code: String, completion: @escaping(Any) -> Void) {
-        let url = Config.domain + "/connection/social/wechat:mobile/\(self.userPoolId!)/callback?code=\(code)"
-            + ((self.appId != nil && self.appId?.count ?? 0 > 0) ? "&app_id=\(self.appId ?? "")" : "")
+        let userPoolId = self.userPoolId ?? ""
+        let appId = self.appId ?? ""
+        let url = Config.wechatmobile(userPoolId: userPoolId, code: code, appId: appId)
         AF.request(url, method: .get).responseJSON { response in
             switch response.result {
             case .success(let value):
@@ -1825,4 +1793,82 @@ public class AuthenticationClient {
         UserDefaults.standard.setValue("", forKey: Config.keyAccessToken)
     }
 
+    /// User Id Verify.
+    /// 实名认证 - 使用姓名，身份证号码，人脸图像，需要登录后调用
+    /// - parameter name: 姓名
+    /// - parameter idCard: 身份证号码
+    /// - parameter faceImageURL: 人脸图像 URL
+    /// - parameter completion: 服务器端返回的数据
+    /// - returns: N/A
+    ///
+    /// 使用姓名，身份证号码，人脸图像认证
+    ///
+    public func userIdVerify(name: String, idCard: String, faceImageURL: URL, completion: @escaping(Any) -> Void) {
+        let url = Config.idverify
+        let token = UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
+        let userPoolId = self.userPoolId ?? ""
+        let faceImageLink = faceImageURL.absoluteString
+        let headers: HTTPHeaders = [
+            Config.userpoolidHeader: userPoolId,
+            Config.contentTypeHeader: Config.contentTypeHeaderValue,
+            Config.authorizationHeader: token
+        ]
+        let parameters: [String: String] = [
+            "name": name,
+            "idCard": idCard,
+            "faceImage": faceImageLink
+        ]
+        AF.request(url, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
+            completion(response.result)
+        }
+    }
+    
+    /// User Id Verify.
+    /// 实名认证 - 使用姓名，身份证号码，人脸图像，需要登录后调用
+    /// - parameter name: 姓名
+    /// - parameter idCard: 身份证号码
+    /// - parameter faceImageBase64: 人脸图像 Base64 编码，例如"data:image/jpeg;base64,/9j/4QFmRXhpZgA"
+    /// - parameter completion: 服务器端返回的数据
+    /// - returns: N/A
+    ///
+    /// 实名认证 - 使用姓名，身份证号码，人脸图像，需要登录后调用
+    ///
+    public func userIdVerify(name: String, idCard: String, faceImageBase64: String, completion: @escaping(Any) -> Void) {
+        let url = Config.idverify
+        let token = UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
+        let userPoolId = self.userPoolId ?? ""
+        let headers: HTTPHeaders = [
+            Config.userpoolidHeader: userPoolId,
+            Config.contentTypeHeader: Config.contentTypeHeaderValue,
+            Config.authorizationHeader: token
+        ]
+        let parameters: [String: String] = [
+            "name": name,
+            "idCard": idCard,
+            "faceImage": faceImageBase64
+        ]
+        AF.request(url, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
+            completion(response.result)
+        }
+    }
+
+    /// User Id Verify Status.
+    /// 查询实名认证状态，需要登录后调用
+    /// - parameter completion: 服务器端返回的数据
+    /// - returns: N/A
+    ///
+    /// 查询实名认证状态，需要登录后调用
+    ///
+    public func userIdVerifyStatus(completion: @escaping(Any) -> Void) {
+        let url = Config.idverifystatus
+        let token = UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
+        let userPoolId = self.userPoolId ?? ""
+        let headers: HTTPHeaders = [
+            Config.userpoolidHeader: userPoolId,
+            Config.authorizationHeader: token
+        ]
+        AF.request(url, method: .get, headers: headers).responseJSON { response in
+            completion(response.result)
+        }
+    }
 }

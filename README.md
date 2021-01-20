@@ -61,7 +61,6 @@ self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId)
 //self.client?.accessToken = "accessToken"
 
 
-
 /// Register by Email and Password.
 /// 使用邮箱注册
 ///
@@ -982,6 +981,62 @@ func loginByWeChatCode() {
     self.client?.loginByWeChatCodeWithResult(code: code, completion: { result in
         print(result)
     })
+}
+
+
+/// User Id Verify.
+/// 实名认证 - 使用姓名，身份证号码，人脸图像，需要登录后调用
+///
+func userIdVerify() {
+    //*需要登录后调用
+    
+    //via faceImageURL
+    self.client?.userIdVerify(name: "张三", idCard: "123456", faceImageURL: URL(string: "http://xxx.jpg")!, completion: { result in
+        print(result)
+    })
+    
+    //via faceImageBase64, 如使用 UIImage 可以使用 getBase64FromImage 转换
+//        self.client?.userIdVerify(name: "张三", idCard: "123456", faceImageBase64: "data:image/jpeg;base64,/9j/4QFmRXhpZgA", completion: { result in
+//            print(result)
+//        })
+    
+//        success msg
+//        {
+//            "code": 200,
+//            "message": "实名认证成功"
+//        }
+}
+
+/// Get Base64 from UIImage
+/// UIImage 转 Base64
+///
+func getBase64FromImage(_ name: String) -> String{
+    let imageOrigin = UIImage(named: name)
+    if let image = imageOrigin {
+        let dataTmp = image.pngData()
+        if let data = dataTmp {
+            let imageStrTT = data.base64EncodedString()
+            return imageStrTT
+        }
+    }
+    return ""
+}
+
+/// User Id Verify Status.
+/// 查询实名认证状态，需要登录后调用
+///
+func userIdVerifyStatus() {
+    //*需要登录后调用
+    self.client?.userIdVerifyStatus(completion: { result in
+        print(result)
+    })
+    
+//        success msg
+//        {
+//            "code": 200,
+//            "data": true,
+//            "message": "查询实名认证状态成功"
+//        }
 }
 
 ```
