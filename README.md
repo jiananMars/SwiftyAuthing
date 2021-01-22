@@ -1045,5 +1045,28 @@ func userIdVerifyStatus() {
 //        }
 }
 
+/// Social Link.
+/// 将社交账号绑定到主账号
+///
+func socialLink() {
+    let primaryUserToken = ""
+    let secondaryUserToken = ""
+
+//        //*需要登录后调用，primaryUserToken 为当前登录用户的 token
+//        self.client?.socialLink(secondaryUserToken: secondaryUserToken, completion: { result in
+//            print(result)
+//        })
+    
+    self.client?.socialLink(primaryUserToken: primaryUserToken, secondaryUserToken: secondaryUserToken, completion: { result in
+        print(result)
+    })
+    
+//        success msg
+//        {
+//          "code": 200,
+//          "message": "绑定成功"
+//        }
+}
+
 ```
 

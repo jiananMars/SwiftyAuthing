@@ -51,6 +51,7 @@ class ViewController: UIViewController {
         //self.getCurrentUser()
         //self.userIdVerify()
         //self.userIdVerifyStatus()
+        //self.socialLink()
     }
     
     @IBAction func action1(_ sender: Any) {
