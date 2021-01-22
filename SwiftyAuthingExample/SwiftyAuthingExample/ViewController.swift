@@ -51,6 +51,7 @@ class ViewController: UIViewController {
         //self.getCurrentUser()
         //self.userIdVerify()
         //self.userIdVerifyStatus()
+        //self.socialLink()
     }
     
     @IBAction func action1(_ sender: Any) {
@@ -1081,6 +1082,29 @@ class ViewController: UIViewController {
 //            "code": 200,
 //            "data": true,
 //            "message": "查询实名认证状态成功"
+//        }
+    }
+    
+    /// Social Link.
+    /// 将社交账号绑定到主账号
+    ///
+    func socialLink() {
+        let primaryUserToken = ""
+        let secondaryUserToken = ""
+
+//        //*需要登录后调用，primaryUserToken 为当前登录用户的 token
+//        self.client?.socialLink(secondaryUserToken: secondaryUserToken, completion: { result in
+//            print(result)
+//        })
+        
+        self.client?.socialLink(primaryUserToken: primaryUserToken, secondaryUserToken: secondaryUserToken, completion: { result in
+            print(result)
+        })
+        
+//        success msg
+//        {
+//          "code": 200,
+//          "message": "绑定成功"
 //        }
     }
     

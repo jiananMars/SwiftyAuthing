@@ -46,6 +46,10 @@ public class Config {
     ///
     public static let idverifystatus = domain + "/api/v2/users/me/id-verify/status"
     
+    /// Social link Host.
+    ///
+    public static let sociallink = domain + "/api/v2/users/link"
+    
     /// Encrypt with PKCS1v1.5 PublicKey.
     ///
     public static let publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4xKeUgQ+Aoz7TLfAfs9+paePb" +
@@ -81,9 +85,12 @@ public class Config {
     ///
     public static let contentTypeHeader = "Content-Type"
     
-    /// Content-Type for Header.
+    /// Content-Type Json for Header.
     ///
-    public static let contentTypeHeaderValue = "application/json; charset=utf-8"
+    public static let contentTypeHeaderJsonValue = "application/json; charset=utf-8"
     
+    /// Content-Type application/x-www-form-urlencoded for Header.
+    ///
+    public static let contentTypeHeaderUrlencodedValue = "application/x-www-form-urlencoded"
     
 }
