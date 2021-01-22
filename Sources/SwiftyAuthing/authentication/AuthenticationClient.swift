@@ -1809,7 +1809,7 @@ public class AuthenticationClient {
         let faceImageLink = faceImageURL.absoluteString
         let headers: HTTPHeaders = [
             Config.userpoolidHeader: userPoolId,
-            Config.contentTypeHeader: Config.contentTypeHeaderValue,
+            Config.contentTypeHeader: Config.contentTypeHeaderJsonValue,
             Config.authorizationHeader: token
         ]
         let parameters: [String: String] = [
@@ -1838,7 +1838,7 @@ public class AuthenticationClient {
         let userPoolId = self.userPoolId ?? ""
         let headers: HTTPHeaders = [
             Config.userpoolidHeader: userPoolId,
-            Config.contentTypeHeader: Config.contentTypeHeaderValue,
+            Config.contentTypeHeader: Config.contentTypeHeaderJsonValue,
             Config.authorizationHeader: token
         ]
         let parameters: [String: String] = [
@@ -1870,4 +1870,57 @@ public class AuthenticationClient {
             completion(response.result)
         }
     }
+    
+    /// Social Link.
+    /// 将社交账号绑定到主账号，需要登录后调用。
+    /// - parameter secondaryUserToken: 社交账号 Token
+    /// - parameter completion: 服务器端返回的数据
+    /// - returns: N/A
+    ///
+    /// 将社交账号绑定到主账号，需要登录后调用，primaryUserToken 为当前登录用户的 token。
+    /// 如果希望绑定一个社交账号到一个主账号，那么终端用户必须提供社交账号的凭证和主账号的凭证，这样才能证明他是这两个账号的主人，然后进行绑定。
+    /// 当完成社交账号绑定后，原来社交账号对应的数据会被删除，无法再次登录到原来的社交账号。
+    /// https://docs.authing.cn/user/link-account.html
+    ///
+    public func socialLink(secondaryUserToken: String, completion: @escaping(Any) -> Void) {
+        let url = Config.sociallink
+        let token = UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
+        let headers: HTTPHeaders = [
+            Config.contentTypeHeader: Config.contentTypeHeaderUrlencodedValue
+        ]
+        let parameters: [String: String] = [
+            "primaryUserToken": token,
+            "secondaryUserToken": secondaryUserToken
+        ]
+        AF.request(url, method: .post, parameters: parameters, encoder: URLEncodedFormParameterEncoder.default, headers: headers).responseJSON { response in
+            completion(response.result)
+        }
+    }
+    
+    /// Social Link.
+    /// 将社交账号绑定到主账号
+    /// - parameter primaryUserToken: 主账号 Token
+    /// - parameter secondaryUserToken: 社交账号 Token
+    /// - parameter completion: 服务器端返回的数据
+    /// - returns: N/A
+    ///
+    /// 将社交账号绑定到主账号。
+    /// 如果希望绑定一个社交账号到一个主账号，那么终端用户必须提供社交账号的凭证和主账号的凭证，这样才能证明他是这两个账号的主人，然后进行绑定。
+    /// 当完成社交账号绑定后，原来社交账号对应的数据会被删除，无法再次登录到原来的社交账号。
+    /// https://docs.authing.cn/user/link-account.html
+    ///
+    public func socialLink(primaryUserToken: String, secondaryUserToken: String, completion: @escaping(Any) -> Void) {
+        let url = Config.sociallink
+        let headers: HTTPHeaders = [
+            Config.contentTypeHeader: Config.contentTypeHeaderUrlencodedValue
+        ]
+        let parameters: [String: String] = [
+            "primaryUserToken": primaryUserToken,
+            "secondaryUserToken": secondaryUserToken
+        ]
+        AF.request(url, method: .post, parameters: parameters, encoder: URLEncodedFormParameterEncoder.default, headers: headers).responseJSON { response in
+            completion(response.result)
+        }
+    }
+    
 }
