@@ -1161,11 +1161,9 @@ public class AuthenticationClient {
                 } else {
                     //Failure
                     print(status.errors ?? "")
-                    completion(result)
                 }
             case .failure(let error):
                 print("Failure: \(error)")
-                completion(result)
             }
         })
     }
