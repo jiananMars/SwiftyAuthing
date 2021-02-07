@@ -1156,16 +1156,16 @@ public class AuthenticationClient {
                     let _country = (country != nil) ? country : u?.country
                     
                     Network.shared.apollo.perform(mutation: UpdateUserMutation(id: id, username: _username, nickname: _nickname, photo: _photo, company: _company, browser: _browser, device: _device, lastIP: _lastIP, name: _name, givenName: _givenName, familyName: _familyName, middleName: _middleName, profile: _profile, preferredUsername: _preferredUsername, website: _website, gender: _gender, birthdate: _birthdate, zoneinfo: _zoneinfo, locale: _locale, address: _address, streetAddress: _streetAddress, locality: _locality, region: _region, postalCode: _postalCode, city: _city, province: _province, country: _country), queue: DispatchQueue.main) { result in
-                        
                         completion(result)
-                        
                     }
                 } else {
                     //Failure
                     print(status.errors ?? "")
+                    completion(result)
                 }
             case .failure(let error):
                 print("Failure: \(error)")
+                completion(result)
             }
         })
     }
