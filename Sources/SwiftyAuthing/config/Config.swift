@@ -75,7 +75,7 @@ public class Config {
     
     /// AccessToken Key.
     ///
-    public static let keyAccessToken = "accessToken"
+    public static let keyAccessToken = "token"
     
     /// Authorization for Header.
     ///

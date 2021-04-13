@@ -58,7 +58,7 @@ self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId)
 
 // 如在此类中调用用户 User 相关方法，需要在此设置此用户保存的有效的用户 AccessToken。
 // 如需变动用户 AccessToken，只需再次赋值即可。
-//self.client?.accessToken = "accessToken"
+//self.client?.token = "token"
 
 
 /// Register by Email and Password.
@@ -347,12 +347,12 @@ func loginByPhonePassword() {
 /// 检测 Token 登录状态
 ///
 func checkLoginStatus() {
-    // Change your accessToken here
-    let accessToken = self.client?.accessToken ?? ""
-    print("accessToken: " + accessToken)
+    // Change your token here
+    let token = self.client?.token ?? ""
+    print("token: " + token)
     
     //Normal
-//        self.client?.checkLoginStatus(token: accessToken, completion:{ status in
+//        self.client?.checkLoginStatus(token: token, completion:{ status in
 //            if(status.errors == nil) {
 //                //Success
 //                print(status.data?.checkLoginStatus ?? "")
@@ -363,7 +363,7 @@ func checkLoginStatus() {
 //        })
     
     //With result
-    self.client?.checkLoginStatusWithResult(token: accessToken, completion:{ result in
+    self.client?.checkLoginStatusWithResult(token: token, completion:{ result in
         switch result {
         case .success(let graphQLResult):
             let status = graphQLResult

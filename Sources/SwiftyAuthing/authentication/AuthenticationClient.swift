@@ -29,14 +29,14 @@ public class AuthenticationClient {
     
     /// AccessToken: The AccessToken of user.
     ///
-    private var _accessToken: String?
-    public var accessToken: String? {
+    private var _token: String?
+    public var token: String? {
         get {
-            return self._accessToken
+            return self._token
         }
         set {
-            self.setAccessToken(newValue ?? "")
-            self._accessToken = newValue
+            self.setToken(newValue ?? "")
+            self._token = newValue
         }
     }
 
@@ -141,8 +141,8 @@ public class AuthenticationClient {
                 print("Failure: \(error)")
             case .success(let graphQLResult):
                 if(generateToken ?? false) {
-                    let accessToken = graphQLResult.data?.registerByEmail?.token ?? ""
-                    self.setAccessToken(accessToken)
+                    let token = graphQLResult.data?.registerByEmail?.token ?? ""
+                    self.setToken(token)
                 }
                 completion(graphQLResult)
             }
@@ -169,8 +169,8 @@ public class AuthenticationClient {
                 print("Failure: \(error)")
             case .success(let graphQLResult):
                 if(generateToken ?? false) {
-                    let accessToken = graphQLResult.data?.registerByEmail?.token ?? ""
-                    self.setAccessToken(accessToken)
+                    let token = graphQLResult.data?.registerByEmail?.token ?? ""
+                    self.setToken(token)
                 }
             }
             completion(result)
@@ -233,8 +233,8 @@ public class AuthenticationClient {
                 print("Failure: \(error)")
             case .success(let graphQLResult):
                 if(generateToken ?? false) {
-                    let accessToken = graphQLResult.data?.registerByUsername?.token ?? ""
-                    self.setAccessToken(accessToken)
+                    let token = graphQLResult.data?.registerByUsername?.token ?? ""
+                    self.setToken(token)
                 }
                 completion(graphQLResult)
             }
@@ -261,8 +261,8 @@ public class AuthenticationClient {
                 print("Failure: \(error)")
             case .success(let graphQLResult):
                 if(generateToken ?? false) {
-                    let accessToken = graphQLResult.data?.registerByUsername?.token ?? ""
-                    self.setAccessToken(accessToken)
+                    let token = graphQLResult.data?.registerByUsername?.token ?? ""
+                    self.setToken(token)
                 }
             }
             completion(result)
@@ -364,8 +364,8 @@ public class AuthenticationClient {
                 print("Failure: \(error)")
             case .success(let graphQLResult):
                 if(generateToken ?? false) {
-                    let accessToken = graphQLResult.data?.registerByPhoneCode?.token ?? ""
-                    self.setAccessToken(accessToken)
+                    let token = graphQLResult.data?.registerByPhoneCode?.token ?? ""
+                    self.setToken(token)
                 }
                 completion(graphQLResult)
             }
@@ -393,8 +393,8 @@ public class AuthenticationClient {
                 print("Failure: \(error)")
             case .success(let graphQLResult):
                 if(generateToken ?? false) {
-                    let accessToken = graphQLResult.data?.registerByPhoneCode?.token ?? ""
-                    self.setAccessToken(accessToken)
+                    let token = graphQLResult.data?.registerByPhoneCode?.token ?? ""
+                    self.setToken(token)
                 }
             }
             completion(result)
@@ -494,8 +494,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByEmail?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByEmail?.token ?? ""
+                self.setToken(token)
                 completion(graphQLResult)
             }
         }
@@ -517,8 +517,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByEmail?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByEmail?.token ?? ""
+                self.setToken(token)
             }
             completion(result)
         }
@@ -544,8 +544,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByEmail?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByEmail?.token ?? ""
+                self.setToken(token)
                 completion(graphQLResult)
             }
         }
@@ -569,8 +569,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByEmail?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByEmail?.token ?? ""
+                self.setToken(token)
             }
             completion(result)
         }
@@ -591,8 +591,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByUsername?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByUsername?.token ?? ""
+                self.setToken(token)
                 completion(graphQLResult)
             }
         }
@@ -613,8 +613,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByUsername?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByUsername?.token ?? ""
+                self.setToken(token)
             }
             completion(result)
         }
@@ -638,8 +638,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByUsername?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByUsername?.token ?? ""
+                self.setToken(token)
                 completion(graphQLResult)
             }
         }
@@ -663,8 +663,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByUsername?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByUsername?.token ?? ""
+                self.setToken(token)
             }
             completion(result)
         }
@@ -686,8 +686,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByPhoneCode?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByPhoneCode?.token ?? ""
+                self.setToken(token)
                 completion(graphQLResult)
             }
         }
@@ -708,8 +708,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByPhoneCode?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByPhoneCode?.token ?? ""
+                self.setToken(token)
             }
             completion(result)
         }
@@ -732,8 +732,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByPhoneCode?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByPhoneCode?.token ?? ""
+                self.setToken(token)
                 completion(graphQLResult)
             }
         }
@@ -755,8 +755,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByPhoneCode?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByPhoneCode?.token ?? ""
+                self.setToken(token)
             }
             completion(result)
         }
@@ -777,8 +777,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByPhonePassword?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByPhonePassword?.token ?? ""
+                self.setToken(token)
                 completion(graphQLResult)
             }
         }
@@ -799,8 +799,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByPhonePassword?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByPhonePassword?.token ?? ""
+                self.setToken(token)
             }
             completion(result)
         }
@@ -824,8 +824,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByPhonePassword?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByPhonePassword?.token ?? ""
+                self.setToken(token)
                 completion(graphQLResult)
             }
         }
@@ -849,8 +849,8 @@ public class AuthenticationClient {
             case .failure(let error):
                 print("Failure: \(error)")
             case .success(let graphQLResult):
-                let accessToken = graphQLResult.data?.loginByPhonePassword?.token ?? ""
-                self.setAccessToken(accessToken)
+                let token = graphQLResult.data?.loginByPhonePassword?.token ?? ""
+                self.setToken(token)
             }
             completion(result)
         }
@@ -1730,8 +1730,8 @@ public class AuthenticationClient {
                 let json = JSON(value)
                 let code = json["code"].intValue
                 if(code == 200) {
-                    let accessToken = json["data"]["token"].stringValue
-                    self.setAccessToken(accessToken)
+                    let token = json["data"]["token"].stringValue
+                    self.setToken(token)
                 }
                 completion(value)
             case .failure(let error):
@@ -1758,8 +1758,8 @@ public class AuthenticationClient {
                 let json = JSON(value)
                 let code = json["code"].intValue
                 if(code == 200) {
-                    let accessToken = json["data"]["token"].stringValue
-                    self.setAccessToken(accessToken)
+                    let token = json["data"]["token"].stringValue
+                    self.setToken(token)
                 }
             case .failure(let error):
                 print(error)
@@ -1775,8 +1775,8 @@ public class AuthenticationClient {
     ///
     /// 设置用户的 AccessToken
     ///
-    private func setAccessToken(_ token: String) {
-        self._accessToken = token
+    private func setToken(_ token: String) {
+        self._token = token
         UserDefaults.standard.setValue(token, forKey: Config.keyAccessToken)
     }
     
@@ -1787,7 +1787,7 @@ public class AuthenticationClient {
     /// 清空用户的 AccessToken
     ///
     private func removeAccessToken() {
-        self._accessToken = ""
+        self._token = ""
         UserDefaults.standard.setValue("", forKey: Config.keyAccessToken)
     }
 
