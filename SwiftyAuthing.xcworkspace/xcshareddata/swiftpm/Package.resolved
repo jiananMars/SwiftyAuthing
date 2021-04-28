@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/stencilproject/Stencil.git",
         "state": {
           "branch": null,
-          "revision": "94197b3adbbf926348ad8765476a158aa4e54f8a",
-          "version": "0.14.0"
+          "revision": "973e190edf5d09274e4a6bc2e636c86899ed84c3",
+          "version": "0.14.1"
         }
       },
       {
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/Woo-Interactive/SwiftyAuthing.git",
         "state": {
           "branch": null,
-          "revision": "1f6a0a7215203545040fdd7400b53541a9074bbd",
-          "version": "1.6.5"
+          "revision": "e0c4d75b5d30b88da28014e1f0423759c012892d",
+          "version": "1.7.0"
         }
       }
     ]
