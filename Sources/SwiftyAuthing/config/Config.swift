@@ -11,9 +11,13 @@ import Foundation
 ///
 public class Config {
     
+    /// Default Domain.
+    ///
+    public static let domainDefault = "https://core.authing.cn"
+    
     /// Domain.
     ///
-    public static let domain = "https://core.authing.cn"
+    public static var domain = "https://core.authing.cn"
     
     /// GraphQL Host.
     ///
@@ -93,4 +97,13 @@ public class Config {
     ///
     public static let contentTypeHeaderUrlencodedValue = "application/x-www-form-urlencoded"
     
+    /// User Domain Key.
+    ///
+    public static let keyDomain = "domain"
+    
+    /// Get Host by Domain.
+    ///
+    public static func getHost(domain: String) -> String {
+        return domain + "/graphql/v2"
+    }
 }

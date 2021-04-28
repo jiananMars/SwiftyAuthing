@@ -20,7 +20,10 @@ class ViewController: UIViewController {
     /// Find in https://console.authing.cn Setting - Basic Information & Application.
     let userPoolId = "userPoolId"
     let appId = "appId"
-
+    
+    //Private cloud domain
+    //let domain = "https://core.xxxx.cn"
+    
     var client: AuthenticationClient?
     var userid = ""
     
@@ -33,6 +36,9 @@ class ViewController: UIViewController {
         //使用 userPoolId 和 appId 同时初始化
         self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId)
 
+        //使用 userPoolId, appId, domain 同时初始化
+        //self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId, domain: domain)
+       
         // 如在此类中调用用户 User 相关方法，需要在此设置此用户保存的有效的用户 AccessToken。
         // 如需变动用户 AccessToken，只需再次赋值即可。
         //self.client?.token = "token"

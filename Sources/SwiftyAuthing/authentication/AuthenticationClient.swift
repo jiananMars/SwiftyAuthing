@@ -27,6 +27,10 @@ public class AuthenticationClient {
     ///
     public var appId: String?
     
+    /// Domain: The private domain.
+    ///
+    public var domain: String = Config.domainDefault
+    
     /// AccessToken: The AccessToken of user.
     ///
     private var _token: String?
@@ -85,6 +89,23 @@ public class AuthenticationClient {
         UserDefaults.standard.setValue(userPoolId, forKey: Config.keyUserPoolId)
     }
     
+    /// Init with UserPoolId
+    /// userPoolId: The user pool Id.
+    /// appId: The App ID.
+    /// Find in https://console.authing.cn Setting - Basic Information & Application.
+    ///
+    public init(userPoolId: String, appId: String, domain: String) {
+        self.userPoolId = userPoolId
+        self.appId = appId
+        UserDefaults.standard.setValue(userPoolId, forKey: Config.keyUserPoolId)
+        UserDefaults.standard.setValue(appId, forKey: Config.keyAppId)
+        
+        let host = Config.getHost(domain: domain)
+        self.domain = domain
+        self.host = host
+        Network.shared.host = host
+        UserDefaults.standard.setValue(domain, forKey: Config.keyDomain)
+    }
     
     /// Register by Email and Password.
     /// 使用邮箱注册
@@ -445,6 +466,7 @@ public class AuthenticationClient {
     /// 发送短信验证码, 短信验证码的有效时间为 60 s。
     ///
     public func sendSmsCode(phone: String, completion: @escaping(Any) -> Void) {
+        Config.domain = self.domain
         let url = Config.sms
         let parameters = ["phone": phone]
         let headers: HTTPHeaders = [
@@ -469,6 +491,7 @@ public class AuthenticationClient {
     /// 发送短信验证码, 短信验证码的有效时间为 60 s。
     ///
     public func sendSmsCodeWithResult(phone: String, completion: @escaping(Any) -> Void) {
+        Config.domain = self.domain
         let url = Config.sms
         let parameters = ["phone": phone]
         let headers: HTTPHeaders = [
@@ -1168,6 +1191,91 @@ public class AuthenticationClient {
         })
     }
     
+    /// Update Profile.
+    /// 修改用户资料
+    /// - parameter username: 用户名
+    /// - parameter nickname: 昵称
+    /// - parameter photo: 头像
+    /// - parameter company: 公司
+    /// - parameter browser: 浏览器
+    /// - parameter device: 设备
+    /// - parameter lastIP: 最近登录的 IP
+    /// - parameter name: Name
+    /// - parameter givenName: Given Name
+    /// - parameter familyName: Family Name
+    /// - parameter middleName: Middle Name
+    /// - parameter profile: Profile Url
+    /// - parameter preferredUsername: Preferred Name
+    /// - parameter website: 个人网站
+    /// - parameter gender: 性别, F 表示男性、W 表示女性、未知表示 U
+    /// - parameter birthdate: 生日
+    /// - parameter zoneinfo: 时区
+    /// - parameter locale: 语言
+    /// - parameter address: 地址
+    /// - parameter streetAddress: 街道地址
+    /// - parameter locality: Locality
+    /// - parameter region: 地域
+    /// - parameter postalCode: 邮编
+    /// - parameter city: 城市
+    /// - parameter province: 省份
+    /// - parameter country: 国家
+    /// - parameter completion: 服务器端返回的数据
+    /// - returns: N/A
+    ///
+    /// 修改用户资料，此接口不能用于修改手机号、邮箱、密码，如果需要请调用 updatePhone、updateEmail、updatePassword 接口。
+    ///
+    public func updateProfileWithResult2(username: String? = nil, nickname: String? = nil, photo: String? = nil, company: String? = nil, browser: String? = nil, device: String? = nil, lastIP: String? = nil, name: String? = nil, givenName: String? = nil, familyName: String? = nil, middleName: String? = nil, profile: String? = nil, preferredUsername: String? = nil, website: String? = nil, gender: String? = nil, birthdate: String? = nil, zoneinfo: String? = nil, locale: String? = nil, address: String? = nil, streetAddress: String? = nil, locality: String? = nil, region: String? = nil, postalCode: String? = nil, city: String? = nil, province: String? = nil, country: String? = nil, completion: @escaping ((Result<GraphQLResult<UpdateUserMutation.Data>, Error>) -> Void)) {
+        
+        let id = self.getUserId()
+        self.getCurrentUserWithResult(completion: {result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    let u = status.data?.user
+                    let _username = (username != nil) ? username : u?.username
+                    let _nickname = (nickname != nil) ? nickname : u?.nickname
+                    let _photo = (photo != nil) ? photo : u?.photo
+                    let _company = (company != nil) ? company : u?.company
+                    let _browser = (browser != nil) ? browser : u?.browser
+                    let _device = (device != nil) ? device : u?.device
+                    let _lastIP = (lastIP != nil) ? lastIP : u?.lastIp
+                    let _name = (name != nil) ? name : u?.name
+                    let _givenName = (givenName != nil) ? givenName : u?.givenName
+                    let _familyName = (familyName != nil) ? familyName : u?.familyName
+                    let _middleName = (middleName != nil) ? middleName : u?.middleName
+                    let _profile = (profile != nil) ? profile : u?.profile
+                    let _preferredUsername = (preferredUsername != nil) ? preferredUsername : u?.preferredUsername
+                    let _website = (website != nil) ? website : u?.website
+                    let _gender = (gender != nil) ? gender : u?.gender
+                    let _birthdate = (birthdate != nil) ? birthdate : u?.birthdate
+                    let _zoneinfo = (zoneinfo != nil) ? zoneinfo : u?.zoneinfo
+                    let _locale = (locale != nil) ? locale : u?.locale
+                    let _address = (address != nil) ? address : u?.address
+                    let _streetAddress = (streetAddress != nil) ? streetAddress : u?.streetAddress
+                    let _locality = (locality != nil) ? locality : u?.locality
+                    let _region = (region != nil) ? region : u?.region
+                    let _postalCode = (postalCode != nil) ? postalCode : u?.postalCode
+                    let _city = (city != nil) ? city : u?.city
+                    let _province = (province != nil) ? province : u?.province
+                    let _country = (country != nil) ? country : u?.country
+                    
+                    Network.shared.apollo.perform(mutation: UpdateUserMutation(id: id, username: _username, nickname: _nickname, photo: _photo, company: _company, browser: _browser, device: _device, lastIP: _lastIP, name: _name, givenName: _givenName, familyName: _familyName, middleName: _middleName, profile: _profile, preferredUsername: _preferredUsername, website: _website, gender: _gender, birthdate: _birthdate, zoneinfo: _zoneinfo, locale: _locale, address: _address, streetAddress: _streetAddress, locality: _locality, region: _region, postalCode: _postalCode, city: _city, province: _province, country: _country), queue: DispatchQueue.main) { result2 in
+                        
+                        completion(result2)
+                        
+                    }
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+            case .failure(let error):
+                print("Failure: \(error)")
+            }
+        })
+    }
+    
     
     /// Update Password.
     /// 更新用户密码
@@ -1623,6 +1731,7 @@ public class AuthenticationClient {
     public func listOrg(completion: @escaping(Any) -> Void) {
         let token = UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
         let userPoolId = self.userPoolId ?? ""
+        Config.domain = self.domain
         let url = Config.orgs
         let headers: HTTPHeaders = [
             Config.userpoolidHeader: userPoolId,
@@ -1648,6 +1757,7 @@ public class AuthenticationClient {
     public func listOrgWithResult(completion: @escaping(Any) -> Void) {
         let token = UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
         let userPoolId = self.userPoolId ?? ""
+        Config.domain = self.domain
         let url = Config.orgs
         let headers: HTTPHeaders = [
             Config.userpoolidHeader: userPoolId,
@@ -1672,6 +1782,7 @@ public class AuthenticationClient {
     /// 使用 LDAP 用户名登录。如果你的用户池配置了登录失败检测，当同一  IP 下登录多次失败的时候会要求用户输入图形验证码（code 为 2000)。
     ///
     public func loginByLdap(username: String, password: String, autoRegister: Bool? = nil, captchaCode: String? = nil, clientIp: String? = nil, completion: @escaping(Any) -> Void) {
+        Config.domain = self.domain
         let url = Config.verifyuser
         let parameters = [
             "username": username,
@@ -1701,6 +1812,7 @@ public class AuthenticationClient {
     /// 使用 LDAP 用户名登录。如果你的用户池配置了登录失败检测，当同一  IP 下登录多次失败的时候会要求用户输入图形验证码（code 为 2000)。
     ///
     public func loginByLdapWithResult(username: String, password: String, autoRegister: Bool? = nil, captchaCode: String? = nil, clientIp: String? = nil, completion: @escaping(Any) -> Void) {
+        Config.domain = self.domain
         let url = Config.verifyuser
         let parameters = [
             "username": username,
@@ -1723,6 +1835,7 @@ public class AuthenticationClient {
     public func loginByWeChatCode(code: String, completion: @escaping(Any) -> Void) {
         let userPoolId = self.userPoolId ?? ""
         let appId = self.appId ?? ""
+        Config.domain = self.domain
         let url = Config.wechatmobile(userPoolId: userPoolId, code: code, appId: appId)
         AF.request(url, method: .get).responseJSON { response in
             switch response.result {
@@ -1751,6 +1864,7 @@ public class AuthenticationClient {
     public func loginByWeChatCodeWithResult(code: String, completion: @escaping(Any) -> Void) {
         let userPoolId = self.userPoolId ?? ""
         let appId = self.appId ?? ""
+        Config.domain = self.domain
         let url = Config.wechatmobile(userPoolId: userPoolId, code: code, appId: appId)
         AF.request(url, method: .get).responseJSON { response in
             switch response.result {
@@ -1802,6 +1916,7 @@ public class AuthenticationClient {
     /// 使用姓名，身份证号码，人脸图像认证
     ///
     public func userIdVerify(name: String, idCard: String, faceImageURL: URL, completion: @escaping(Any) -> Void) {
+        Config.domain = self.domain
         let url = Config.idverify
         let token = UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
         let userPoolId = self.userPoolId ?? ""
@@ -1832,6 +1947,7 @@ public class AuthenticationClient {
     /// 实名认证 - 使用姓名，身份证号码，人脸图像，需要登录后调用
     ///
     public func userIdVerify(name: String, idCard: String, faceImageBase64: String, completion: @escaping(Any) -> Void) {
+        Config.domain = self.domain
         let url = Config.idverify
         let token = UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
         let userPoolId = self.userPoolId ?? ""
@@ -1858,6 +1974,7 @@ public class AuthenticationClient {
     /// 查询实名认证状态，需要登录后调用
     ///
     public func userIdVerifyStatus(completion: @escaping(Any) -> Void) {
+        Config.domain = self.domain
         let url = Config.idverifystatus
         let token = UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
         let userPoolId = self.userPoolId ?? ""
@@ -1869,6 +1986,7 @@ public class AuthenticationClient {
             completion(response.result)
         }
     }
+    
     
     /// Social Link.
     /// 将社交账号绑定到主账号，需要登录后调用。
@@ -1882,6 +2000,7 @@ public class AuthenticationClient {
     /// https://docs.authing.cn/user/link-account.html
     ///
     public func socialLink(secondaryUserToken: String, completion: @escaping(Any) -> Void) {
+        Config.domain = self.domain
         let url = Config.sociallink
         let token = UserDefaults.standard.string(forKey: Config.keyAccessToken) ?? ""
         let headers: HTTPHeaders = [
@@ -1909,6 +2028,7 @@ public class AuthenticationClient {
     /// https://docs.authing.cn/user/link-account.html
     ///
     public func socialLink(primaryUserToken: String, secondaryUserToken: String, completion: @escaping(Any) -> Void) {
+        Config.domain = self.domain
         let url = Config.sociallink
         let headers: HTTPHeaders = [
             Config.contentTypeHeader: Config.contentTypeHeaderUrlencodedValue
