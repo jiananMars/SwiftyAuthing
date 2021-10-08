@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="index.js"></script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- JavaScript 代码 -->
+<script src="https://cdn.jsdelivr.net/npm/@authing/native-js-ui-components"></script>
+
+<!-- CSS 文件 -->
+<link href="https://cdn.jsdelivr.net/npm/@authing/native-js-ui-components/lib/index.min.css" rel="stylesheet"></link>
+
+  <title>Document</title>
+</head>
+<body>
+
+  <script>
+      function loginSuccess()
+      {
+          webkit.messageHandlers.regcallBack.postMessage('1111')
+      }
+      
+      var guard = new AuthingNativeJsUIComponents.AuthingGuard('6145cf972806f4a1c10d72f5')
+      
+      // 事件监听
+      guard.on('load', (authClient) => console.log(authClient))
+      
+      guard.on('login', (user) => {
+        loginSuccess();
+      })
+    
+  </script>
+</body>
+</html>
