@@ -48,23 +48,23 @@
 
 ​	进入 https://console.authing.cn/ ，注册开发者账号。
 
-<img src="/Users/xiangwei/Authing/接口文档/接入手册/swift1-1.png" alt="image-20211012162126941" style="zoom:50%;" />
+<img src="./images/swift1-1.png" alt="image-20211012162126941" style="zoom:50%;" />
 
 ​	注册完成后，登录后，进入主页面
 
-<img src="/Users/xiangwei/Authing/接口文档/接入手册/swift1-2.png" alt="image-20211012162407286" style="zoom:40%;" />
+<img src="./images/swift1-2.png" alt="image-20211012162407286" style="zoom:40%;" />
 
 ​	点击【点击添加用户池】按钮，弹出“新建用户池”窗口
 
-<img src="/Users/xiangwei/Library/Application Support/typora-user-images/image-20211012162526204.png" alt="image-20211012162526204" style="zoom:40%;" />
+<img src="./images/swift1-10.png" alt="image-20211012162526204" style="zoom:40%;" />
 
 ​	输入【用户池名称】（必填）和【用户池Logo】（非必填），创建成功后，进入用户池管理首页：
 
-<img src="/Users/xiangwei/Authing/接口文档/接入手册/swift1-4.png" alt="image-20211012163212382" style="zoom:60%;" />
+<img src="./images/swift1-4.png" alt="image-20211012163212382" style="zoom:60%;" />
 
 ​	点击左上【 AuthingTest 】下拉菜单按钮，选择【设置】，进入用户池详情页：
 
-<img src="/Users/xiangwei/Authing/接口文档/接入手册/swift1-5.png" alt="image-20211012164200877" style="zoom:67%;" />
+<img src="./images/swift1-5.png" alt="image-20211012164200877" style="zoom:67%;" />
 
 ​	这里有用户池的详细信息，包含：**用户池 ID**，**用户池密钥** 等信息，以及用户池的管理功能。
 
@@ -72,15 +72,15 @@
 
 ​	在用户池管理首页，点击左侧菜单栏【应用】按钮，进入应用管理页：
 
-<img src="/Users/xiangwei/Authing/接口文档/接入手册/swift1-6.png" alt="image-20211012164354742" style="zoom:67%;" />
+<img src="./images/swift1-6.png" alt="image-20211012164354742" style="zoom:67%;" />
 
 ​	点击【添加应用】按钮，进入应用创建窗口：
 
-<img src="/Users/xiangwei/Authing/接口文档/接入手册/swift1-7.png" alt="image-20211012164821912" style="zoom:50%;" />
+<img src="./images/swift1-7.png" alt="image-20211012164821912" style="zoom:50%;" />
 
 ​		选择【自建应用】，并输入【应用名称】和【认证地址】，点击【创建】按钮，创建移动应用，创建成功后，进入应用详情页：
 
-<img src="/Users/xiangwei/Authing/接口文档/接入手册/swift1-8.png" alt="image-20211012165037456" style="zoom:67%;" />
+<img src="./images/swift1-8.png" alt="image-20211012165037456" style="zoom:67%;" />
 
 ​	应用详情页有应用的 详细信息，包含了：**App ID** 等信息。
 
@@ -88,7 +88,7 @@
 
 1. 进入已经成功pod 更新后的工程根目录下后，点击 SwiftyAuthingExample.xcworkspace 使用 Xcode 打开工程，打开 ViewController.swift 文件，在20，21 行找到 **UserPoolId, appId** ，将之前创建的用户池 ID 和 App ID（应用 ID ）分别更新。
 
-<img src="/Users/xiangwei/Authing/接口文档/接入手册/swift1-9.png" alt="image-20211012175745205" style="zoom:50%;" />
+<img src="./images/swift1-9.png" alt="image-20211012175745205" style="zoom:50%;" />
 
 
 2. 用模拟器或者真机启动 **SwiftyAuthing** 项目。
