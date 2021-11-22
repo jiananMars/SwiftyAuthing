@@ -95,6 +95,11 @@ public class AuthingHttpClient
     }
     
     //MARK: -- Request With DataRequest
+    func dataRequest(_ convertible: URLConvertible,
+                                             method: HTTPMethod = .get) -> DataRequest {
+        return AHC.dataRequest(convertible, method: method, parameters: Dictionary<String, String>(),encoder: URLEncodedFormParameterEncoder.default,headers: Config.keyHeaders)
+    }
+    
     func dataRequest<Parameters: Encodable>(_ convertible: URLConvertible,
                                              method: HTTPMethod = .get,
                                              parameters: Parameters? = nil) -> DataRequest {
