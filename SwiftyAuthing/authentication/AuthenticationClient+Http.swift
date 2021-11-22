@@ -299,29 +299,7 @@ extension AuthenticationClient
         let appId = self.appId ?? ""
         Config.domain = self.domain
         let url = Config.wechatmobile(userPoolId: userPoolId, code: code, appId: appId)
-//        AF.request(url, method: .get).responseJSON { response in
-//            switch response.result {
-//            case .success(let value):
-//                let json = JSON(value)
-//                let code = json["code"].intValue
-//                if(code == 200) {
-//                    let token = json["data"]["token"].stringValue
-//                    self.setToken(token)
-//                }
-//
-//                print("\(#function) success")
-//
-//                completion(value)
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-        
-        let parameters = [
-            "app_id": Config.keyAppId
-        ]
-        
-        AHC.dataRequest(url, method: .get, parameters: parameters).responseJSON { (response) in
+        AHC.dataRequest(url, method: .get).responseJSON { (response) in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
@@ -353,11 +331,7 @@ extension AuthenticationClient
         let appId = self.appId ?? ""
         Config.domain = self.domain
         let url = Config.wechatmobile(userPoolId: userPoolId, code: code, appId: appId)
-        let parameters = [
-            "app_id": Config.keyAppId
-        ]
-        
-        AHC.dataRequest(url, method: .get, parameters: parameters).responseJSON { (response) in
+        AHC.dataRequest(url, method: .get).responseJSON { (response) in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
