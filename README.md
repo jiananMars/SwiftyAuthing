@@ -1,7 +1,11 @@
 # Authing Swift SDK Guide
-​	Authing Swift SDK 为企业和开发者提供专业的身份认证和授权服务。
+<div align=center><img src="https://files.authing.co/authing-console/authing-logo-new-20210924.svg"></div>
 
-​	Authing Swift SDK 以终端用户（End User）的身份进行请求，提供了登录、注册、登出、管理用户资料、获取授权资源等所有管理用户的方法。但是不提供管理员（Administrator）身份的相关接口调用方法。
+<div align=center>Authing Swift SDK 为企业和开发者提供专业的身份认证和授权服务。</div>
+
+<br/>
+
+Authing Swift SDK 以终端用户（End User）的身份进行请求，提供了登录、注册、登出、管理用户资料、获取授权资源等所有管理用户的方法。但是不提供管理员（Administrator）身份的相关接口调用方法。
 
 ## GitHub 下载地址
 
@@ -968,3 +972,16 @@
         })
 ```
 
+## 更新日志
+
+[文档](https://github.com/Authing/AuthingSSO/releases)中记录了每个版本的详细更改。
+
+## 参与贡献
+- Fork it
+- Create your feature branch (git checkout -b my-new-feature)
+- Commit your changes (git commit -am 'Add some feature')
+- Push to the branch (git push origin my-new-feature)
+- Create new Pull Request
+## 获取帮助
+
+Join us on forum: [#authing-chat](https://forum.authing.cn/)
