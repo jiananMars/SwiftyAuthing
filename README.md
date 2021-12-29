@@ -1,5 +1,5 @@
 # Authing Swift SDK Guide
-<div align=center><img src="https://files.authing.co/authing-console/authing-logo-new-20210924.svg"></div>
+<div align=center><img width="300" src="https://files.authing.co/authing-console/authing-logo-new-20210924.svg"></div>
 
 <div align=center>Authing Swift SDK 为企业和开发者提供专业的身份认证和授权服务。</div>
 
