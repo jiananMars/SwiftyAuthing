@@ -21,6 +21,7 @@ let package = Package(
     targets: [
         .target(
             name: "SwiftyAuthing",
+            path: "SwiftyAuthing",
             dependencies: ["Apollo","Alamofire",]),
         .testTarget(
             name: "SwiftyAuthingTests",
