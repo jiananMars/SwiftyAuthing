@@ -6,6 +6,7 @@
 //
 import Apollo
 import Alamofire
+import Foundation
 
 extension AuthenticationClient
 {
