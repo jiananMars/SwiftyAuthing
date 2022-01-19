@@ -419,4 +419,104 @@ public class AuthenticationClient {
         }
     }
     
+    public func updateProfileREST(_ data: NSDictionary, completion: @escaping (Int, String?, NSDictionary?) -> Void) {
+        let url = "\(Config.domain)/api/v2/users/profile/update"
+        post(urlString: url, body: data, completion: completion)
+    }
+    
+    public func get(urlString: String, completion: @escaping (Int, String?, NSDictionary?) -> Void) {
+        request(urlString: urlString, method: "GET", body: nil, completion: completion)
+    }
+    
+    public func post(urlString: String, body: NSDictionary?, completion: @escaping (Int, String?, NSDictionary?) -> Void) {
+        request(urlString: urlString, method: "POST", body: body, completion: completion)
+    }
+    
+    public func request(urlString: String, method: String, body: NSDictionary?, completion: @escaping (Int, String?, NSDictionary?) -> Void) {
+        let url:URL! = URL(string:urlString)
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        if (method == "POST") {
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            let httpBody = try? JSONSerialization.data(withJSONObject: body!, options: [])
+            if (httpBody != nil) {
+                request.httpBody = httpBody
+            }
+        }
+        if (userPoolId != nil) {
+            request.addValue(userPoolId!, forHTTPHeaderField: "x-authing-userpool-id")
+        }
+        if (token != nil) {
+            request.addValue("Bearer \(token!)", forHTTPHeaderField: "Authorization")
+        }
+
+        request.timeoutInterval = 60
+        if (appId != nil) {
+            request.addValue(appId!, forHTTPHeaderField: "x-authing-app-id")
+        }
+        request.addValue(getLangHeader(), forHTTPHeaderField: "x-authing-lang")
+        
+        request.httpShouldHandleCookies = false
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard error == nil else {
+                print("Guardian request network error:\(error!.localizedDescription)")
+                completion(500, error!.localizedDescription, nil)
+                return
+            }
+            
+            guard data != nil else {
+                print("data is null when requesting \(urlString)")
+                completion(500, "no data from server", nil)
+                return
+            }
+            
+            do {
+                guard let json = try JSONSerialization.jsonObject(with: data!, options: []) as? NSDictionary else {
+                    print("data is not json when requesting \(urlString)")
+                    completion(500, "only accept json data", nil)
+                    return
+                }
+                
+                let httpResponse = response as? HTTPURLResponse
+                let statusCode: Int = (httpResponse?.statusCode)!
+                guard statusCode == 200 || statusCode == 201 else {
+                    print("Guardian request network error. Status code:" + statusCode.description)
+                    let message: String? = json["message"] as? String
+                    completion(statusCode, message ?? "Network Error", json)
+                    return
+                }
+                
+                if (json["code"] as? Int == nil) {
+                    completion(200, nil, json)
+                } else {
+                    let code: Int = json["code"] as! Int
+                    let message: String? = json["message"] as? String
+                    let jsonData: NSDictionary? = json["data"] as? NSDictionary
+                    if (jsonData == nil) {
+                        let result = json["data"]
+                        if (result == nil) {
+                            completion(code, message, nil)
+                        } else {
+                            completion(code, message, ["data": result!])
+                        }
+                    } else {
+                        completion(code, message, jsonData)
+                    }
+                }
+            } catch {
+                print("parsing json error when requesting \(urlString)")
+                completion(500, urlString, nil)
+            }
+        }.resume()
+    }
+    
+    public func getLangHeader() -> String {
+        let langStr: String? = Locale.current.languageCode
+        if (langStr!.hasPrefix("zh")) {
+            return "zh-CN"
+        } else {
+            return "en-US"
+        }
+    }
 }
