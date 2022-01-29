@@ -318,6 +318,34 @@ extension AuthenticationClient
         }
     }
     
+    //MARK:--微信登录 EC（Enhanced Cliet mode）
+    /// Login by WeChat Code.
+    /// 通过微信认证码登陆
+    /// - parameter connId: 连接 ID
+    /// - parameter code: 微信认证码
+    /// - parameter completion: 服务器端返回的数据
+    /// - returns: N/A
+    ///
+    /// 通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
+    ///
+    public func loginByWeChatWithConnId(connId: String, code: String, completion: @escaping(Any) -> Void) {
+        let userPoolId = self.userPoolId ?? ""
+        let appId = self.appId ?? ""
+        Config.domain = self.domain
+        let url = domain + "/api/v2/ecConn/wechatMobile/authByCode"
+        
+        let parameters = [
+            "connId": connId,
+            "code": code
+        ]
+        
+        AHC.requestWithResponse(fullUrl, method: .post, parameters: parameters) { (response) in
+            completion(response)
+            
+            print("[ \(#function) ] success")
+        }
+    }
+    
     /// Login by WeChat Code.
     /// 通过微信认证码登陆
     /// - parameter code: 微信认证码
