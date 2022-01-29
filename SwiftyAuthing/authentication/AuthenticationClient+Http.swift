@@ -339,8 +339,8 @@ extension AuthenticationClient
             "code": code
         ]
         
-        AHC.requestWithResponse(url, method: .post, parameters: parameters) { (response) in
-            completion(response)
+        AHC.request(url, method: .post, parameters: parameters) { (result) in
+            completion(result)
             
             print("[ \(#function) ] success")
         }
