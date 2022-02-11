@@ -73,7 +73,6 @@ public class AuthenticationClient {
     ///
     public func setToken(_ token: String) {
         self._token = token
-        Config.keyAccessToken = token
         
 //        Config.keyHeaders.add(name: Config.authorizationHeader, value: token)
 //        Config.keyHeade
