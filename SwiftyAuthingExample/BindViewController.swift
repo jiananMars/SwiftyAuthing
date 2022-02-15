@@ -34,7 +34,7 @@ class BindViewController: TempViewController {
     ///
     func bindPhone(){
         //Normal
-        self.client?.bindPhone(phone: textPhone.text!, phoneCode: textPhonecode.text!, completion: { (status) in
+        AuthenticationClient.shared.bindPhone(phone: textPhone.text!, phoneCode: textPhonecode.text!, completion: { (status) in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.bindPhone ?? "")
@@ -44,7 +44,7 @@ class BindViewController: TempViewController {
             }
         })
         
-//        self.client?.bindPhoneWithResult(phone: textPhone.text!, phoneCode: textPhonecode.text!, completion: { result in
+//        AuthenticationClient.shared.bindPhoneWithResult(phone: textPhone.text!, phoneCode: textPhonecode.text!, completion: { result in
 //            switch result {
 //            case .success(let graphQLResult):
 //                let status = graphQLResult
@@ -66,7 +66,7 @@ class BindViewController: TempViewController {
     /// 解绑手机号
     ///
     func UnbindPhone(){
-        self.client?.unbindPhone(completion: { (status) in
+        AuthenticationClient.shared.unbindPhone(completion: { (status) in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.unbindPhone ?? "")
@@ -76,7 +76,7 @@ class BindViewController: TempViewController {
             }
         })
         
-//        self.client?.unbindPhoneWithResult(completion: { result in
+//        AuthenticationClient.shared.unbindPhoneWithResult(completion: { result in
 //            switch result {
 //            case .success(let graphQLResult):
 //                let status = graphQLResult
@@ -101,7 +101,7 @@ class BindViewController: TempViewController {
     /// 绑定邮箱
     ///
     func bindEmail(){
-        self.client?.bindEmail(email: textEmail.text!, emailCode: textPhonecode.text!, completion: { (status) in
+        AuthenticationClient.shared.bindEmail(email: textEmail.text!, emailCode: textPhonecode.text!, completion: { (status) in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.bindEmail ?? "")
@@ -117,7 +117,7 @@ class BindViewController: TempViewController {
     ///
     func UnbindEmail(){
         //Normal
-        self.client?.unbindEmail(completion: { (status) in
+        AuthenticationClient.shared.unbindEmail(completion: { (status) in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.unbindEmail ?? "")
@@ -127,7 +127,7 @@ class BindViewController: TempViewController {
             }
         })
         
-        self.client?.unbindEmailWithResult(completion: { result in
+        AuthenticationClient.shared.unbindEmailWithResult(completion: { result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -150,7 +150,7 @@ class BindViewController: TempViewController {
     ///
     func updateEmail() {
         //Normal
-        self.client?.updateEmail(email: textEmail.text!, emailCode: textPhonecode.text!, oldEmail: textEmail.text!, oldEmailCode: textPhonecode.text!, completion: {status in
+        AuthenticationClient.shared.updateEmail(email: textEmail.text!, emailCode: textPhonecode.text!, oldEmail: textEmail.text!, oldEmailCode: textPhonecode.text!, completion: {status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.updateEmail ?? "")
@@ -161,7 +161,7 @@ class BindViewController: TempViewController {
         })
         
         //With result
-        self.client?.updateEmailWithResult(email: textEmail.text!, emailCode: textPhonecode.text!, oldEmail: textEmail.text!, oldEmailCode: textPhonecode.text!, completion: {result in
+        AuthenticationClient.shared.updateEmailWithResult(email: textEmail.text!, emailCode: textPhonecode.text!, oldEmail: textEmail.text!, oldEmailCode: textPhonecode.text!, completion: {result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult

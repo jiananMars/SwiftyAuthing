@@ -32,7 +32,7 @@ class SearchViewController: TempViewController {
     /// 获取用户被授权的所有资源列表
     ///
     func listAuthorizedResources() {
-        self.client?.listAuthorizedResources(completion: { (result) in
+        AuthenticationClient.shared.listAuthorizedResources(completion: { (result) in
             print(result)
         })
     }
@@ -42,18 +42,18 @@ class SearchViewController: TempViewController {
     ///
     func ListOrgs() {
         //Normal
-        self.client?.listOrg(completion: { status in
+        AuthenticationClient.shared.listOrg(completion: { status in
             print(status)
         })
         
 //        //With result
-//        self.client?.listOrgWithResult(completion: { result in
+//        AuthenticationClient.shared.listOrgWithResult(completion: { result in
 //            print(result)
 //        })
     }
     
     func GetCurrentUser() {
-        self.client?.getCurrentUser(completion: { (result) in
+        AuthenticationClient.shared.getCurrentUser(completion: { (result) in
             print(result)
         })
     }
@@ -63,7 +63,7 @@ class SearchViewController: TempViewController {
     ///
     func ListUdv() {
         //Normal
-        self.client?.listUdv(completion:{ status in
+        AuthenticationClient.shared.listUdv(completion:{ status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.udv ?? "")
@@ -78,7 +78,7 @@ class SearchViewController: TempViewController {
     /// 计算密码安全等级
     ///
     func ComputedPasswordSecurityLevel() {
-        self.client?.computedPasswordSecurityLevel(proclaimedPassword: textPassword.text!, completion: { (result) in
+        AuthenticationClient.shared.computedPasswordSecurityLevel(proclaimedPassword: textPassword.text!, completion: { (result) in
             print(result)
         })
     }

@@ -56,7 +56,7 @@ class HttpViewController: TempViewController {
     /// 退出登录
     ///
     func logout() {
-        self.client?.logout(completion: { (status) in
+        AuthenticationClient.shared.logout(completion: { (status) in
             print(status)
         })
     }
@@ -65,13 +65,13 @@ class HttpViewController: TempViewController {
     /// 使用LDAP 账号密码登录
     ///
     func loginByLdap(){
-        self.client?.loginByLdap(username: textUsername.text!, password: textPassword.text!, completion: { (status) in
+        AuthenticationClient.shared.loginByLdap(username: textUsername.text!, password: textPassword.text!, completion: { (status) in
             print(status)
         })
     }
     
     func loginByWeChatCode(){
-        self.client?.loginByWeChatCode(code: textPhonecode.text!, completion: { (status) in
+        AuthenticationClient.shared.loginByWeChatCode(code: textPhonecode.text!, completion: { (status) in
             print(status)
         })
     }
@@ -80,31 +80,31 @@ class HttpViewController: TempViewController {
     /// 获取当前用户能够访问的应用
     ///
     func listApplications(){
-        self.client?.listApplications(page: 0, limit: 10, completion: { (status) in
+        AuthenticationClient.shared.listApplications(page: 0, limit: 10, completion: { (status) in
             print(status)
         })
     }
     
     func userIdVerifyByFaceImageBase64() {
-        self.client?.userIdVerifyByFaceImageBase64(name: textUsername.text!, idCard: textPassword.text!, faceImageBase64: "", completion: { (status) in
+        AuthenticationClient.shared.userIdVerifyByFaceImageBase64(name: textUsername.text!, idCard: textPassword.text!, faceImageBase64: "", completion: { (status) in
             print(status)
         })
     }
     
     func userIdVerifyStatus(){
-        self.client?.userIdVerifyStatus(completion: { (status) in
+        AuthenticationClient.shared.userIdVerifyStatus(completion: { (status) in
             print(status)
         })
     }
     
     func socialLinkByTwoToken(){
-        self.client?.socialLink(primaryUserToken: textUsername.text!, secondaryUserToken: textPassword.text!, completion: { (status) in
+        AuthenticationClient.shared.socialLink(primaryUserToken: textUsername.text!, secondaryUserToken: textPassword.text!, completion: { (status) in
             print(status)
         })
     }
     
     func socialLinkByOneToken(){
-        self.client?.socialLink(secondaryUserToken: textPassword.text!, completion: { (status) in
+        AuthenticationClient.shared.socialLink(secondaryUserToken: textPassword.text!, completion: { (status) in
             print(status)
         })
     }
@@ -113,7 +113,7 @@ class HttpViewController: TempViewController {
     /// 解绑社交账号
     ///
     func socialUnLink(){
-        self.client?.socialUnLink(primaryUserToken: textUsername.text!, completion: { (status) in
+        AuthenticationClient.shared.socialUnLink(primaryUserToken: textUsername.text!, completion: { (status) in
             print(status)
         })
     }
@@ -122,7 +122,7 @@ class HttpViewController: TempViewController {
     /// 获取用户的安全等级评分
     ///
     func getSecurityLevel() {
-        self.client?.getSecurityLevel(completion: { (status) in
+        AuthenticationClient.shared.getSecurityLevel(completion: { (status) in
             print(status)
         })
     }

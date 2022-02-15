@@ -21,7 +21,7 @@ class CheckViewController: TempViewController {
     ///
     func checkPassword(){
         //Normal
-        self.client?.checkPasswordStrength(password: textPassword.text!, completion: { (status) in
+        AuthenticationClient.shared.checkPasswordStrength(password: textPassword.text!, completion: { (status) in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.checkPasswordStrength ?? "")
@@ -31,7 +31,7 @@ class CheckViewController: TempViewController {
             }
         })
         
-//        self.client?.checkPasswordStrengthWithResult(password: textPassword.text!, completion:{ result in
+//        AuthenticationClient.shared.checkPasswordStrengthWithResult(password: textPassword.text!, completion:{ result in
 //            switch result {
 //            case .success(let graphQLResult):
 //                let status = graphQLResult
@@ -55,11 +55,11 @@ class CheckViewController: TempViewController {
     func checkLoginStatus() {
         // Change your token here
         
-        let token = self.client?.userDetaultsToken ?? ""
+        let token = AuthenticationClient.shared.userDetaultsToken ?? ""
         print("token: " + token)
         
         //Normal
-        self.client?.checkLoginStatus(token: token, completion:{ status in
+        AuthenticationClient.shared.checkLoginStatus(token: token, completion:{ status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.checkLoginStatus ?? "")
@@ -69,7 +69,7 @@ class CheckViewController: TempViewController {
             }
         })
         
-//        self.client?.checkLoginStatusWithResult(token: token, completion:{ result in
+//        AuthenticationClient.shared.checkLoginStatusWithResult(token: token, completion:{ result in
 //            switch result {
 //            case .success(let graphQLResult):
 //                let status = graphQLResult

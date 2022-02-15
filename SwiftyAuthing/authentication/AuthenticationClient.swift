@@ -102,14 +102,18 @@ public class AuthenticationClient {
         }
     }
     
+    static let shared = AuthenticationClient()
+    
+    private init() {}
+    
     /// Init with UserPoolId
     /// userPoolId: The user pool Id.
     /// appId: The App ID.
     /// Find in https://console.authing.cn Setting - Basic Information & Application.
     ///
-    public init(userPoolId: String, appId: String) {
-        self.userPoolId = userPoolId
-        self.appId = appId
+    class func initSDK(userPoolId: String, appId: String) {
+        AuthenticationClient().userPoolId = userPoolId
+        AuthenticationClient().appId = appId
         Config.keyAppId = appId
         
         let currentVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -133,8 +137,8 @@ public class AuthenticationClient {
     /// userPoolId: The user pool Id.
     /// Find in https://console.authing.cn Setting - Basic Information.
     ///
-    public init(userPoolId: String) {
-        self.userPoolId = userPoolId
+    class func initSDK(userPoolId: String) {
+        AuthenticationClient().userPoolId = userPoolId
         
         let currentVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
         let allLanguages: [String] = UserDefaults.standard.object(forKey: "AppleLanguages") as! [String]
@@ -156,9 +160,9 @@ public class AuthenticationClient {
     /// host: The host of user pool.
     /// Find in https://console.authing.cn Setting - Basic Information.
     ///
-    public init(userPoolId: String, host: String) {
-        self.userPoolId = userPoolId
-        self.host = host
+    class func initSDK(userPoolId: String, host: String) {
+        AuthenticationClient().userPoolId = userPoolId
+        AuthenticationClient().host = host
         Network.shared.host = host
         
         let currentVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -181,9 +185,9 @@ public class AuthenticationClient {
     /// appId: The App ID.
     /// Find in https://console.authing.cn Setting - Basic Information & Application.
     ///
-    public init(userPoolId: String, appId: String, domain: String) {
-        self.userPoolId = userPoolId
-        self.appId = appId
+    class func initSDK(userPoolId: String, appId: String, domain: String) {
+        AuthenticationClient().userPoolId = userPoolId
+        AuthenticationClient().appId = appId
         UserDefaults.standard.setValue(userPoolId, forKey: Config.keyUserPoolId)
         UserDefaults.standard.setValue(appId, forKey: Config.keyAppId)
         
@@ -203,8 +207,8 @@ public class AuthenticationClient {
         Config.keyHeaders = headers
         
         let host = Config.getHost(domain: domain)
-        self.domain = domain
-        self.host = host
+        AuthenticationClient().domain = domain
+        AuthenticationClient().host = host
         Network.shared.host = host
         UserDefaults.standard.setValue(domain, forKey: Config.keyDomain)
     }
@@ -442,16 +446,16 @@ public class AuthenticationClient {
                 request.httpBody = httpBody
             }
         }
-        if (userPoolId != nil) {
-            request.addValue(userPoolId!, forHTTPHeaderField: "x-authing-userpool-id")
+        if (self.userPoolId != nil) {
+            request.addValue(self.userPoolId!, forHTTPHeaderField: "x-authing-userpool-id")
         }
-        if (token != nil) {
-            request.addValue("Bearer \(token!)", forHTTPHeaderField: "Authorization")
+        if (self.token != nil) {
+            request.addValue("Bearer \(self.token!)", forHTTPHeaderField: "Authorization")
         }
 
         request.timeoutInterval = 60
-        if (appId != nil) {
-            request.addValue(appId!, forHTTPHeaderField: "x-authing-app-id")
+        if (self.appId != nil) {
+            request.addValue(self.appId!, forHTTPHeaderField: "x-authing-app-id")
         }
         request.addValue(getLangHeader(), forHTTPHeaderField: "x-authing-lang")
         

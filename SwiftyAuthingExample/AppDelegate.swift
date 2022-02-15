@@ -14,6 +14,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //let domain = "https://core.xxxx.cn"
+        let userPoolId = "6131fcde0fcce7d79ea8dc46"
+        let appId = "6131fe56c6ddf9a514beb354"
+
+//        AuthenticationClient.initSDK(userPoolId: userPoolId)
+//        AuthenticationClient.initSDK(userPoolId: userPoolId, appId: appId, domain: domain)
+
+        AuthenticationClient.initSDK(userPoolId: userPoolId, appId: appId)
+        
         return true
     }
 

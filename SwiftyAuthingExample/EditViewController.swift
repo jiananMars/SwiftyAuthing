@@ -49,7 +49,7 @@ class EditViewController: TempViewController {
     ///
     func sendEmail() {
         //Normal
-        self.client?.sendEmail(email: textEmail.text!, scene: EmailScene.resetPassword, completion: {status in
+        AuthenticationClient.shared.sendEmail(email: textEmail.text!, scene: EmailScene.resetPassword, completion: {status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.sendEmail ?? "")
@@ -60,7 +60,7 @@ class EditViewController: TempViewController {
         })
         
         //With result
-//        self.client?.sendEmailWithResult(email: textEmail.text!, scene: EmailScene.resetPassword, completion: {result in
+//        AuthenticationClient.shared.sendEmailWithResult(email: textEmail.text!, scene: EmailScene.resetPassword, completion: {result in
 //            switch result {
 //            case .success(let graphQLResult):
 //                let status = graphQLResult
@@ -82,7 +82,7 @@ class EditViewController: TempViewController {
     /// 添加用户自定义数据
     ///
     func setUdv() {
-        self.client?.setUdv(key: "fatherAge", value: "50", completion: { (status) in
+        AuthenticationClient.shared.setUdv(key: "fatherAge", value: "50", completion: { (status) in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.setUdv ?? "")
@@ -97,7 +97,7 @@ class EditViewController: TempViewController {
     /// 删除用户自定义数据
     ///
     func removeUdv() {
-        self.client?.removeUdv(key: "fatherAge", completion: { (status) in
+        AuthenticationClient.shared.removeUdv(key: "fatherAge", completion: { (status) in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.removeUdv ?? "")
@@ -112,7 +112,7 @@ class EditViewController: TempViewController {
     /// 通过短信验证码重置密码
     ///
     func resetPasswordByPhoneCode(){
-        self.client?.resetPasswordByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: { (status) in
+        AuthenticationClient.shared.resetPasswordByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: { (status) in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.resetPassword ?? "")
@@ -127,7 +127,7 @@ class EditViewController: TempViewController {
     /// 通过邮件验证码重置密码
     ///
     func resetPasswordByEmailCode(){
-        self.client?.resetPasswordByEmailCode(email: textEmail.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion:{ (status) in
+        AuthenticationClient.shared.resetPasswordByEmailCode(email: textEmail.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion:{ (status) in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.resetPassword ?? "")
@@ -142,7 +142,7 @@ class EditViewController: TempViewController {
     /// 更新用户密码
     ///
     func updatePassword() {
-        self.client?.updatePassword(newPassword: textPassword.text!, completion:{ (status) in
+        AuthenticationClient.shared.updatePassword(newPassword: textPassword.text!, completion:{ (status) in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.updatePassword ?? "")
@@ -158,7 +158,7 @@ class EditViewController: TempViewController {
     ///
     func updatePhone() {
         //Normal
-        self.client?.updatePhone(phone: textPhone.text!, phoneCode: textPhonecode.text!, oldPhone: textPhone.text!, oldPhoneCode: textPhonecode.text!, completion: {status in
+        AuthenticationClient.shared.updatePhone(phone: textPhone.text!, phoneCode: textPhonecode.text!, oldPhone: textPhone.text!, oldPhoneCode: textPhonecode.text!, completion: {status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.updatePhone ?? "")
@@ -169,7 +169,7 @@ class EditViewController: TempViewController {
         })
         
         //With result
-//        self.client?.updatePhoneWithResult(phone: textPhone.text!, phoneCode: textPhonecode.text!, oldPhone: textPhone.text!, oldPhoneCode: textPhonecode.text!, completion: {result in
+//        AuthenticationClient.shared.updatePhoneWithResult(phone: textPhone.text!, phoneCode: textPhonecode.text!, oldPhone: textPhone.text!, oldPhoneCode: textPhonecode.text!, completion: {result in
 //            switch result {
 //            case .success(let graphQLResult):
 //                let status = graphQLResult
@@ -188,7 +188,7 @@ class EditViewController: TempViewController {
     }
     
     func refreshToken(){
-        self.client?.refreshToken(completion: { (status) in
+        AuthenticationClient.shared.refreshToken(completion: { (status) in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.refreshToken ?? "")

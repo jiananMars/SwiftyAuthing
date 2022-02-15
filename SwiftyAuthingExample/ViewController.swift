@@ -14,33 +14,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var textEmail: UITextField!
     @IBOutlet weak var textPhone: UITextField!
     @IBOutlet weak var textPhonecode: UITextField!
-    
-    /// Config Information, change your UserPoolId
-    /// Find in https://console.authing.cn Setting - Basic Information & Application.
-    let userPoolId = "6131fcde0fcce7d79ea8dc46"
-    let appId = "6131fe56c6ddf9a514beb354"
-    
-    //Private cloud domain
-    //let domain = "https://core.xxxx.cn"
-    
-    var client: AuthenticationClient?
+        
     var userid = ""
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //使用 userPoolId 初始化
-        //self.client = AuthenticationClient(userPoolId: userPoolId)
-        
-        //使用 userPoolId 和 appId 同时初始化
-        self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId)
 
-        //使用 userPoolId, appId, domain 同时初始化
-        //self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId, domain: domain)
-       
         // 如在此类中调用用户 User 相关方法，需要在此设置此用户保存的有效的用户 AccessToken。
         // 如需变动用户 AccessToken，只需再次赋值即可。
-        //self.client?.token = "token"
+        //AuthenticationClient.shared.token = "token"
     }
     
     
@@ -123,7 +106,7 @@ class ViewController: UIViewController {
     /// 使用子账号密码登录
     ///
     func loginBySubAccount() {
-        self.client?.loginBySubAccount(username: textUsername.text!, password: textPassword.text!, completion: { (status) in
+        AuthenticationClient.shared.loginBySubAccount(username: textUsername.text!, password: textPassword.text!, completion: { (status) in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.loginBySubAccount ?? "")
@@ -139,7 +122,7 @@ class ViewController: UIViewController {
     /// 使用AD 账号密码登录
     ///
     func loginByAD() {
-        self.client?.loginByAD(username: textUsername.text!, password: textPassword.text!) { (status) in
+        AuthenticationClient.shared.loginByAD(username: textUsername.text!, password: textPassword.text!) { (status) in
             let statusDic = status as! NSDictionary
             print(statusDic)
         }
@@ -202,7 +185,7 @@ class ViewController: UIViewController {
     ///
     func registerByEmail() {
         //Normal
-        self.client?.registerByEmail(email: textEmail.text!, password: textPassword.text!, completion: {status in
+        AuthenticationClient.shared.registerByEmail(email: textEmail.text!, password: textPassword.text!, completion: {status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.registerByEmail ?? "")
@@ -219,7 +202,7 @@ class ViewController: UIViewController {
     ///
     func registerByUsername() {
         //Normal
-        self.client?.registerByUsername(username: textUsername.text!, password: textPassword.text!, completion:{status in
+        AuthenticationClient.shared.registerByUsername(username: textUsername.text!, password: textPassword.text!, completion:{status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.registerByUsername ?? "")
@@ -231,7 +214,7 @@ class ViewController: UIViewController {
         })
         
 //        //With result
-//        self.client?.registerByUsernameWithResult(username: textUsername.text!, password: textPassword.text!, completion:{result in
+//        AuthenticationClient.shared.registerByUsernameWithResult(username: textUsername.text!, password: textPassword.text!, completion:{result in
 //            switch result {
 //            case .success(let graphQLResult):
 //                print(graphQLResult)
@@ -247,7 +230,7 @@ class ViewController: UIViewController {
     func registerByPhoneCode() {
         
         //Normal
-//        self.client?.registerByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, completion:{ status in
+//        AuthenticationClient.shared.registerByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, completion:{ status in
 //            if(status.errors == nil) {
 //                //Success
 //                print(status.data?.registerByPhoneCode ?? "")
@@ -259,7 +242,7 @@ class ViewController: UIViewController {
 //        })
         
         //With result
-        self.client?.registerByPhoneCodeWithResult(phone: textPhone.text!, code: textPhonecode.text!, completion:{ result in
+        AuthenticationClient.shared.registerByPhoneCodeWithResult(phone: textPhone.text!, code: textPhonecode.text!, completion:{ result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -283,7 +266,7 @@ class ViewController: UIViewController {
     /// 使用用户名登录
     func loginByUsername() {
         //Normal
-        self.client?.loginByUsername(username: textUsername.text!, password: textPassword.text!, completion:{ status in
+        AuthenticationClient.shared.loginByUsername(username: textUsername.text!, password: textPassword.text!, completion:{ status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.loginByUsername ?? "")
@@ -294,7 +277,7 @@ class ViewController: UIViewController {
         })
         
         //With result
-        self.client?.loginByUsernameWithResult(username: textUsername.text!, password: textPassword.text!, completion:{ result in
+        AuthenticationClient.shared.loginByUsernameWithResult(username: textUsername.text!, password: textPassword.text!, completion:{ result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -317,7 +300,7 @@ class ViewController: UIViewController {
     ///
     func loginByEmail() {
         //Normal
-        self.client?.loginByEmail(email: textEmail.text!, password: textPassword.text!, completion:{ status in
+        AuthenticationClient.shared.loginByEmail(email: textEmail.text!, password: textPassword.text!, completion:{ status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.loginByEmail ?? "")
@@ -328,7 +311,7 @@ class ViewController: UIViewController {
         })
         
 //        //With result
-//        self.client?.loginByEmailWithResult(email: textEmail.text!, password: textPassword.text!, completion:{ result in
+//        AuthenticationClient.shared.loginByEmailWithResult(email: textEmail.text!, password: textPassword.text!, completion:{ result in
 //            switch result {
 //            case .success(let graphQLResult):
 //                let status = graphQLResult
@@ -351,7 +334,7 @@ class ViewController: UIViewController {
     ///
     func loginByPhoneCode() {
         //Normal
-        self.client?.loginByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, completion:{ status in
+        AuthenticationClient.shared.loginByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, completion:{ status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.loginByPhoneCode ?? "")
@@ -362,7 +345,7 @@ class ViewController: UIViewController {
         })
         
 //        //With result
-//        self.client?.loginByPhoneCodeWithResult(phone: textPhone.text!, code: textPhonecode.text!, completion:{ result in
+//        AuthenticationClient.shared.loginByPhoneCodeWithResult(phone: textPhone.text!, code: textPhonecode.text!, completion:{ result in
 //            switch result {
 //            case .success(let graphQLResult):
 //                let status = graphQLResult
@@ -385,7 +368,7 @@ class ViewController: UIViewController {
     ///
     func loginByPhonePassword() {
         //Normal
-        self.client?.loginByPhonePassword(phone: textPhone.text!, password: textPassword.text!, completion:{ status in
+        AuthenticationClient.shared.loginByPhonePassword(phone: textPhone.text!, password: textPassword.text!, completion:{ status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.loginByPhonePassword ?? "")
@@ -396,7 +379,7 @@ class ViewController: UIViewController {
         })
         
         //With result
-//        self.client?.loginByPhonePasswordWithResult(phone: textPhone.text!, password: textPassword.text!, completion:{ result in
+//        AuthenticationClient.shared.loginByPhonePasswordWithResult(phone: textPhone.text!, password: textPassword.text!, completion:{ result in
 //            switch result {
 //            case .success(let graphQLResult):
 //                let status = graphQLResult
@@ -421,7 +404,7 @@ class ViewController: UIViewController {
     ///
     func checkPasswordStrength() {
         //Normal
-//        self.client?.checkPasswordStrength(password: textPassword.text!, completion:{ status in
+//        AuthenticationClient.shared.checkPasswordStrength(password: textPassword.text!, completion:{ status in
 //            if(status.errors == nil) {
 //                //Success
 //                print(status.data?.checkPasswordStrength ?? "")
@@ -432,7 +415,7 @@ class ViewController: UIViewController {
 //        })
         
         //With result
-        self.client?.checkPasswordStrengthWithResult(password: textPassword.text!, completion:{ result in
+        AuthenticationClient.shared.checkPasswordStrengthWithResult(password: textPassword.text!, completion:{ result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -456,12 +439,12 @@ class ViewController: UIViewController {
     ///
     func sendSmsCode() {
         //Normal
-        self.client?.sendSmsCode(phone: textPhone.text!, completion: { status in
+        AuthenticationClient.shared.sendSmsCode(phone: textPhone.text!, completion: { status in
             print(status)
         })
         
         //With result
-//        self.client?.sendSmsCodeWithResult(phone: textPhone.text!, completion: { result in
+//        AuthenticationClient.shared.sendSmsCodeWithResult(phone: textPhone.text!, completion: { result in
 //            print(result)
 //        })
     }
@@ -471,7 +454,7 @@ class ViewController: UIViewController {
     ///
     func resetPasswordByPhoneCode() {
         //Normal
-//        self.client?.resetPasswordByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: {status in
+//        AuthenticationClient.shared.resetPasswordByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: {status in
 //            if(status.errors == nil) {
 //                //Success
 //                print(status.data?.resetPassword ?? "")
@@ -482,7 +465,7 @@ class ViewController: UIViewController {
 //        })
         
         //With result
-        self.client?.resetPasswordByPhoneCodeWithResult(phone: textPhone.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: {result in
+        AuthenticationClient.shared.resetPasswordByPhoneCodeWithResult(phone: textPhone.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: {result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -505,7 +488,7 @@ class ViewController: UIViewController {
     ///
     func resetPasswordByEmailCode() {
         //Normal
-//        self.client?.resetPasswordByEmailCode(email: textEmail.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: {status in
+//        AuthenticationClient.shared.resetPasswordByEmailCode(email: textEmail.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: {status in
 //            if(status.errors == nil) {
 //                //Success
 //                print(status.data?.resetPassword ?? "")
@@ -516,7 +499,7 @@ class ViewController: UIViewController {
 //        })
         
         //With result
-        self.client?.resetPasswordByEmailCodeWithResult(email: textEmail.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: {result in
+        AuthenticationClient.shared.resetPasswordByEmailCodeWithResult(email: textEmail.text!, code: textPhonecode.text!, newPassword: textPassword.text!, completion: {result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -540,7 +523,7 @@ class ViewController: UIViewController {
     ///
     func updateProfile() {
         //Normal
-//        self.client?.updateProfile(nickname: textUsername.text!, completion: {status in
+//        AuthenticationClient.shared.updateProfile(nickname: textUsername.text!, completion: {status in
 //            if(status.errors == nil) {
 //                //Success
 //                print(status.data?.updateUser ?? "")
@@ -551,7 +534,7 @@ class ViewController: UIViewController {
 //        })
         
         //With result
-        self.client?.updateProfileWithResult(nickname: textUsername.text!, completion: {result in
+        AuthenticationClient.shared.updateProfileWithResult(nickname: textUsername.text!, completion: {result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -575,7 +558,7 @@ class ViewController: UIViewController {
     ///
     func updatePassword() {
         //Normal
-//        self.client?.updatePassword(newPassword: textPassword.text!,oldPassword: textPassword.text!, completion: {status in
+//        AuthenticationClient.shared.updatePassword(newPassword: textPassword.text!,oldPassword: textPassword.text!, completion: {status in
 //            if(status.errors == nil) {
 //                //Success
 //                print(status.data?.updatePassword ?? "")
@@ -586,7 +569,7 @@ class ViewController: UIViewController {
 //        })
         
         //With result
-        self.client?.updatePasswordWithResult(newPassword: textPassword.text!,oldPassword: textPassword.text!, completion: {result in
+        AuthenticationClient.shared.updatePasswordWithResult(newPassword: textPassword.text!,oldPassword: textPassword.text!, completion: {result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -609,7 +592,7 @@ class ViewController: UIViewController {
     ///
     func refreshToken() {
         //Normal
-        self.client?.refreshToken(completion:{ status in
+        AuthenticationClient.shared.refreshToken(completion:{ status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.refreshToken ?? "")
@@ -620,7 +603,7 @@ class ViewController: UIViewController {
         })
         
         //With result
-        self.client?.refreshTokenWithResult(completion:{ result in
+        AuthenticationClient.shared.refreshTokenWithResult(completion:{ result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -644,7 +627,7 @@ class ViewController: UIViewController {
     ///
     func getCurrentUser() {
         //Normal
-        self.client?.getCurrentUser(completion: {status in
+        AuthenticationClient.shared.getCurrentUser(completion: {status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.user ?? "")
@@ -655,7 +638,7 @@ class ViewController: UIViewController {
         })
         
         //With result
-//        self.client?.getCurrentUserWithResult(completion: {result in
+//        AuthenticationClient.shared.getCurrentUserWithResult(completion: {result in
 //            switch result {
 //            case .success(let graphQLResult):
 //                let status = graphQLResult
@@ -679,7 +662,7 @@ class ViewController: UIViewController {
     ///
     func logout() {
         //Normal
-//        self.client?.logout(completion:{ status in
+//        AuthenticationClient.shared.logout(completion:{ status in
 //            if(status.errors == nil) {
 //                //Success
 //                print(status.data?.updateUser ?? "")
@@ -690,7 +673,7 @@ class ViewController: UIViewController {
 //        })
         
         //With result
-//        self.client?.logoutWithResult(completion:{ result in
+//        AuthenticationClient.shared.logoutWithResult(completion:{ result in
 //            switch result {
 //            case .success(let graphQLResult):
 //                let status = graphQLResult
@@ -713,7 +696,7 @@ class ViewController: UIViewController {
     ///
     func bindPhone() {
         //Normal
-//        self.client?.bindPhone(phone: textPhone.text!, phoneCode: textPhonecode.text!, completion:{ status in
+//        AuthenticationClient.shared.bindPhone(phone: textPhone.text!, phoneCode: textPhonecode.text!, completion:{ status in
 //            if(status.errors == nil) {
 //                //Success
 //                print(status.data?.bindPhone ?? "")
@@ -724,7 +707,7 @@ class ViewController: UIViewController {
 //        })
         
         //With result
-        self.client?.bindPhoneWithResult(phone: textPhone.text!, phoneCode: textPhonecode.text!, completion:{ result in
+        AuthenticationClient.shared.bindPhoneWithResult(phone: textPhone.text!, phoneCode: textPhonecode.text!, completion:{ result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -748,7 +731,7 @@ class ViewController: UIViewController {
     ///
     func unbindEmail() {
         //Normal
-//        self.client?.unbindEmail(completion:{ status in
+//        AuthenticationClient.shared.unbindEmail(completion:{ status in
 //            if(status.errors == nil) {
 //                //Success
 //                print(status.data?.unbindEmail ?? "")
@@ -759,7 +742,7 @@ class ViewController: UIViewController {
 //        })
         
         //With result
-        self.client?.unbindEmailWithResult(completion:{ result in
+        AuthenticationClient.shared.unbindEmailWithResult(completion:{ result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -783,7 +766,7 @@ class ViewController: UIViewController {
     ///
     func unbindPhone() {
         //Normal
-//        self.client?.unbindPhone(completion:{ status in
+//        AuthenticationClient.shared.unbindPhone(completion:{ status in
 //            if(status.errors == nil) {
 //                //Success
 //                print(status.data?.unbindPhone ?? "")
@@ -794,7 +777,7 @@ class ViewController: UIViewController {
 //        })
         
         //With result
-        self.client?.unbindPhoneWithResult(completion:{ result in
+        AuthenticationClient.shared.unbindPhoneWithResult(completion:{ result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -818,7 +801,7 @@ class ViewController: UIViewController {
     ///
     func setUdv() {
         //Normal
-//        self.client?.setUdv(key: "HelloDate", value: Date(), completion:{ status in
+//        AuthenticationClient.shared.setUdv(key: "HelloDate", value: Date(), completion:{ status in
 //            if(status.errors == nil) {
 //                //Success
 //                print(status.data?.setUdv ?? "")
@@ -829,7 +812,7 @@ class ViewController: UIViewController {
 //        })
         
         //With result
-        self.client?.setUdvWithResult(key: "HelloDate", value: Date(), completion:{ result in
+        AuthenticationClient.shared.setUdvWithResult(key: "HelloDate", value: Date(), completion:{ result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -852,7 +835,7 @@ class ViewController: UIViewController {
     ///
     func removeUdv() {
         //Normal
-        self.client?.removeUdv(key: "HelloDate", completion:{ status in
+        AuthenticationClient.shared.removeUdv(key: "HelloDate", completion:{ status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.removeUdv ?? "")
@@ -863,7 +846,7 @@ class ViewController: UIViewController {
         })
         
         //With result
-        self.client?.removeUdvWithResult(key: "HelloDate", completion:{ result in
+        AuthenticationClient.shared.removeUdvWithResult(key: "HelloDate", completion:{ result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -886,12 +869,12 @@ class ViewController: UIViewController {
     ///
     func loginByLdap() {
         //Normal
-//        self.client?.loginByLdap(username: textUsername.text!, password: textPassword.text!, completion: { status in
+//        AuthenticationClient.shared.loginByLdap(username: textUsername.text!, password: textPassword.text!, completion: { status in
 //            print(status)
 //        })
         
         //With result
-        self.client?.loginByLdapWithResult(username: textUsername.text!, password: textPassword.text!, completion: { result in
+        AuthenticationClient.shared.loginByLdapWithResult(username: textUsername.text!, password: textPassword.text!, completion: { result in
             print(result)
         })
     }
@@ -904,12 +887,12 @@ class ViewController: UIViewController {
         //通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
         let code = "code"
         //Normal
-//        self.client?.loginByWeChatCode(code: code, completion: { status in
+//        AuthenticationClient.shared.loginByWeChatCode(code: code, completion: { status in
 //            print(status)
 //        })
         
         //With result
-        self.client?.loginByWeChatCodeWithResult(code: code, completion: { result in
+        AuthenticationClient.shared.loginByWeChatCodeWithResult(code: code, completion: { result in
             print(result)
         })
     }
@@ -922,12 +905,12 @@ class ViewController: UIViewController {
         //*需要登录后调用
         
         //via faceImageURL
-        self.client?.userIdVerify(name: "张三", idCard: "123456", faceImageURL: URL(string: "http://xxx.jpg")!, completion: { result in
+        AuthenticationClient.shared.userIdVerify(name: "张三", idCard: "123456", faceImageURL: URL(string: "http://xxx.jpg")!, completion: { result in
             print(result)
         })
         
         //via faceImageBase64, 如使用 UIImage 可以使用 getBase64FromImage 转换
-//        self.client?.userIdVerify(name: "张三", idCard: "123456", faceImageBase64: "data:image/jpeg;base64,/9j/4QFmRXhpZgA", completion: { result in
+//        AuthenticationClient.shared.userIdVerify(name: "张三", idCard: "123456", faceImageBase64: "data:image/jpeg;base64,/9j/4QFmRXhpZgA", completion: { result in
 //            print(result)
 //        })
         
@@ -958,7 +941,7 @@ class ViewController: UIViewController {
     ///
     func userIdVerifyStatus() {
         //*需要登录后调用
-        self.client?.userIdVerifyStatus(completion: { result in
+        AuthenticationClient.shared.userIdVerifyStatus(completion: { result in
             print(result)
         })
         
@@ -978,11 +961,11 @@ class ViewController: UIViewController {
         let secondaryUserToken = ""
 
 //        //*需要登录后调用，primaryUserToken 为当前登录用户的 token
-//        self.client?.socialLink(secondaryUserToken: secondaryUserToken, completion: { result in
+//        AuthenticationClient.shared.socialLink(secondaryUserToken: secondaryUserToken, completion: { result in
 //            print(result)
 //        })
         
-        self.client?.socialLink(primaryUserToken: primaryUserToken, secondaryUserToken: secondaryUserToken, completion: { result in
+        AuthenticationClient.shared.socialLink(primaryUserToken: primaryUserToken, secondaryUserToken: secondaryUserToken, completion: { result in
             print(result)
         })
         

@@ -17,17 +17,13 @@ class TempViewController: UIViewController {
     
     
     /// Find in https://console.authing.cn Setting - Basic Information & Application.
-    let userPoolId = "6131fcde0fcce7d79ea8dc46"
-    let appId = "6131fe56c6ddf9a514beb354"
-    
-    var client: AuthenticationClient?
-    var userid = ""
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId)
+//        self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId)
         
+//        AuthenticationClient.initSDK(userPoolId: userPoolId, appId: appId)
     }
     
     @IBAction func actionBack(_ sender: Any) {
