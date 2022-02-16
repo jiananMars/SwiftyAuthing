@@ -19,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let userPoolId = "6131fcde0fcce7d79ea8dc46"
         let appId = "6131fe56c6ddf9a514beb354"
 
-//        AuthenticationClient.initSDK(userPoolId: userPoolId)
-//        AuthenticationClient.initSDK(userPoolId: userPoolId, appId: appId, domain: domain)
+//        AuthenticationClient.initSDK(userPoolId: <#用户池 ID#>)
+//        AuthenticationClient.initSDK(userPoolId: <#用户池 ID#>, appId: <#App ID#>, domain: <#domain#>)
 
         AuthenticationClient.initSDK(userPoolId: userPoolId, appId: appId)
         

@@ -56,9 +56,8 @@ extension AuthenticationClient
         }
     }
     
-    //MARK:--使用 LDAP 用户名登录
     /// loginByLdap.
-    /// 使用 LDAP 用户名登录
+    //MARK: --使用 LDAP 用户名登录
     /// - parameter username: 用户名
     /// - parameter password: 密码
     /// - parameter autoRegister: 是否自动注册。如果检测到用户不存在，会根据登录账密自动创建一个账号。
@@ -69,45 +68,12 @@ extension AuthenticationClient
     ///
     /// 使用 LDAP 用户名登录。如果你的用户池配置了登录失败检测，当同一  IP 下登录多次失败的时候会要求用户输入图形验证码（code 为 2000)。
     ///
-    public func loginByLdap(username: String, password: String, autoRegister: Bool? = nil, captchaCode: String? = nil, clientIp: String? = nil, completion: @escaping(Any) -> Void) {
-        Config.domain = self.domain
-        let url = Config.verifyuser
-        let parameters = [
-            "username": username,
-            "password": password
-        ]
-//        AF.request(url, method: .post, parameters: parameters).responseJSON { response in
-//            switch response.result {
-//            case .success(let value):
-//                completion(value)
-//
-//                print("\(#function) success")
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-        
-        AHC.request(url, method: .post, parameters: parameters) { (result) in
-            completion(result)
-            
-            print("[ \(#function) ] success")
-        }
-    }
-    
-    
-    /// loginByLdap.
-    /// 使用 LDAP 用户名登录
-    /// - parameter username: 用户名
-    /// - parameter password: 密码
-    /// - parameter autoRegister: 是否自动注册。如果检测到用户不存在，会根据登录账密自动创建一个账号。
-    /// - parameter captchaCode: 图形验证码
-    /// - parameter clientIp: 客户端真实 IP，如果你在服务器端调用此接口，请务必将此参数设置为终端用户的真实 IP。
-    /// - parameter completion: 服务器端返回的数据
-    /// - returns: N/A
-    ///
-    /// 使用 LDAP 用户名登录。如果你的用户池配置了登录失败检测，当同一  IP 下登录多次失败的时候会要求用户输入图形验证码（code 为 2000)。
-    ///
-    public func loginByLdapWithResult(username: String, password: String, autoRegister: Bool? = nil, captchaCode: String? = nil, clientIp: String? = nil, completion: @escaping(Any) -> Void) {
+    public func loginByLdap(username: String,
+                            password: String,
+                            autoRegister: Bool? = nil,
+                            captchaCode: String? = nil,
+                            clientIp: String? = nil,
+                            completion: @escaping(Any) -> Void) {
         Config.domain = self.domain
         let url = Config.verifyuser
         let parameters = [
@@ -206,7 +172,7 @@ extension AuthenticationClient
         }
     }
     
-    //MARK:--使用AD 用户名登录
+    //MARK: --使用AD 用户名登录
     /// loginByAD.
     /// 使用AD 用户名登录
     /// - parameter username: 用户名
@@ -249,43 +215,7 @@ extension AuthenticationClient
         }
     }
     
-    /// loginByAD.
-    /// 使用AD 用户名登录
-    /// - parameter username: 用户名
-    /// - parameter password: 密码
-    /// - parameter completion: 服务器端返回的数据
-    /// - returns: N/A
-    ///
-    /// 使用AD 用户名登录
-    ///
-    public func loginByADWithResult(username: String, password: String, completion: @escaping(Any) -> Void) {
-        Config.domain = self.domain
-        let subUrlArr = Config.domain.split(separator: ".")
-        if subUrlArr.count<3 {
-            print("The domain url is wrong!")
-            return
-        }
-        let adNewUrl = "https://ws." + subUrlArr[1]+"."+subUrlArr[2]
-        let fullUrl = adNewUrl + "/api/v2/ad/verify-user"
-        
-        let parameters = [
-            "username": username,
-            "password": password
-        ]
-//        AF.request(fullUrl, method: .post, parameters: parameters).responseJSON { response in
-//            completion(response.result)
-//
-//            print("\(#function) success")
-//        }
-        
-        AHC.requestWithResponse(fullUrl, method: .post, parameters: parameters) { (response) in
-            completion(response)
-            
-            print("[ \(#function) ] success")
-        }
-    }
-    
-    //MARK:--微信登录
+    //MARK: --微信登录
     /// Login by WeChat Code.
     /// 通过微信认证码登陆
     /// - parameter code: 微信认证码
