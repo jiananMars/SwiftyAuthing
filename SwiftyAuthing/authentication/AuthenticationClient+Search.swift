@@ -11,7 +11,7 @@ import Foundation
 extension AuthenticationClient
 {
     /// list Authorized Resources.
-    /// 获取当前用户的自定义数据列表
+    //MARK: --获取当前用户的自定义数据列表
     ///
     /// - parameter namespace: 权限分组的 code
     /// - parameter completion: 服务器端返回的数据
@@ -34,7 +34,7 @@ extension AuthenticationClient
     }
     
     /// List Udv.
-    /// 获取当前用户的自定义数据列表
+    //MARK: --获取当前用户的自定义数据列表
     ///
     /// - parameter namespace: 权限分组的 code
     /// - parameter completion: 服务器端返回的数据
@@ -53,7 +53,7 @@ extension AuthenticationClient
     }
     
     /// listOrg.
-    /// 获取用户所在组织机构
+    //MARK: --获取用户所在组织机构
     /// - parameter completion: 服务器端返回的数据
     /// - returns: N/A
     ///
@@ -81,7 +81,7 @@ extension AuthenticationClient
     }
     
     /// listOrg.
-    /// 获取用户所在组织机构
+    //MARK: --获取用户所在组织机构
     /// - parameter completion: 服务器端返回的数据
     /// - returns: N/A
     ///
@@ -103,7 +103,7 @@ extension AuthenticationClient
         }
     }
     
-    //MARK:--获取用户信息
+    //MARK: --获取用户信息
     /// Get User Id.
     /// 通过 token 获取 User Id。
     /// - parameter token: 用户 Token
@@ -121,34 +121,14 @@ extension AuthenticationClient
     
     
     /// Get Current User.
-    /// 获取当前登录的用户信息
+    //MARK: --获取当前登录的用户信息
     /// - parameter completion: 服务器端返回的数据
     /// - returns: N/A
     ///
     /// 获取当前登录的用户信息
     ///
-    public func getCurrentUser(completion: @escaping ((GraphQLResult<UserQuery.Data>) -> Void)) {
-        let id = self.getUserId()
-        Network.shared.apollo.fetch(query: UserQuery(id: id), cachePolicy: self.cachePolicy ?? .fetchIgnoringCacheCompletely) { result in
-            switch result {
-            case .failure(let error):
-                print("Failure: \(error)")
-            case .success(let graphQLResult):
-                completion(graphQLResult)
-                
-                print("\(#function) success")
-            }
-        }
-    }
-    
-    /// Get Current User.
-    /// 获取当前登录的用户信息
-    /// - parameter completion: 服务器端返回的数据
-    /// - returns: N/A
-    ///
-    /// 获取当前登录的用户信息
-    ///
-    public func getCurrentUserWithResult(completion: @escaping ((Result<GraphQLResult<UserQuery.Data>, Error>) -> Void)) {
+
+    public func getCurrentUser(completion: @escaping ((Result<GraphQLResult<UserQuery.Data>, Error>) -> Void)) {
         let id = self.getUserId()
         Network.shared.apollo.fetch(query: UserQuery(id: id), cachePolicy: self.cachePolicy ?? .fetchIgnoringCacheCompletely) { result in
             completion(result)
@@ -158,7 +138,7 @@ extension AuthenticationClient
     }
     
     /// List Udv.
-    /// 获取当前用户的自定义数据列表
+    //MARK: --获取当前用户的自定义数据列表
     /// - parameter completion: 服务器端返回的数据
     /// - returns: N/A
     ///
@@ -179,7 +159,7 @@ extension AuthenticationClient
     }
     
     /// List Udv.
-    /// 获取当前用户的自定义数据列表
+    //MARK: --获取当前用户的自定义数据列表
     /// - parameter completion: 服务器端返回的数据
     /// - returns: N/A
     ///
@@ -195,7 +175,7 @@ extension AuthenticationClient
     }
     
     /// computedPasswordSecurityLevel.
-    /// 计算密码安全等级
+    //MARK: --计算密码安全等级
     /// - parameter proclaimedPassword: 明文密码
     /// - parameter completion: 服务器端返回的数据
     /// - returns: N/A

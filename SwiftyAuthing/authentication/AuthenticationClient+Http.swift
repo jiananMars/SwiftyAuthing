@@ -11,33 +11,13 @@ import UIKit
 
 extension AuthenticationClient
 {
-    //MARK:--登出
+    //MARK: --登出
     /// logout.
-    /// 登出
     /// - returns: N/A
     ///
     /// logout
     ///
     public func logout(completion: @escaping(Any) -> Void) {
-        Config.domain = self.domain
-        let url = Config.logout
-        let parameters = [
-            "app_id": Config.keyAppId
-        ]
-        AHC.request(url, method: .get, parameters: parameters) { (result) in
-            completion(result)
-            print("[ \(#function) ] success")
-            //let tResult = result as? [String: Any]
-        }
-    }
-    
-    /// logout.
-    /// 登出
-    /// - returns: N/A
-    ///
-    /// logout
-    ///
-    public func logoutWithResult(completion: @escaping(Any) -> Void) {
         Config.domain = self.domain
         let url = Config.logout
         let parameters = [

@@ -14,16 +14,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var textEmail: UITextField!
     @IBOutlet weak var textPhone: UITextField!
     @IBOutlet weak var textPhonecode: UITextField!
-        
-    var userid = ""
+    var userid: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
-        // 如在此类中调用用户 User 相关方法，需要在此设置此用户保存的有效的用户 AccessToken。
-        // 如需变动用户 AccessToken，只需再次赋值即可。
-        //AuthenticationClient.shared.token = "token"
     }
     
     //MARK: ---------- Action ----------
@@ -153,7 +147,7 @@ class ViewController: UIViewController {
         self.loginByWeChatCode()
     }
 
-    //MARK: ---------- Event ----------
+    //MARK: ---------- APIs ----------
     /// Register by Email and Password.
     /// 使用邮箱注册
     ///
@@ -355,6 +349,37 @@ class ViewController: UIViewController {
     func loginByAD() {
         AuthenticationClient.shared.loginByAD(username: textUsername.text!, password: textPassword.text!) { (status) in
         }
+    }
+    
+    /// Get Current User.
+    /// 获取当前登录的用户信息
+    ///
+    func getCurrentUser() {
+
+        AuthenticationClient.shared.getCurrentUser(completion: {result in
+            switch result {
+            case .success(let graphQLResult):
+                let status = graphQLResult
+                if(status.errors == nil) {
+                    //Success
+                    print(status.data?.user ?? "")
+                } else {
+                    //Failure
+                    print(status.errors ?? "")
+                }
+                print(graphQLResult)
+            case .failure(let error):
+                print(error)
+            }
+        })
+    }
+    
+    /// Logout Current User.
+    /// 退出登录
+    ///
+    func logout() {
+
+        AuthenticationClient.shared.logout(completion:{ result in  })
     }
 
     /// Check Password Strength.
@@ -578,76 +603,7 @@ class ViewController: UIViewController {
             }
         })
     }
-    
-    
-    /// Get Current User.
-    /// 获取当前登录的用户信息
-    ///
-    func getCurrentUser() {
-        //Normal
-        AuthenticationClient.shared.getCurrentUser(completion: {status in
-            if(status.errors == nil) {
-                //Success
-                print(status.data?.user ?? "")
-            } else {
-                //Failure
-                print(status.errors ?? "")
-            }
-        })
-        
-        //With result
-//        AuthenticationClient.shared.getCurrentUserWithResult(completion: {result in
-//            switch result {
-//            case .success(let graphQLResult):
-//                let status = graphQLResult
-//                if(status.errors == nil) {
-//                    //Success
-//                    print(status.data?.user ?? "")
-//                } else {
-//                    //Failure
-//                    print(status.errors ?? "")
-//                }
-//                print(graphQLResult)
-//            case .failure(let error):
-//                print(error)
-//            }
-//        })
-    }
-    
-    
-    /// Logout Current User.
-    /// 退出登录
-    ///
-    func logout() {
-        //Normal
-//        AuthenticationClient.shared.logout(completion:{ status in
-//            if(status.errors == nil) {
-//                //Success
-//                print(status.data?.updateUser ?? "")
-//            } else {
-//                //Failure
-//                print(status.errors ?? "")
-//            }
-//        })
-        
-        //With result
-//        AuthenticationClient.shared.logoutWithResult(completion:{ result in
-//            switch result {
-//            case .success(let graphQLResult):
-//                let status = graphQLResult
-//                if(status.errors == nil) {
-//                    //Success
-//                    print(status.data?.updateUser ?? "")
-//                } else {
-//                    //Failure
-//                    print(status.errors ?? "")
-//                }
-//                print(graphQLResult)
-//            case .failure(let error):
-//                print(error)
-//            }
-//        })
-    }
+
     
     /// bindPhone.
     /// 绑定手机号

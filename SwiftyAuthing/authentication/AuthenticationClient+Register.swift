@@ -13,7 +13,7 @@ extension AuthenticationClient
 {
     
     /// Register by Email and Password.
-    /// 使用邮箱注册
+    //MARK: --使用邮箱注册
     /// - parameter email: 邮箱
     /// - parameter password: 密码
     /// - parameter RegisterProfile: [profile] 用户资料
@@ -50,7 +50,7 @@ extension AuthenticationClient
     }
 
     /// Register by Username and Password.
-    /// 使用用户名注册
+    //MARK: --使用用户名注册
     /// - parameter username: 用户名
     /// - parameter password: 密码
     /// - parameter RegisterProfile: [profile] 用户资料
@@ -87,7 +87,7 @@ extension AuthenticationClient
     }
     
     /// Register by Phone Number and SMS Code.
-    /// 使用手机号注册
+    //MARK: --使用手机号注册
     /// - parameter phone: 手机号
     /// - parameter code: 短信验证码
     /// - parameter password: 初始密码
@@ -126,9 +126,8 @@ extension AuthenticationClient
         }
     }
     
-    //MARK:验证码
     /// Send SMS Code to Phone Number.
-    /// 发送短信验证码
+    //MARK: --发送短信验证码
     /// - parameter phone: 手机号
     /// - parameter completion: 服务器端返回的数据
     /// - returns: N/A
@@ -155,7 +154,7 @@ extension AuthenticationClient
     }
 
     /// Send SMS Code to Phone Number.
-    /// 发送短信验证码
+    //MARK: --发送短信验证码
     /// - parameter phone: 手机号
     /// - parameter completion: 服务器端返回的数据
     /// - returns: N/A
