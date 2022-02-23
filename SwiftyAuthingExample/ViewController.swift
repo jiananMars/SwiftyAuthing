@@ -14,10 +14,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var textEmail: UITextField!
     @IBOutlet weak var textPhone: UITextField!
     @IBOutlet weak var textPhonecode: UITextField!
+    
     var userid: String?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+               
+        // 如在此类中调用用户 User 相关方法，需要在此设置此用户保存的有效的用户 AccessToken。
+        // 如需变动用户 AccessToken，只需再次赋值即可。
+        //AuthenticationClient.shared.token = "token"
     }
     
     //MARK: ---------- Action ----------
@@ -96,6 +101,32 @@ class ViewController: UIViewController {
         self.present(webVC, animated: true, completion: nil)
     }
     
+    /// Login by Phone Number and Password.
+    /// 使用子账号密码登录
+    ///
+    func loginBySubAccount() {
+        AuthenticationClient.shared.loginBySubAccount(username: textUsername.text!, password: textPassword.text!, completion: { (status) in
+            if(status.errors == nil) {
+                //Success
+                print(status.data?.loginBySubAccount ?? "")
+            } else {
+                //Failure
+                print(status.errors ?? "")
+            }
+
+        })
+    }
+    
+    /// Login by AD username and password.
+    /// 使用AD 账号密码登录
+    ///
+    func loginByAD() {
+        AuthenticationClient.shared.loginByAD(username: textUsername.text!, password: textPassword.text!) { (status) in
+            let statusDic = status as! NSDictionary
+            print(statusDic)
+        }
+    }
+    
     @IBAction func action10(_ sender: Any) {
 //        self.logout()
 //        self.presentingViewController
@@ -147,19 +178,21 @@ class ViewController: UIViewController {
         self.loginByWeChatCode()
     }
 
-    //MARK: ---------- APIs ----------
+    //MARK: ---------- API ----------
     /// Register by Email and Password.
     /// 使用邮箱注册
     ///
     func registerByEmail() {
-
-        AuthenticationClient.shared.registerByEmail(email: textEmail.text!, password: textPassword.text!, completion: {result in
-                switch result {
-                case .success(let graphQLResult):
-                    print(graphQLResult)
-                case .failure(let error):
-                    print(error)
-                }
+        //Normal
+        AuthenticationClient.shared.registerByEmail(email: textEmail.text!, password: textPassword.text!, completion: {status in
+            if(status.errors == nil) {
+                //Success
+                print(status.data?.registerByEmail ?? "")
+                self.userid = status.data?.registerByEmail?.id ?? ""
+            } else {
+                //Failure
+                print(status.errors ?? "")
+            }
         })
     }
 
@@ -167,25 +200,27 @@ class ViewController: UIViewController {
     /// 使用用户名注册
     ///
     func registerByUsername() {
-
-        AuthenticationClient.shared.registerByUsername(username: textUsername.text!, password: textPassword.text!, completion:{ result in
-            switch result {
-            case .success(let graphQLResult):
-                let status = graphQLResult
-                if(status.errors == nil) {
-                    //Success
-                    print(status.data?.registerByUsername ?? "")
-                    self.userid = status.data?.registerByUsername?.id ?? ""
-                } else {
-                    print(status.errors ?? "")
-                }
-                print(graphQLResult)
-                
-            case .failure(let error):
-                print(error)
+        //Normal
+        AuthenticationClient.shared.registerByUsername(username: textUsername.text!, password: textPassword.text!, completion:{status in
+            if(status.errors == nil) {
+                //Success
+                print(status.data?.registerByUsername ?? "")
+                self.userid = status.data?.registerByUsername?.id ?? ""
+            } else {
+                //Failure
+                print(status.errors ?? "")
             }
         })
         
+//        //With result
+//        AuthenticationClient.shared.registerByUsernameWithResult(username: textUsername.text!, password: textPassword.text!, completion:{result in
+//            switch result {
+//            case .success(let graphQLResult):
+//                print(graphQLResult)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        })
     }
 
     /// Register by Phone Number and SMS Code.
@@ -193,7 +228,20 @@ class ViewController: UIViewController {
     ///
     func registerByPhoneCode() {
         
-        AuthenticationClient.shared.registerByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, password: textPassword.text!, completion:{ result in
+        //Normal
+//        AuthenticationClient.shared.registerByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.registerByPhoneCode ?? "")
+//                self.userid = status.data?.registerByPhoneCode?.id ?? ""
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+        AuthenticationClient.shared.registerByPhoneCodeWithResult(phone: textPhone.text!, code: textPhonecode.text!, completion:{ result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -213,35 +261,22 @@ class ViewController: UIViewController {
         
     }
     
-    
-    /// Login by Email and Password.
-    /// 使用邮箱登录
-    ///
-    func loginByEmail() {
-        AuthenticationClient.shared.loginByEmail(email: textEmail.text!, password: textPassword.text!, completion:{ result in
-            switch result {
-            case .success(let graphQLResult):
-                let status = graphQLResult
-                if(status.errors == nil) {
-                    //Success
-                    print(status.data?.loginByEmail ?? "")
-                    self.userid = status.data?.loginByEmail?.id ?? ""
-                } else {
-                    print(status.errors ?? "")
-                }
-                print(graphQLResult)
-                
-            case .failure(let error):
-                print(error)
-            }
-        })
-    }
-    
     /// Login with Username and Password.
     /// 使用用户名登录
     func loginByUsername() {
-
-        AuthenticationClient.shared.loginByUsername(username: textUsername.text!, password: textPassword.text!, completion:{ result in
+        //Normal
+        AuthenticationClient.shared.loginByUsername(username: textUsername.text!, password: textPassword.text!, completion:{ status in
+            if(status.errors == nil) {
+                //Success
+                print(status.data?.loginByUsername ?? "")
+            } else {
+                //Failure
+                print(status.errors ?? "")
+            }
+        })
+        
+        //With result
+        AuthenticationClient.shared.loginByUsernameWithResult(username: textUsername.text!, password: textPassword.text!, completion:{ result in
             switch result {
             case .success(let graphQLResult):
                 let status = graphQLResult
@@ -257,129 +292,110 @@ class ViewController: UIViewController {
                 print(error)
             }
         })
-        
     }
-
+    
+    /// Login by Email and Password.
+    /// 使用邮箱登录
+    ///
+    func loginByEmail() {
+        //Normal
+        AuthenticationClient.shared.loginByEmail(email: textEmail.text!, password: textPassword.text!, completion:{ status in
+            if(status.errors == nil) {
+                //Success
+                print(status.data?.loginByEmail ?? "")
+            } else {
+                //Failure
+                print(status.errors ?? "")
+            }
+        })
+        
+//        //With result
+//        AuthenticationClient.shared.loginByEmailWithResult(email: textEmail.text!, password: textPassword.text!, completion:{ result in
+//            switch result {
+//            case .success(let graphQLResult):
+//                let status = graphQLResult
+//                if(status.errors == nil) {
+//                    //Success
+//                    print(status.data?.loginByEmail ?? "")
+//                } else {
+//                    //Failure
+//                    print(status.errors ?? "")
+//                }
+//                print(graphQLResult)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        })
+    }
     
     /// Login by Phone Number and SMS Code.
     /// 使用手机号验证码登录
     ///
     func loginByPhoneCode() {
-
-        AuthenticationClient.shared.loginByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, completion:{ result in
-            switch result {
-            case .success(let graphQLResult):
-                let status = graphQLResult
-                if(status.errors == nil) {
-                    //Success
-                    print(status.data?.loginByPhoneCode ?? "")
-                } else {
-                    //Failure
-                    print(status.errors ?? "")
-                }
-                print(graphQLResult)
-            case .failure(let error):
-                print(error)
+        //Normal
+        AuthenticationClient.shared.loginByPhoneCode(phone: textPhone.text!, code: textPhonecode.text!, completion:{ status in
+            if(status.errors == nil) {
+                //Success
+                print(status.data?.loginByPhoneCode ?? "")
+            } else {
+                //Failure
+                print(status.errors ?? "")
             }
         })
+        
+//        //With result
+//        AuthenticationClient.shared.loginByPhoneCodeWithResult(phone: textPhone.text!, code: textPhonecode.text!, completion:{ result in
+//            switch result {
+//            case .success(let graphQLResult):
+//                let status = graphQLResult
+//                if(status.errors == nil) {
+//                    //Success
+//                    print(status.data?.loginByPhoneCode ?? "")
+//                } else {
+//                    //Failure
+//                    print(status.errors ?? "")
+//                }
+//                print(graphQLResult)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        })
     }
     
     /// Login by Phone Number and Password.
     /// 使用手机号密码登录
     ///
     func loginByPhonePassword() {
-
-        AuthenticationClient.shared.loginByPhonePassword(phone: textPhone.text!, password: textPassword.text!, completion:{ result in
-            switch result {
-            case .success(let graphQLResult):
-                let status = graphQLResult
-                if(status.errors == nil) {
-                    //Success
-                    print(status.data?.loginByPhonePassword ?? "")
-                } else {
-                    //Failure
-                    print(status.errors ?? "")
-                    //print(status.errors?.first?.displayMessage)
-                    //print(status.errors?.first?.displayCode)
-                }
-                print(graphQLResult)
-            case .failure(let error):
-                print(error)
+        //Normal
+        AuthenticationClient.shared.loginByPhonePassword(phone: textPhone.text!, password: textPassword.text!, completion:{ status in
+            if(status.errors == nil) {
+                //Success
+                print(status.data?.loginByPhonePassword ?? "")
+            } else {
+                //Failure
+                print(status.errors ?? "")
             }
         })
-    }
-    
-    /// Login by Phone Number and Password.
-    /// 使用子账号密码登录
-    ///
-    func loginBySubAccount() {
-        AuthenticationClient.shared.loginBySubAccount(username: textUsername.text!, password: textPassword.text!, completion: { (result) in
-            switch result {
-            case .success(let graphQLResult):
-                let status = graphQLResult
-                if(status.errors == nil) {
-                    //Success
-                    print(status.data?.loginBySubAccount ?? "")
-                } else {
-                    //Failure
-                    print(status.errors ?? "")
-                    //print(status.errors?.first?.displayMessage)
-                    //print(status.errors?.first?.displayCode)
-                }
-                print(graphQLResult)
-            case .failure(let error):
-                print(error)
-            }
-        })
-    }
-    
-    /// loginByLdap.
-    /// 使用 LDAP 用户名登录
-    ///
-    func loginByLdap() {
-        AuthenticationClient.shared.loginByLdap(username: textUsername.text!, password: textPassword.text!, completion: { result in
-            print(result)
-        })
-    }
-    
-    
-    /// Login by AD username and password.
-    /// 使用AD 账号密码登录
-    ///
-    func loginByAD() {
-        AuthenticationClient.shared.loginByAD(username: textUsername.text!, password: textPassword.text!) { (status) in
-        }
-    }
-    
-    /// Get Current User.
-    /// 获取当前登录的用户信息
-    ///
-    func getCurrentUser() {
-
-        AuthenticationClient.shared.getCurrentUser(completion: {result in
-            switch result {
-            case .success(let graphQLResult):
-                let status = graphQLResult
-                if(status.errors == nil) {
-                    //Success
-                    print(status.data?.user ?? "")
-                } else {
-                    //Failure
-                    print(status.errors ?? "")
-                }
-                print(graphQLResult)
-            case .failure(let error):
-                print(error)
-            }
-        })
-    }
-    
-    /// Logout Current User.
-    /// 退出登录
-    ///
-    func logout() {
-
-        AuthenticationClient.shared.logout(completion:{ result in  })
+        
+        //With result
+//        AuthenticationClient.shared.loginByPhonePasswordWithResult(phone: textPhone.text!, password: textPassword.text!, completion:{ result in
+//            switch result {
+//            case .success(let graphQLResult):
+//                let status = graphQLResult
+//                if(status.errors == nil) {
+//                    //Success
+//                    print(status.data?.loginByPhonePassword ?? "")
+//                } else {
+//                    //Failure
+//                    print(status.errors ?? "")
+//                    //print(status.errors?.first?.displayMessage)
+//                    //print(status.errors?.first?.displayCode)
+//                }
+//                print(graphQLResult)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        })
     }
 
     /// Check Password Strength.
@@ -603,7 +619,76 @@ class ViewController: UIViewController {
             }
         })
     }
-
+    
+    
+    /// Get Current User.
+    /// 获取当前登录的用户信息
+    ///
+    func getCurrentUser() {
+        //Normal
+        AuthenticationClient.shared.getCurrentUser(completion: {status in
+            if(status.errors == nil) {
+                //Success
+                print(status.data?.user ?? "")
+            } else {
+                //Failure
+                print(status.errors ?? "")
+            }
+        })
+        
+        //With result
+//        AuthenticationClient.shared.getCurrentUserWithResult(completion: {result in
+//            switch result {
+//            case .success(let graphQLResult):
+//                let status = graphQLResult
+//                if(status.errors == nil) {
+//                    //Success
+//                    print(status.data?.user ?? "")
+//                } else {
+//                    //Failure
+//                    print(status.errors ?? "")
+//                }
+//                print(graphQLResult)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        })
+    }
+    
+    
+    /// Logout Current User.
+    /// 退出登录
+    ///
+    func logout() {
+        //Normal
+//        AuthenticationClient.shared.logout(completion:{ status in
+//            if(status.errors == nil) {
+//                //Success
+//                print(status.data?.updateUser ?? "")
+//            } else {
+//                //Failure
+//                print(status.errors ?? "")
+//            }
+//        })
+        
+        //With result
+//        AuthenticationClient.shared.logoutWithResult(completion:{ result in
+//            switch result {
+//            case .success(let graphQLResult):
+//                let status = graphQLResult
+//                if(status.errors == nil) {
+//                    //Success
+//                    print(status.data?.updateUser ?? "")
+//                } else {
+//                    //Failure
+//                    print(status.errors ?? "")
+//                }
+//                print(graphQLResult)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        })
+    }
     
     /// bindPhone.
     /// 绑定手机号
@@ -777,7 +862,22 @@ class ViewController: UIViewController {
             }
         })
     }
-
+    
+    /// loginByLdap.
+    /// 使用 LDAP 用户名登录
+    ///
+    func loginByLdap() {
+        //Normal
+//        AuthenticationClient.shared.loginByLdap(username: textUsername.text!, password: textPassword.text!, completion: { status in
+//            print(status)
+//        })
+        
+        //With result
+        AuthenticationClient.shared.loginByLdapWithResult(username: textUsername.text!, password: textPassword.text!, completion: { result in
+            print(result)
+        })
+    }
+    
     
     /// Login by WeChat Code.
     /// 通过微信认证码登陆

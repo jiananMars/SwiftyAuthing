@@ -15,15 +15,11 @@ class TempViewController: UIViewController {
     @IBOutlet weak var textPhone: UITextField!
     @IBOutlet weak var textPhonecode: UITextField!
     
+    var userid: String?
     
-    /// Find in https://console.authing.cn Setting - Basic Information & Application.
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        self.client = AuthenticationClient(userPoolId: userPoolId, appId: appId)
-        
-//        AuthenticationClient.initSDK(userPoolId: userPoolId, appId: appId)
+                
     }
     
     @IBAction func actionBack(_ sender: Any) {
