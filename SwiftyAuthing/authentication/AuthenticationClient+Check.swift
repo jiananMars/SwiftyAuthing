@@ -11,7 +11,7 @@ import Foundation
 
 extension AuthenticationClient
 {
-    //MARK:--检查密码强度
+    //MARK: --检查密码强度
     /// Check Password Strength.
     /// 检查密码强度
     /// - parameter password: 密码
@@ -49,7 +49,7 @@ extension AuthenticationClient
         }
     }
     
-    //MARK:--检测 Token 登录状态
+    //MARK: --检测 Token 登录状态
     /// Check Login Status.
     /// 检测 Token 登录状态
     /// - parameter token: token 用户的登录凭证 token

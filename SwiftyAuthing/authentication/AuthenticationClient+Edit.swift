@@ -11,7 +11,7 @@ import Foundation
 
 extension AuthenticationClient
 {
-    //MARK:--发送邮件
+    //MARK: --发送邮件
     /// Send Email.
     /// 发送邮件
     /// - parameter email: 邮箱
@@ -51,7 +51,7 @@ extension AuthenticationClient
         }
     }
     
-    //MARK:--自定义数据管理
+    //MARK: --自定义数据管理
     /// Set Udv.
     /// 添加自定义数据
     /// - parameter key: 自定义字段的 key
@@ -93,6 +93,7 @@ extension AuthenticationClient
         }
     }
     
+    //MARK: --删除自定义数据
     /// Remove Udv.
     /// 删除自定义数据
     /// - parameter key: 自定义字段的 key
@@ -132,7 +133,7 @@ extension AuthenticationClient
         }
     }
     
-    //MARK:--密码管理
+    //MARK: --通过短信验证码重置密码
     /// Reset Password by Phone Code.
     /// 通过短信验证码重置密码
     /// - parameter phone: 手机号
@@ -175,6 +176,7 @@ extension AuthenticationClient
         }
     }
 
+    //MARK: --通过邮件验证码重置密码
     /// Reset Password by Email Code.
     /// 通过邮件验证码重置密码
     /// - parameter email: 邮件
@@ -198,6 +200,7 @@ extension AuthenticationClient
         }
     }
     
+    //MARK: --更新用户手机号
     /// Update Phone.
     /// 更新用户手机号
     /// - parameter phone: 新密码
@@ -221,6 +224,7 @@ extension AuthenticationClient
         }
     }
     
+    //MARK: --通过邮件验证码重置密码
     /// Reset Password by Email Code.
     /// 通过邮件验证码重置密码
     /// - parameter email: 邮件
@@ -239,6 +243,7 @@ extension AuthenticationClient
         }
     }
     
+    //MARK: --更新用户密码
     /// Update Password.
     /// 更新用户密码
     /// - parameter newPassword: 新密码
@@ -278,6 +283,7 @@ extension AuthenticationClient
         }
     }
     
+    //MARK: --刷新当前用户的 token
     ///Refresh Token.
     /// 刷新当前用户的 token
     /// - parameter completion: 服务器端返回的数据

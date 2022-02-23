@@ -10,7 +10,7 @@ import Foundation
 
 extension AuthenticationClient
 {
-    //MARK:--绑定手机号
+    //MARK: --绑定手机号
     /// bindPhone.
     /// 绑定手机号
     /// - parameter phone: Phone
@@ -50,7 +50,7 @@ extension AuthenticationClient
         }
     }
     
-    //MARK:--用户解绑手机号
+    //MARK: --用户解绑手机号
     /// unbindPhone.
     /// 解绑手机号
     /// - parameter completion: 服务器端返回的数据
@@ -71,7 +71,6 @@ extension AuthenticationClient
         }
     }
     
-    //MARK:--解绑手机号
     /// unbindPhone.
     /// 解绑手机号
     /// - parameter completion: 服务器端返回的数据
@@ -87,7 +86,7 @@ extension AuthenticationClient
         }
     }
     
-    //MARK:-- 绑定邮箱
+    //MARK: --绑定邮箱
     /// bindEmail.
     /// 绑定邮箱
     /// - parameter email: 邮箱
@@ -162,6 +161,7 @@ extension AuthenticationClient
         }
     }
     
+    //MARK: --更新用户邮箱
     /// Update Email.
     /// 更新用户邮箱
     /// - parameter email: 新密码

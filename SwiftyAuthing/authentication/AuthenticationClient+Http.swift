@@ -13,11 +13,31 @@ extension AuthenticationClient
 {
     //MARK: --登出
     /// logout.
+    /// 登出
     /// - returns: N/A
     ///
     /// logout
     ///
     public func logout(completion: @escaping(Any) -> Void) {
+        Config.domain = self.domain
+        let url = Config.logout
+        let parameters = [
+            "app_id": Config.keyAppId
+        ]
+        AHC.request(url, method: .get, parameters: parameters) { (result) in
+            completion(result)
+            print("[ \(#function) ] success")
+            //let tResult = result as? [String: Any]
+        }
+    }
+    
+    /// logout.
+    /// 登出
+    /// - returns: N/A
+    ///
+    /// logout
+    ///
+    public func logoutWithResult(completion: @escaping(Any) -> Void) {
         Config.domain = self.domain
         let url = Config.logout
         let parameters = [
@@ -36,8 +56,9 @@ extension AuthenticationClient
         }
     }
     
-    /// loginByLdap.
     //MARK: --使用 LDAP 用户名登录
+    /// loginByLdap.
+    /// 使用 LDAP 用户名登录
     /// - parameter username: 用户名
     /// - parameter password: 密码
     /// - parameter autoRegister: 是否自动注册。如果检测到用户不存在，会根据登录账密自动创建一个账号。
@@ -48,12 +69,45 @@ extension AuthenticationClient
     ///
     /// 使用 LDAP 用户名登录。如果你的用户池配置了登录失败检测，当同一  IP 下登录多次失败的时候会要求用户输入图形验证码（code 为 2000)。
     ///
-    public func loginByLdap(username: String,
-                            password: String,
-                            autoRegister: Bool? = nil,
-                            captchaCode: String? = nil,
-                            clientIp: String? = nil,
-                            completion: @escaping(Any) -> Void) {
+    public func loginByLdap(username: String, password: String, autoRegister: Bool? = nil, captchaCode: String? = nil, clientIp: String? = nil, completion: @escaping(Any) -> Void) {
+        Config.domain = self.domain
+        let url = Config.verifyuser
+        let parameters = [
+            "username": username,
+            "password": password
+        ]
+//        AF.request(url, method: .post, parameters: parameters).responseJSON { response in
+//            switch response.result {
+//            case .success(let value):
+//                completion(value)
+//
+//                print("\(#function) success")
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+        
+        AHC.request(url, method: .post, parameters: parameters) { (result) in
+            completion(result)
+            
+            print("[ \(#function) ] success")
+        }
+    }
+    
+    
+    /// loginByLdap.
+    /// 使用 LDAP 用户名登录
+    /// - parameter username: 用户名
+    /// - parameter password: 密码
+    /// - parameter autoRegister: 是否自动注册。如果检测到用户不存在，会根据登录账密自动创建一个账号。
+    /// - parameter captchaCode: 图形验证码
+    /// - parameter clientIp: 客户端真实 IP，如果你在服务器端调用此接口，请务必将此参数设置为终端用户的真实 IP。
+    /// - parameter completion: 服务器端返回的数据
+    /// - returns: N/A
+    ///
+    /// 使用 LDAP 用户名登录。如果你的用户池配置了登录失败检测，当同一  IP 下登录多次失败的时候会要求用户输入图形验证码（code 为 2000)。
+    ///
+    public func loginByLdapWithResult(username: String, password: String, autoRegister: Bool? = nil, captchaCode: String? = nil, clientIp: String? = nil, completion: @escaping(Any) -> Void) {
         Config.domain = self.domain
         let url = Config.verifyuser
         let parameters = [
@@ -73,7 +127,7 @@ extension AuthenticationClient
         }
     }
     
-    //MARK:--获取当前用户能够访问的应用
+    //MARK: --获取当前用户能够访问的应用
     /// listApplications.
     /// 获取当前用户能够访问的应用
     /// - parameter username: 用户名
@@ -195,6 +249,42 @@ extension AuthenticationClient
         }
     }
     
+    /// loginByAD.
+    /// 使用AD 用户名登录
+    /// - parameter username: 用户名
+    /// - parameter password: 密码
+    /// - parameter completion: 服务器端返回的数据
+    /// - returns: N/A
+    ///
+    /// 使用AD 用户名登录
+    ///
+    public func loginByADWithResult(username: String, password: String, completion: @escaping(Any) -> Void) {
+        Config.domain = self.domain
+        let subUrlArr = Config.domain.split(separator: ".")
+        if subUrlArr.count<3 {
+            print("The domain url is wrong!")
+            return
+        }
+        let adNewUrl = "https://ws." + subUrlArr[1]+"."+subUrlArr[2]
+        let fullUrl = adNewUrl + "/api/v2/ad/verify-user"
+        
+        let parameters = [
+            "username": username,
+            "password": password
+        ]
+//        AF.request(fullUrl, method: .post, parameters: parameters).responseJSON { response in
+//            completion(response.result)
+//
+//            print("\(#function) success")
+//        }
+        
+        AHC.requestWithResponse(fullUrl, method: .post, parameters: parameters) { (response) in
+            completion(response)
+            
+            print("[ \(#function) ] success")
+        }
+    }
+    
     //MARK: --微信登录
     /// Login by WeChat Code.
     /// 通过微信认证码登陆
@@ -228,7 +318,7 @@ extension AuthenticationClient
         }
     }
     
-    //MARK:--微信登录 EC（Enhanced Cliet mode）
+    //MARK: --微信登录 EC（Enhanced Cliet mode）
     /// Login by WeChat Code.
     /// 通过微信认证码登陆
     /// - parameter connId: 连接 ID
@@ -288,6 +378,7 @@ extension AuthenticationClient
         }
     }
 
+    //MARK: --实名认证 - 使用姓名，身份证号码，人脸图像，需要登录后调用
     /// User Id Verify.
     /// 实名认证 - 使用姓名，身份证号码，人脸图像，需要登录后调用
     /// - parameter name: 姓名
@@ -365,6 +456,7 @@ extension AuthenticationClient
 //        }
     }
 
+    //MARK: --查询实名认证状态，需要登录后调用
     /// User Id Verify Status.
     /// 查询实名认证状态，需要登录后调用
     /// - parameter completion: 服务器端返回的数据
@@ -398,7 +490,7 @@ extension AuthenticationClient
         }
     }
     
-    
+    //MARK: --将社交账号绑定到主账号，需要登录后调用。
     /// Social Link.
     /// 将社交账号绑定到主账号，需要登录后调用。
     /// - parameter secondaryUserToken: 社交账号 Token
@@ -467,6 +559,7 @@ extension AuthenticationClient
         }
     }
     
+    //MARK: --将社交账号解绑
     /// unSocial Link.
     /// 将社交账号解绑
     /// - parameter primaryUserToken: 主账号 Token
@@ -502,6 +595,7 @@ extension AuthenticationClient
         }
     }
     
+    //MARK: --获取用户账号安全等级
     /// Get Security Level.
     /// 获取用户账号安全等级
     /// - parameter completion: 服务器端返回的数据
