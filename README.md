@@ -761,7 +761,7 @@ AuthenticationClient.shared.listApplications(page: <#page#>, limit: <#limit#>, c
 AuthenticationClient.shared.listAuthorizedResources(completion: { (result) in })
 ```
 
-# 社会化登录
+# 4. 社会化登录
 
 > Authing 目前共支持微信扫码、微信网页授权、微信小程序、微信移动应用、GitHub、Google、微博、钉钉、QQ、支付宝移动端、企业微信内部应用扫码登录、企业微信第三方服务商扫码登录、企业微信第三方服务商网页授权登录等 10 余种社会化登录方式。
 
@@ -774,17 +774,12 @@ AuthenticationClient.shared.listAuthorizedResources(completion: { (result) in })
 > [支付宝社会化登录](./sdk-for-swift/swift-alipaylogin.md) 
 
 
-
-## 更新日志
-
-[文档](https://github.com/Authing/AuthingSSO/releases)中记录了每个版本的详细更改。
-
-## 参与贡献
+# 5. 参与贡献
 - Fork it
 - Create your feature branch (git checkout -b my-new-feature)
 - Commit your changes (git commit -am 'Add some feature')
 - Push to the branch (git push origin my-new-feature)
 - Create new Pull Request
-## 获取帮助
 
+# 6. 获取帮助
 Join us on forum: [#authing-chat](https://forum.authing.cn/)
