@@ -118,7 +118,6 @@ extension AuthenticationClient
     ///
     /// 使用用户名注册
     ///
-    @available(*, deprecated, message: "Use 'getCurrentUser(completion:)' instead")
     public func registerByUsername(username: String, password: String, completion: @escaping ((GraphQLResult<RegisterByUsernameMutation.Data>) -> Void)) {
         Network.shared.apollo.perform(mutation: RegisterByUsernameMutation(input: RegisterByUsernameInput(username: username, password: Encryption.encrypt(password))), queue: DispatchQueue.main) { result in
             switch result {

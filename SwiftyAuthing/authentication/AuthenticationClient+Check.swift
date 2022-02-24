@@ -82,6 +82,7 @@ extension AuthenticationClient
     ///
     /// 检测 Token 登录状态
     ///
+    @available(*, deprecated, message: "Use 'getCurrentUser(completion:)' instead")
     public func checkLoginStatusWithResult(token: String, completion: @escaping ((Result<GraphQLResult<CheckLoginStatusQuery.Data>, Error>) -> Void)) {
         UserDefaults.standard.setValue("", forKey: Config.keyAccessToken)
         Network.shared.apollo.fetch(query: CheckLoginStatusQuery(token: token), cachePolicy: self.cachePolicy ?? .fetchIgnoringCacheCompletely) { result in

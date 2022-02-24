@@ -74,8 +74,8 @@ public class AuthenticationClient {
     /// Find in https://console.authing.cn Setting - Basic Information & Application.
     ///
     class func initSDK(userPoolId: String, appId: String) {
-        AuthenticationClient().userPoolId = userPoolId
-        AuthenticationClient().appId = appId
+        AuthenticationClient.shared.userPoolId = userPoolId
+        AuthenticationClient.shared.appId = appId
         Config.keyAppId = appId
         
         let currentVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -101,7 +101,7 @@ public class AuthenticationClient {
     /// Find in https://console.authing.cn Setting - Basic Information.
     ///
     class func initSDK(userPoolId: String) {
-        AuthenticationClient().userPoolId = userPoolId
+        AuthenticationClient.shared.userPoolId = userPoolId
 
         let currentVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
         let allLanguages: [String] = UserDefaults.standard.object(forKey: "AppleLanguages") as! [String]
@@ -125,8 +125,8 @@ public class AuthenticationClient {
     /// Find in https://console.authing.cn Setting - Basic Information.
     ///
     class func initSDK(userPoolId: String, host: String) {
-        AuthenticationClient().userPoolId = userPoolId
-        AuthenticationClient().host = host
+        AuthenticationClient.shared.userPoolId = userPoolId
+        AuthenticationClient.shared.host = host
         Network.shared.host = host
         
         let currentVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -151,8 +151,8 @@ public class AuthenticationClient {
     /// Find in https://console.authing.cn Setting - Basic Information & Application.
     ///
     class func initSDK(userPoolId: String, appId: String, domain: String) {
-        AuthenticationClient().userPoolId = userPoolId
-        AuthenticationClient().appId = appId
+        AuthenticationClient.shared.userPoolId = userPoolId
+        AuthenticationClient.shared.appId = appId
         UserDefaults.standard.setValue(userPoolId, forKey: Config.keyUserPoolId)
         UserDefaults.standard.setValue(appId, forKey: Config.keyAppId)
         
@@ -172,8 +172,8 @@ public class AuthenticationClient {
         Config.keyHeaders = headers
         
         let host = Config.getHost(domain: domain)
-        AuthenticationClient().domain = domain
-        AuthenticationClient().host = host
+        AuthenticationClient.shared.domain = domain
+        AuthenticationClient.shared.host = host
         Network.shared.host = host
         UserDefaults.standard.setValue(domain, forKey: Config.keyDomain)
     }

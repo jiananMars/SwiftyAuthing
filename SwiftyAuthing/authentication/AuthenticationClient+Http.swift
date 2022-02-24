@@ -329,8 +329,8 @@ extension AuthenticationClient
     /// 通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
     ///
     public func loginByWeChatWithConnId(connId: String, code: String, completion: @escaping(Any) -> Void) {
-        let userPoolId = self.userPoolId ?? ""
-        let appId = self.appId ?? ""
+//        let userPoolId = self.userPoolId ?? ""
+//        let appId = self.appId ?? ""
         Config.domain = self.domain
         let url = domain + "/api/v2/ecConn/wechatMobile/authByCode"
         

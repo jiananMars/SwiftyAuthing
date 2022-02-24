@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -87,9 +87,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Initiate Test"/>
-                                <connections>
-                                    <action selector="action0:" destination="BYZ-38-t0r" eventType="touchUpInside" id="D9A-17-V7l"/>
-                                </connections>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Initiate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyf-xk-0De">
                                 <rect key="frame" x="20" y="356" width="100" height="32"/>
@@ -111,7 +108,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Register by Username and Password"/>
                                 <connections>
-                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vFn-Fp-thW"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="O98-ZV-vQo"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uwv-ES-cWp">
@@ -120,7 +117,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Register by Email and Password"/>
                                 <connections>
-                                    <action selector="action2:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rNX-Om-jh9"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ueq-Ld-7sn"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3k2-sr-rQr">
@@ -129,7 +126,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Send SMS Code to Phone Number"/>
                                 <connections>
-                                    <action selector="action4:" destination="BYZ-38-t0r" eventType="touchUpInside" id="63z-py-viL"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f1w-fQ-vrB"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pbM-uw-t3L">
@@ -138,7 +135,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Register by Phone Number and SMS Code"/>
                                 <connections>
-                                    <action selector="actionn5:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MgK-zR-AyL"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lBA-Cj-3fi"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Login" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ala-dt-qtG">
@@ -154,7 +151,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Login with Username and Password"/>
                                 <connections>
-                                    <action selector="action6:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0aq-yv-I6P"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="48d-kr-3cn"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Loc-2D-2Do">
@@ -163,7 +160,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Login by Email and Password"/>
                                 <connections>
-                                    <action selector="action7:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rcP-XU-nzJ"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qwq-1k-dhG"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S7K-JA-Slv">
@@ -172,7 +169,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="login By Sub Account"/>
                                 <connections>
-                                    <action selector="actionLoginBySubAccount:" destination="BYZ-38-t0r" eventType="touchUpInside" id="29e-EJ-sH5"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="crE-YJ-lz4"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dV2-nU-HUK">
@@ -181,7 +178,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Login by AD"/>
                                 <connections>
-                                    <action selector="actionLoginByAD:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wtV-FA-pau"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZZs-c8-m6e"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhW-dl-2V8">
@@ -190,7 +187,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Login by Phone Number and SMS Code"/>
                                 <connections>
-                                    <action selector="action8:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AUS-Eo-VJp"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tAz-TY-aaV"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dJ-du-evD">
@@ -199,7 +196,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Login by Phone Number and Password"/>
                                 <connections>
-                                    <action selector="action9:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xy0-Fb-jj5"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vPQ-WM-bkh"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bEa-If-7of">
@@ -210,7 +207,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Http"/>
                                 <connections>
-                                    <action selector="action10:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PpQ-Ul-zSO"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dfZ-Ns-57b"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oPe-bH-i7T">
@@ -221,7 +218,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Bind"/>
                                 <connections>
-                                    <action selector="actionJumpBindVC:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BoE-nz-tRN"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vbt-sa-gho"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TSM-Sc-Yvl">
@@ -232,7 +229,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Search"/>
                                 <connections>
-                                    <action selector="actionJumpSearchVC:" destination="BYZ-38-t0r" eventType="touchUpInside" id="97X-Km-ib2"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JTX-A8-jfX"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Isy-aX-f8q">
@@ -242,7 +239,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Edit"/>
                                 <connections>
-                                    <action selector="actionJumpEditVC:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DeF-XT-fIJ"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M5k-hf-cz9"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Function" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uKP-Tm-HmL">
@@ -260,7 +257,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Check"/>
                                 <connections>
-                                    <action selector="action11:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zMX-vP-KOj"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XQG-2A-aaO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ajT-zg-VdR">
@@ -271,7 +268,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="WebView"/>
                                 <connections>
-                                    <action selector="actionWebView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="biA-W2-MOO"/>
+                                    <action selector="action1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bEr-It-H7R"/>
                                 </connections>
                             </button>
                         </subviews>

@@ -26,80 +26,88 @@ class ViewController: UIViewController {
     }
     
     //MARK: ---------- Action ----------
-    @IBAction func action0(_ sender: Any) {
-        //Test
-        //self.listUdv()
-        //self.setUdv()
-        //self.bindPhone()
-        //self.unbindPhone()
-        //self.unbindEmail()
-        //self.listOrg()
-        //self.loginByLdap()
-        //self.getCurrentUser()
-        //self.userIdVerify()
-        //self.userIdVerifyStatus()
-        //self.socialLink()
-    }
-    
-    @IBAction func action1(_ sender: Any) {
-        self.registerByUsername()
-    }
-    
-    @IBAction func action2(_ sender: Any) {
-        self.registerByEmail()
-    }
-    
-    @IBAction func action3(_ sender: Any) {
-        let alertView = UIAlertView()  //定义一个弹出框
 
-       alertView.title = "System Info"
+    @IBAction func action1(_ sender: UIButton) {
+        switch sender.titleLabel?.text {
+        case "Register by Username and Password":
+            self.registerByUsername()
+            break
+        case "Register by Email and Password":
+            self.registerByEmail()
+            break
+        case "Register by Phone Number and SMS Code":
+            self.registerByPhoneCode()
+            break
+        case "Send SMS Code to Phone Number":
+            self.sendSmsCode()
+            break
+        case "Login with Username and Password":
+            self.loginByUsername()
+            break
+        case "Login by Email and Password":
+            self.loginByEmail()
+            break
+        case "Login by Phone Number and SMS Code":
+            self.loginByPhoneCode()
+            break
+        case "Login by Phone Number and Password":
+            self.loginByPhonePassword()
+            break
+        case "login By Sub Account":
+            self.loginBySubAccount()
+            break
+        case "Login by AD":
+            self.loginByAD()
+            break
+        case "Edit":
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let editVC = storyboard.instantiateViewController(withIdentifier: "EditViewController")
+            editVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+            editVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            self.present(editVC, animated: true, completion: nil)
+            break
+        case "Bind":
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let bindVC = storyboard.instantiateViewController(withIdentifier: "BindViewController")
+            bindVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+            bindVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            self.present(bindVC, animated: true, completion: nil)
+            break
+        case "Search":
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let searchVC = storyboard.instantiateViewController(withIdentifier: "SearchViewController")
+            searchVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+            searchVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            self.present(searchVC, animated: true, completion: nil)
+            break
+        case "Check":
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let checkVC = storyboard.instantiateViewController(withIdentifier: "CheckViewController")
+            checkVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+            checkVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            self.present(checkVC, animated: true, completion: nil)
+            break
+        case "Http":
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let httpVC = storyboard.instantiateViewController(withIdentifier: "HttpViewController")
+            httpVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+            httpVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            self.present(httpVC, animated: true, completion: nil)
+            break
+        case "WebView":
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let webVC = storyboard.instantiateViewController(withIdentifier: "WebViewController")
+            webVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+            webVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            self.present(webVC, animated: true, completion: nil)
+            break
+        default:
+            break
+        }
+    }
+    
 
-       alertView.message = "Your Name is xw"
-        
-        alertView.addButton(withTitle: "ok")
-
-       alertView.show()
-    }
-    
-    @IBAction func action4(_ sender: Any) {
-        self.sendSmsCode()
-    }
-    
-    @IBAction func actionn5(_ sender: Any) {
-        self.registerByPhoneCode()
-    }
-    
-    @IBAction func action6(_ sender: Any) {
-        self.loginByUsername()
-    }
-    
-    @IBAction func action7(_ sender: Any) {
-        self.loginByEmail()
-    }
-    
-    @IBAction func action8(_ sender: Any) {
-        self.loginByPhoneCode()
-    }
-    
-    @IBAction func action9(_ sender: Any) {
-        self.loginByPhonePassword()
-    }
-    
-    @IBAction func actionLoginBySubAccount(_ sender: Any) {
-        self.loginBySubAccount()
-    }
-    
-    @IBAction func actionLoginByAD(_ sender: Any) {
-        self.loginByAD()
-    }
-    
-    @IBAction func actionWebView(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let webVC = storyboard.instantiateViewController(withIdentifier: "WebViewController")
-        webVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        webVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.present(webVC, animated: true, completion: nil)
-    }
+    //MARK: ---------- API ----------
     
     /// Login by Phone Number and Password.
     /// 使用子账号密码登录
@@ -122,63 +130,11 @@ class ViewController: UIViewController {
     ///
     func loginByAD() {
         AuthenticationClient.shared.loginByAD(username: textUsername.text!, password: textPassword.text!) { (status) in
-            let statusDic = status as! NSDictionary
-            print(statusDic)
+            print(status)
         }
-    }
-    
-    @IBAction func action10(_ sender: Any) {
-//        self.logout()
-//        self.presentingViewController
-//        let loginViewController = self.storyboard！.instantiateViewControllerWithIdentifier（" loginViewController"）as ！ LoginViewController
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let httpVC = storyboard.instantiateViewController(withIdentifier: "HttpViewController")
-        httpVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        httpVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.present(httpVC, animated: true, completion: nil)
         
     }
     
-    @IBAction func actionJumpBindVC(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let bindVC = storyboard.instantiateViewController(withIdentifier: "BindViewController")
-        bindVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        bindVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.present(bindVC, animated: true, completion: nil)
-    }
-    
-    @IBAction func actionJumpSearchVC(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let searchVC = storyboard.instantiateViewController(withIdentifier: "SearchViewController")
-        searchVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        searchVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.present(searchVC, animated: true, completion: nil)
-    }
-    
-    @IBAction func actionJumpEditVC(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let editVC = storyboard.instantiateViewController(withIdentifier: "EditViewController")
-        editVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        editVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.present(editVC, animated: true, completion: nil)
-    }
-    
-    @IBAction func action11(_ sender: Any) {
-//        self.checkLoginStatus()
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let checkVC = storyboard.instantiateViewController(withIdentifier: "CheckViewController")
-        checkVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        checkVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.present(checkVC, animated: true, completion: nil)
-    }
-    
-    @IBAction func action12(_ sender: Any) {
-        self.loginByWeChatCode()
-    }
-
-    //MARK: ---------- API ----------
     /// Register by Email and Password.
     /// 使用邮箱注册
     ///
@@ -201,7 +157,7 @@ class ViewController: UIViewController {
     ///
     func registerByUsername() {
         //Normal
-        AuthenticationClient.shared.registerByUsername(username: textUsername.text!, password: textPassword.text!, completion:{status in
+        AuthenticationClient.shared.registerByUsername(username: textUsername.text!, password: textPassword.text!, completion:{ status in
             if(status.errors == nil) {
                 //Success
                 print(status.data?.registerByUsername ?? "")
