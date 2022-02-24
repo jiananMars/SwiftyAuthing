@@ -11,10 +11,6 @@ import Alamofire
 /// Config information
 ///
 public class Config {
-    
-    /// Version
-    public static let version = "4.5.8"
-    
     /// Default Domain.
     ///
     public static let domainDefault = "https://core.authing.cn"
