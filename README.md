@@ -5,6 +5,8 @@
 
 <br/>
 
+> 推荐使用 [iOS Guard SDK](https://docs.authing.cn/v2/reference/sdk-for-ios/) 接入。它包含本 SDK 全部内容，并且提供了大量本 SDK 不具备的功能。本 SDK 只作为向下兼容进行维护
+
 - Authing Swift SDK 仅支持以终端用户（End User）的身份进行请求，提供了登录、注册、登出、管理用户资料、获取授权资源等所有管理用户的方法。目前不支持管理员（Administrator）身份的相关方法。
 - SDK 的更新日志，可参阅[ Release Notes](https://github.com/Authing/SwiftyAuthing/releases)
 
