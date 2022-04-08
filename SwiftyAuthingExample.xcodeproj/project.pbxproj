@@ -47,7 +47,7 @@
 		A376F49A254C1B2700CA84D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A376F498254C1B2700CA84D8 /* Main.storyboard */; };
 		A376F49C254C1B2700CA84D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A376F49B254C1B2700CA84D8 /* Assets.xcassets */; };
 		A376F49F254C1B2700CA84D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A376F49D254C1B2700CA84D8 /* LaunchScreen.storyboard */; };
-		A3E294A725BACA3F00F29548 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A3E294A625BACA3E00F29548 /* README.md */; };
+		A8A0FDB627FFE3730075B481 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A8A0FDB527FFE3730075B481 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,7 +95,7 @@
 		A376F49B254C1B2700CA84D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A376F49E254C1B2700CA84D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A376F4A0254C1B2700CA84D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A3E294A625BACA3E00F29548 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
+		A8A0FDB527FFE3730075B481 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		B408C6CD4AE831FCB8778E7B /* Pods_SwiftyAuthingExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAuthingExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -262,7 +262,7 @@
 				A376F498254C1B2700CA84D8 /* Main.storyboard */,
 				A376F49B254C1B2700CA84D8 /* Assets.xcassets */,
 				A376F4A0254C1B2700CA84D8 /* Info.plist */,
-				A3E294A625BACA3E00F29548 /* README.md */,
+				A8A0FDB527FFE3730075B481 /* README.md */,
 			);
 			path = SwiftyAuthingExample;
 			sourceTree = "<group>";
@@ -326,11 +326,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8A0FDB627FFE3730075B481 /* README.md in Resources */,
 				A376F49F254C1B2700CA84D8 /* LaunchScreen.storyboard in Resources */,
 				A376F49C254C1B2700CA84D8 /* Assets.xcassets in Resources */,
 				9DF32B92270202E800B14270 /* authingThirdLogin.html in Resources */,
 				9DF32BD42702EB9000B14270 /* index.js in Resources */,
-				A3E294A725BACA3F00F29548 /* README.md in Resources */,
 				A376F49A254C1B2700CA84D8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

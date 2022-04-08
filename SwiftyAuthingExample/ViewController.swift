@@ -835,24 +835,6 @@ class ViewController: UIViewController {
     }
     
     
-    /// Login by WeChat Code.
-    /// 通过微信认证码登陆
-    ///
-    func loginByWeChatCode() {
-        //通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
-        let code = "code"
-        //Normal
-//        AuthenticationClient.shared.loginByWeChatCode(code: code, completion: { status in
-//            print(status)
-//        })
-        
-        //With result
-        AuthenticationClient.shared.loginByWeChatCodeWithResult(code: code, completion: { result in
-            print(result)
-        })
-    }
-    
-    
     /// User Id Verify.
     /// 实名认证 - 使用姓名，身份证号码，人脸图像，需要登录后调用
     ///

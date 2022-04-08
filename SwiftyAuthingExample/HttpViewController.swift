@@ -18,10 +18,6 @@ class HttpViewController: TempViewController {
         self.loginByLdap()
     }
     
-    @IBAction func actionLoginByWeChatCode(_ sender: Any) {
-        self.loginByWeChatCode()
-    }
-    
     @IBAction func actionListApplications(_ sender: Any) {
         self.listApplications()
     }
@@ -66,12 +62,6 @@ class HttpViewController: TempViewController {
     ///
     func loginByLdap(){
         AuthenticationClient.shared.loginByLdap(username: textUsername.text!, password: textPassword.text!, completion: { (status) in
-            print(status)
-        })
-    }
-    
-    func loginByWeChatCode(){
-        AuthenticationClient.shared.loginByWeChatCode(code: textPhonecode.text!, completion: { (status) in
             print(status)
         })
     }

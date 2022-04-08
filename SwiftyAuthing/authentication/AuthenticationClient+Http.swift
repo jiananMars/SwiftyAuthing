@@ -285,39 +285,6 @@ extension AuthenticationClient
         }
     }
     
-    //MARK: --微信登录
-    /// Login by WeChat Code.
-    /// 通过微信认证码登陆
-    /// - parameter code: 微信认证码
-    /// - parameter completion: 服务器端返回的数据
-    /// - returns: N/A
-    ///
-    /// 通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
-    ///
-    public func loginByWeChatCode(code: String, completion: @escaping(Any) -> Void) {
-        let userPoolId = self.userPoolId ?? ""
-        let appId = self.appId ?? ""
-        Config.domain = self.domain
-        let url = Config.wechatmobile(userPoolId: userPoolId, code: code, appId: appId)
-        AHC.dataRequest(url, method: .get).responseJSON { (response) in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                let code = json["code"].intValue
-                if(code == 200) {
-                    let token = json["data"]["token"].stringValue
-                    self.setToken(token)
-                }
-                
-                print("\(#function) success")
-                
-                completion(value)
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
     //MARK: --微信登录 EC（Enhanced Cliet mode）
     /// Login by WeChat Code.
     /// 通过微信认证码登陆
@@ -343,38 +310,6 @@ extension AuthenticationClient
             completion(result)
             
             print("[ \(#function) ] success")
-        }
-    }
-    
-    /// Login by WeChat Code.
-    /// 通过微信认证码登陆
-    /// - parameter code: 微信认证码
-    /// - parameter completion: 服务器端返回的数据
-    /// - returns: N/A
-    ///
-    /// 通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
-    ///
-    public func loginByWeChatCodeWithResult(code: String, completion: @escaping(Any) -> Void) {
-        let userPoolId = self.userPoolId ?? ""
-        let appId = self.appId ?? ""
-        Config.domain = self.domain
-        let url = Config.wechatmobile(userPoolId: userPoolId, code: code, appId: appId)
-        AHC.dataRequest(url, method: .get).responseJSON { (response) in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                let code = json["code"].intValue
-                if(code == 200) {
-                    let token = json["data"]["token"].stringValue
-                    self.setToken(token)
-                }
-                
-                print("[ \(#function) ] success")
-                
-                completion(value)
-            case .failure(let error):
-                print(error)
-            }
         }
     }
 

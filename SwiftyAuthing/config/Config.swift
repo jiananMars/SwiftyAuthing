@@ -38,14 +38,7 @@ public class Config {
     /// Logout
     ///
     public static let logout = domain + "/api/v2/logout"
-    
-    /// WeChat code Host.
-    ///
-    public static func wechatmobile(userPoolId: String, code: String, appId: String) -> String {
-        return domain + "/connection/social/wechat:mobile/" + userPoolId + "/callback?code=" + code +
-            (appId.count > 0 ? "&app_id=" + appId : "")
-    }
-    
+        
     /// User id verify Host.
     ///
     public static let idverify = domain + "/api/v2/users/id-verify"
