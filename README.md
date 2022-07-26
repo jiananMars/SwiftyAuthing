@@ -18,7 +18,7 @@
 | -------- | -------------------------------------------- |
 | 支持版本 | - Swift 5.0 + - Xcode 11 + - iOS 10+         |
 | Platform | - iOS - osx - tvos - watchos                 |
-| 仓库地址 | https://github.com/Authing/SwiftyAuthing.git |
+| 仓库地址 | https://github.com/jiananMars/SwiftyAuthing.git |
 
 # 1. 集成 Authing Swift SDK
 
