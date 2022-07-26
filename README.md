@@ -22,25 +22,13 @@
 
 # 1. 集成 Authing Swift SDK
 
-## 1.1. CocoaPods 方式
-
--  在 **Podfile** 中加入如下代码：
-
-```swift
-    pod 'SwiftAuthing'
-```
-
-- 执行 **pod install** 或 **pod update**
-
-​    注：如果执行 **pod update** 无法检测到最新版本，可以先执行 **pod cache clean SwiftAuthing** 清除本地缓存。
-
-## 1.2. Swift Package Manager 方式
+## 1.1. Swift Package Manager 方式
 
 - 在 **Package.swift** 文件中加入如下 **dependencies** 代码：
 
 ```swift
     dependencies: [
-    .package(url: "https://github.com/Authing/SwiftyAuthing.git", .upToNextMajor(from: "4.0.0"))
+    .package(url: "https://github.com/jiananMars/SwiftyAuthing.git", .upToNextMajor(from: "4.0.0"))
     ]
 ```
 
